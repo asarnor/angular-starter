@@ -10,7 +10,7 @@ import { ModalsService } from '../../components/modals/modals.service';
   selector: '[appModalLaunch]',
 })
 export class ModalLaunchDirective implements OnInit, OnDestroy {
-  /** The modal component name to launch */
+  /** The modal component string found in the manifest */
   @Input() modal: string;
   /** Should the modal persist on reload */
   @Input() persist = false;
@@ -32,7 +32,7 @@ export class ModalLaunchDirective implements OnInit, OnDestroy {
 
   private sub: Subscription;
 
-  constructor(private modals: ModalsService) {}
+  constructor(private modalsService: ModalsService) {}
 
   ngOnInit() {}
 
@@ -42,7 +42,7 @@ export class ModalLaunchDirective implements OnInit, OnDestroy {
    */
   @HostListener('click', ['$event'])
   public openModal($event: MouseEvent) {
-    const modal = this.modals.open(<any>this.modal, this.persist, this.size, this.data, this.dataAlt);
+    const modal = this.modalsService.open(<any>this.modal, this.persist, this.size, this.data, this.dataAlt);
     // If static modal
     if (modal) {
       modal.afterClosed().subscribe(reason => {
@@ -54,7 +54,7 @@ export class ModalLaunchDirective implements OnInit, OnDestroy {
     } else {
       // If observable modal. KNOWN BUG: If the page is refreshed and the app is dependent on an onSuccess method
       // that method will not be persisted
-      this.sub = this.modals.modalRef$.subscribe(modalElem => {
+      this.sub = this.modalsService.modalRef$.subscribe(modalElem => {
         if (modalElem) {
           modalElem.result.then((reason: any) => this.success.emit(reason), (reason: any) => this.success.emit(reason));
         }

@@ -35,6 +35,12 @@ import {
 import { LoginComponent, NoContentComponent } from '$routes';
 import { SiteModule } from '$site';
 
+// Dynamic Components
+import { DynamicComponentLoaderModule } from './dynamic-component-loader/dynamic-component-loader.module';
+import { ModalContentComponent } from './components/modals/modal-content.component';
+import { MODALS_MANIFEST } from './components/modals/modals.manifest';
+import { ModalContentModule } from './components/modals/modal-content.module';
+
 // Components
 export const APP_COMPONENTS = [
   // App component
@@ -59,6 +65,10 @@ export const APP_COMPONENTS = [
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.settings.enableServiceWorker }),
 
     SiteModule.forRoot(),
+
+    ModalContentModule,
+    DynamicComponentLoaderModule.forRoot(MODALS_MANIFEST),
+
   ],
   providers: [
     AppSettings, // App settings
@@ -85,7 +95,7 @@ export const APP_COMPONENTS = [
     // },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [],
+  entryComponents: [ModalContentComponent],
 })
 export class AppModule {}
 

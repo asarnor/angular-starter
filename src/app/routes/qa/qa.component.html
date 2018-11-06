@@ -1,16 +1,15 @@
 <div class="container-fluid">
   <h1>QA Testing Page</h1>
   <p>Used for testing non-routable components.</p>
-  <hr />
-
- 
-
 
   <hr />
-  <p>Confirmation Modal</p>
-  <button appModalLaunch modal="ConfirmationModalComponent" size="lg" data="'Does the confirmation modal work?'" (success)="launchModalSuccess($event)">
-      Launch Modal Component
-  </button>
+  <p>Dynamic Content - Modals</p>
+  <p>Watch the network tab in DevTools to see that this modal is loaded dynamically.</p>
+  <div>
+    <button appModalLaunch modal="confirmation-modal" size="lg" data="Does the confirmation modal work?" (success)="launchModalSuccess($event)">
+      Confirmation Modal
+    </button>
+  </div>
   <div *ngIf="launchModalWorks" id="launchModalWorks">Success method works</div>
   <hr />
   <p>Filter Pipe</p>
