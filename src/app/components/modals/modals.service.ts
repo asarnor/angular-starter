@@ -6,8 +6,10 @@ import { AppStore } from '../../shared/stores/store';
 import { Store } from '@ngrx/store';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UIStoreActions } from '$ui';
-import { ConfirmationModalComponent } from './confirmation/confirmation-modal.component';
-import { LogoutModalComponent } from './logout/logout-modal.component';
+// import { ConfirmationModalComponent } from './confirmation/confirmation-modal.component';
+// import { LogoutModalComponent } from './logout/logout-modal.component';
+import { DynamicComponentService } from '../../dynamic-component-loader/dynamic-component-loader.service';
+import { ModalContentComponent } from './modal-content.component';
 
 /** Sample Usage:
 this.ui.modals.open('ConfirmationModalComponent', false, 'lg', 'Are you sure you want to delete this user?', 'Delete User').result.then(
@@ -16,23 +18,27 @@ this.ui.modals.open('ConfirmationModalComponent', false, 'lg', 'Are you sure you
 */
 
 // List modals here by component name
-type modals = 'LogoutModalComponent' | 'ConfirmationModalComponent';
+// type modals = 'LogoutModalComponent' | 'ConfirmationModalComponent';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModalsService {
-  /** Reference to the STATIC currently open modal. This reference is used for static non persistant modals */
+  /** Reference to the STATIC currently open modal. This reference is used for static non persistent modals */
   public modalRef: MatDialogRef<any>;
   /** Reference to the STORE OBSERVABLE currently open modal. This reference is used for modals persisted in the UI store */
   public modalRef$: BehaviorSubject<any> = new BehaviorSubject(null);
   /** List of component references of available modals */
-  public modalList: { [key: string]: any } = {
-    ConfirmationModalComponent: ConfirmationModalComponent,
-    LogoutModalComponent: LogoutModalComponent,
-  };
+  // public modalList: { [key: string]: any } = {
+  //   ConfirmationModalComponent: ConfirmationModalComponent,
+  //   LogoutModalComponent: LogoutModalComponent,
+  // };
 
-  constructor(private store: Store<AppStore.Root>, private settings: AppSettings, public dialog: MatDialog) {
+  constructor(
+    private store: Store<AppStore.Root>,
+    private settings: AppSettings,
+    public dialog: MatDialog
+  ) {
     // Subscribe to the modal in the store and launch store modal if data is found. Also make sure token is present
     this.store.select(storeElem => storeElem.ui.modal).subscribe((modal: any) => {
       // Make sure modal exists AND that a token is present in app settings. This prevents a modal from persisting after logout
@@ -52,27 +58,28 @@ export class ModalsService {
             break;
         }
 
-        const modalRef = this.dialog.open(this.modalList[modal.modalId], {
-          width: width,
-          data: modal.data || null,
-        });
-
-        this.modalRef$.next(modalRef);
-        this.onClose();
+        // TODO: Open from store
+        // const modalRef = this.dialog.open(this.modalList[modal.modalId], {
+        //   width: width,
+        //   data: modal.data || null,
+        // });
+        //
+        // this.modalRef$.next(modalRef);
+        // this.onClose();
       }
     });
   }
 
   /**
    * Open a modal window
-   * @param modalId The class name of the modal window
+   * @param modalId The component ID string found in the manifest
    * @param persist Should the modal persist on reload or otherwise have its state managed by the UI store
    * @param size Modal size
    * @param data Primary set of data to pass to the modal
    * @param dataAlt Secondary set of data to pass to the modal
    */
   public open(
-    modalId: modals,
+    modalId: string,
     persist: boolean = false,
     size: 'sm' | 'lg' | 'xl' | 'full' = 'lg',
     data?: any,
@@ -104,13 +111,14 @@ export class ModalsService {
     } else {
       // If persist is not set
       // this.modalRef = this.modalService.open(this.modalList[modalId], { size: <any>size, windowClass: windowClass });
-      this.modalRef = this.dialog.open(this.modalList[modalId], {
+      this.modalRef = this.dialog.open(ModalContentComponent, {
         width: width,
         data: data,
       });
+      this.modalRef.componentInstance.dataAlt = dataAlt;
+      this.modalRef.componentInstance.modalId = modalId;
+      return this.modalRef;
     }
-    this.modalRef.componentInstance.dataAlt = dataAlt;
-    return this.modalRef;
   }
 
   /**
