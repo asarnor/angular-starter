@@ -8,7 +8,6 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { UIStoreActions } from '$ui';
 // import { ConfirmationModalComponent } from './confirmation/confirmation-modal.component';
 // import { LogoutModalComponent } from './logout/logout-modal.component';
-import { DynamicComponentService } from '../../dynamic-component-loader/dynamic-component-loader.service';
 import { ModalContentComponent } from './modal-content.component';
 
 /** Sample Usage:
@@ -40,34 +39,34 @@ export class ModalsService {
     public dialog: MatDialog
   ) {
     // Subscribe to the modal in the store and launch store modal if data is found. Also make sure token is present
-    this.store.select(storeElem => storeElem.ui.modal).subscribe((modal: any) => {
-      // Make sure modal exists AND that a token is present in app settings. This prevents a modal from persisting after logout
-      if (modal && Object.keys(modal).length && this.settings.token) {
-        // Store reference to the modal instance
-        let width = '720px';
-
-        switch (modal.size) {
-          case 'sm':
-            width = '480px';
-            break;
-          case 'xl':
-            width = '1024px';
-            break;
-          case 'full':
-            width = '90%';
-            break;
-        }
-
-        // TODO: Open from store
-        // const modalRef = this.dialog.open(this.modalList[modal.modalId], {
-        //   width: width,
-        //   data: modal.data || null,
-        // });
-        //
-        // this.modalRef$.next(modalRef);
-        // this.onClose();
-      }
-    });
+    // this.store.select(storeElem => storeElem.ui.modal).subscribe((modal: any) => {
+    //   // Make sure modal exists AND that a token is present in app settings. This prevents a modal from persisting after logout
+    //   if (modal && Object.keys(modal).length && this.settings.token) {
+    //     // Store reference to the modal instance
+    //     let width = '720px';
+    //
+    //     switch (modal.size) {
+    //       case 'sm':
+    //         width = '480px';
+    //         break;
+    //       case 'xl':
+    //         width = '1024px';
+    //         break;
+    //       case 'full':
+    //         width = '90%';
+    //         break;
+    //     }
+    //
+    //     // TODO: Open from store
+    //     // const modalRef = this.dialog.open(this.modalList[modal.modalId], {
+    //     //   width: width,
+    //     //   data: modal.data || null,
+    //     // });
+    //     //
+    //     // this.modalRef$.next(modalRef);
+    //     // this.onClose();
+    //   }
+    // });
   }
 
   /**
@@ -124,18 +123,18 @@ export class ModalsService {
   /**
    * When the modal window is closed, remove from store
    */
-  private onClose() {
-    this.modalRef$.subscribe(modal => {
-      // Wait for promise that is returned when modal is closed or dismissed
-      modal.result.then(
-        () => {
-          this.store.dispatch(UIStoreActions.MODAL_UNLOAD(null));
-        },
-        () => {
-          // On modal dismiss, which is closed without performing an action
-          this.store.dispatch(UIStoreActions.MODAL_UNLOAD(null));
-        },
-      );
-    });
-  }
+  // private onClose() {
+  //   this.modalRef$.subscribe(modal => {
+  //     // Wait for promise that is returned when modal is closed or dismissed
+  //     modal.result.then(
+  //       () => {
+  //         this.store.dispatch(UIStoreActions.MODAL_UNLOAD(null));
+  //       },
+  //       () => {
+  //         // On modal dismiss, which is closed without performing an action
+  //         this.store.dispatch(UIStoreActions.MODAL_UNLOAD(null));
+  //       },
+  //     );
+  //   });
+  // }
 }
