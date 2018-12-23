@@ -1,0 +1,18 @@
+:host,
+.mapbox-map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position:relative;
+}
+.maps-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+    font-size: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }

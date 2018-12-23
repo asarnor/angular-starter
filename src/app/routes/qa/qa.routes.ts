@@ -4,8 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { QaComponent } from './qa.component';
 import { ChartsComponent } from './routes/charts/charts.component';
 import { MapComponent } from './routes/map/map.component';
+import { MapboxComponent } from './routes/mapbox/mapbox.component';
 
 const routes: Routes = [
+  {
+    path: 'mapbox',
+    component: MapboxComponent,
+    data: { title: 'Map Box' },
+  },
   {
     path: 'map',
     component: MapComponent,
