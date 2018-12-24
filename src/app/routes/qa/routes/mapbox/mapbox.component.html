@@ -1,38 +1,48 @@
 <mat-expansion-panel class="d-block d-lg-none">
-        <mat-expansion-panel-header>
-          <mat-panel-title> <i class="fa fa-map-pin mr-2"></i> Map Options </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>This is the primary content of the panel.</p>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <i class="fa fa-map-pin mr-2"></i> Map Options
+      <em class="ml-auto mr-0">(<i class="fa fa-home"></i> 87 Locations)</em>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <ng-container *ngTemplateOutlet="mapOptions"></ng-container>
 </mat-expansion-panel>
 
-
 <div class="container-fluid search-bar d-none d-lg-flex">
- 
-  <form class="form-inline pt-2" id="formLocations" [formGroup]="formLocations">
+  <ng-container *ngTemplateOutlet="mapOptions"></ng-container>
+</div>
 
-    <div class="input-group input-group-sm mr-3 mb-2">
+<div style="height:100vh;" class="d-flex align-items-stretch">
+  <div class="d-none d-lg-inline-block" style="width:50px;">Test</div>
+  <div class="d-inline-block" style="width:calc(100vw - 50px);"><app-map-mapbox></app-map-mapbox></div>
+</div>
+
+<ng-template #mapOptions>
+  <form class="form-inline pt-2" id="formLocations" [formGroup]="formLocations">
+    <!-- Results -->
+    <div class="input-group input-group-sm mr-sm-3 mb-2 d-none d-lg-flex">
       <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1"> 0 / 0 </span></div>
       <div class="input-group-append"><span class="input-group-text" id="basic-addon1">Results</span></div>
     </div>
 
     <!-- Map type toggle -->
-    <div class="btn-group mr-3 mb-2">
-      <button mat-button class="btn" (click)="heatMap = true" [ngClass]="{ active: heatMap }">
+    <div class="btn-group mr-sm-3 mb-2 flex-fill">
+      <button mat-button class="btn flex-fill" (click)="heatMap = true" [ngClass]="{ active: heatMap }">
         <i class="fa fa-thermometer-full" aria-hidden="true"></i> Heatmap
       </button>
-      <button mat-button class="btn" (click)="heatMap = false" [ngClass]="{ active: !heatMap }">
+      <button mat-button class="btn flex-fill" (click)="heatMap = false" [ngClass]="{ active: !heatMap }">
         <i class="fa fa-map-pin" aria-hidden="true"></i> Pins
       </button>
     </div>
 
     <!-- Zip code -->
-    <div class="input-group input-group-sm mr-3 mb-2">
+    <div class="input-group input-group-sm mr-sm-3 mb-2 flex-fill">
       <div class="input-group-prepend"><label for="zip" class="input-group-text" id="basic-addon1">Zip</label></div>
       <input type="text" class="form-control" placeholder="" id="zip" aria-label="Zip" formControlName="zip" />
     </div>
 
     <!-- Price range -->
-    <div class="input-group input-group-sm mr-3 mb-2">
+    <div class="input-group input-group-sm mr-sm-3 mb-2 flex-fill">
       <div class="input-group-prepend">
         <label class="input-group-text" for="priceLow"><i class="fa fa-usd" aria-hidden="true"></i></label>
       </div>
@@ -48,7 +58,7 @@
     </div>
 
     <!-- Bedrooms -->
-    <div class="input-group input-group-sm mr-3 mb-2">
+    <div class="input-group input-group-sm mr-sm-3 mb-2 flex-fill">
       <div class="input-group-prepend">
         <label class="input-group-text" for="bedroomsMin"><i class="fa fa-bed" aria-hidden="true"></i></label>
       </div>
@@ -71,9 +81,11 @@
       />
     </div>
 
-    <div class="form-group mr-3 mb-2">
-      <button mat-button [matMenuTriggerFor]="appMenu">
-        <i class="fa fa-home" aria-hidden="true"></i> Home Type <i class="fa fa-caret-down ml-1" aria-hidden="true"></i>
+    <!-- Home Type -->
+    <div class="form-group mr-sm-3 mb-2 flex-fill">
+      <button mat-button [matMenuTriggerFor]="appMenu" class="w-100 text-left">
+        <i class="fa fa-caret-down ml-1 mt-2 float-right" aria-hidden="true"></i>
+        <i class="fa fa-home" aria-hidden="true"></i> Home Type
       </button>
       <mat-menu #appMenu="matMenu">
         <div class="p-2" (click)="$event.stopPropagation()">
@@ -85,17 +97,11 @@
       </mat-menu>
     </div>
 
-    <div class="ml-auto mr-0">
-      <button class="btn btn-primary btn-sm mr-0 mb-2" (click)="locationsUpdate()">
+    <!-- Search button -->
+    <div class="ml-auto mr-0 flex-fill w-lg-100">
+      <button class="btn btn-primary btn-sm mr-0 mb-2 w-100" (click)="locationsUpdate()">
         <i class="fa fa-search" aria-hidden="true"></i> Search!
       </button>
-        </div>
-
+    </div>
   </form>
-</div>
-
-
-<div style="height:100vh;" class="d-flex align-items-stretch">
-  <div class="d-none d-lg-inline-block" style="width:50px;">Test</div>
-  <div class="d-inline-block" style="width:calc(100vw - 50px);"><app-map-mapbox></app-map-mapbox></div>
-</div>
+</ng-template>
