@@ -41,13 +41,15 @@ export class MapboxComponent implements OnInit {
   public heatMap = true;
   public locations: any[];
 
-  public formLocations: FormGroup;
+  public sidebarMobileShow = false;
+
+  public formSearch: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
     // Create searchable locations
-    this.formLocations = this.fb.group({
+    this.formSearch = this.fb.group({
       zip: ['', []],
       priceLow: ['', []],
       priceHigh: ['', []],
@@ -75,7 +77,6 @@ export class MapboxComponent implements OnInit {
         };
       });
       this.locations.length = 500;
-      console.log();
       this.ref.markForCheck();
     });
   }

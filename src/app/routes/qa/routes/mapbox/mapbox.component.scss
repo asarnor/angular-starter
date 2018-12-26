@@ -1,9 +1,14 @@
+:host{
+    background-color:#fff;
+}
 #formLocations {
   .form-control {
     width: 75px;
   }
   .input-group-text{min-width:38px;text-align:center;}
 }
+
+.btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;background:#fff;}
 
 .map-container{height:100vh;
     .toggles{width:50px;}

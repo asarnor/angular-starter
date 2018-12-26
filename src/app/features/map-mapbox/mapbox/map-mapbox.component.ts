@@ -18,6 +18,7 @@ const apiKey = 'pk.eyJ1Ijoicm9ndXNlciIsImEiOiJjanB1YzFrMmwwZjZnNDNxbGkwY28wdnI5I
   templateUrl: './map-mapbox.component.html',
   styleUrls: ['../../../../../node_modules/mapbox-gl/dist/mapbox-gl.css', './map-mapbox.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [MapObjectsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {

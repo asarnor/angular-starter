@@ -22,3 +22,7 @@ section { padding: 1rem; background: white; padding-bottom: 0.2rem; margin-botto
 .no-support{
     @extend .alert-danger;padding:.5rem 0;position:absolute;top:0px;left:0px;right:0px;
 }
+
+@include media-breakpoint-up(lg){
+    .w-lg-auto{width:auto!important;}
+}

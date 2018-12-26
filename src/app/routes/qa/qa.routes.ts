@@ -18,6 +18,12 @@ const routes: Routes = [
     data: { title: 'Map' },
   },
   {
+    path: 'mapbox',
+    pathMatch: 'full',
+    loadChildren: './routes/mapbox/mapbox.module#MapboxModule',
+    canActivate: [],
+  },
+  {
     path: 'charts',
     component: ChartsComponent,
     data: { title: 'Charts' },
