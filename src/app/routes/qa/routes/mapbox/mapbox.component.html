@@ -12,10 +12,19 @@
   <ng-container *ngTemplateOutlet="mapOptions"></ng-container>
 </div>
 
-<div style="height:100vh;" class="d-flex align-items-stretch">
-  <div class="d-none d-lg-inline-block" style="width:50px;">Test</div>
-  <div class="d-inline-block" style="width:calc(100vw - 50px);"><app-map-mapbox></app-map-mapbox></div>
+<!--
+<div class="row align-items-stretch" style="height:100vh;" >
+  <div class="col col-lg-1 d-none d-lg-block" style="background:red;">Test</div>
+  <div class="col col-12 col-lg-11"><app-map-mapbox></app-map-mapbox></div>
 </div>
+-->
+
+<!---->
+<div class="map-container d-flex align-items-stretch">
+  <div class="toggles">Test</div>
+  <div class="map-main"><app-map-mapbox></app-map-mapbox></div>
+</div>
+
 
 <ng-template #mapOptions>
   <form class="form-inline pt-2" id="formLocations" [formGroup]="formLocations">
