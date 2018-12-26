@@ -31,7 +31,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     // If is browser
     // Does not have custom error message
     // Does not have http status field (to ignore http errors)
-    if (this.settings.isBrowser && !error.errorMsg && !error.hasOwnProperty('status')) {
+    if (this.settings.isBrowser && !error.errorMsg && !error.hasOwnProperty('status') && environment.production) {
       // If error endpoint specified, log errors
       if (environment.endpoints.errors) {
         this.logError(error);

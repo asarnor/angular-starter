@@ -1,5 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+  AfterViewInit,
+  ViewEncapsulation,
+  OnChanges,
+} from '@angular/core';
 import { Map } from 'mapbox-gl';
+import { MapObjectsService } from '../services/map-objects.service';
 
 const scriptSrc = 'https://api.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js';
 const apiKey = 'pk.eyJ1Ijoicm9ndXNlciIsImEiOiJjanB1YzFrMmwwZjZnNDNxbGkwY28wdnI5In0.Xe4QgRnvsvP3WAncobSxqg';
@@ -11,7 +20,7 @@ const apiKey = 'pk.eyJ1Ijoicm9ndXNlciIsImEiOiJjanB1YzFrMmwwZjZnNDNxbGkwY28wdnI5I
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapMapboxComponent implements OnInit, AfterViewInit {
+export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /** Any locations such as pushpins or circles */
   @Input() locations: Map.Location[];
   /** Bing API key which can be generated @ https://www.bingmapsportal.com/Application. Defaults to low usage dev key */
@@ -27,9 +36,16 @@ export class MapMapboxComponent implements OnInit, AfterViewInit {
   /** Randomly generated uniqueID for the div that holds the map. Allows for multiple map per page  */
   public uniqueId = 'map-box' + Math.floor(Math.random() * 1000000);
 
-  constructor() {}
+  constructor(private mapObjects: MapObjectsService) {}
 
   ngOnInit() {}
+
+  ngOnChanges(model: any) {
+    if (model.locations) {
+      // this.map = null;
+      // this.mapInit();
+    }
+  }
 
   ngAfterViewInit() {
     this.scriptsLoad();
@@ -64,13 +80,22 @@ export class MapMapboxComponent implements OnInit, AfterViewInit {
       (<any>window).mapboxgl.accessToken = this.apiKey;
       // Get user's lat long to set initial position
       navigator.geolocation.getCurrentPosition(val => {
+        console.log(val);
         // Create new map
         this.map = new (<any>window).mapboxgl.Map({
           container: this.uniqueId,
           style: 'mapbox://styles/mapbox/dark-v9',
           zoom: this.zoom,
-          center: [val.coords.longitude, val.coords.latitude],
+          // center: [val.coords.longitude, val.coords.latitude],
+          center: [-114.9775958, 36.0080202],
+          
         });
+
+        // If locations passed, add markers
+        if (this.locations) {
+          this.mapObjects.addMarkers(this.map, this.locations);
+        }
+
         /** Add geolocate conrol
         this.map.addControl(new (<any>window).mapboxgl.GeolocateControl({
             positionOptions: {
