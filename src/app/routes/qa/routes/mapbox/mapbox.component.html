@@ -20,22 +20,32 @@
    </div>
 </div>
 -->
-<div class="d-block d-lg-none">
-  <button class="btn btn-sidebar-toggle" *ngIf="!sidebarMobileShow" (click)="sidebarMobileShow = true;">
-    <i class="fa fa-chevron-right float-right mt-1"></i> 
-    <i class="fa fa-map-pin mr-2"></i> Map Options
-  </button>
-  <button class="btn btn-sidebar-toggle" *ngIf="sidebarMobileShow" (click)="sidebarMobileShow = false;">
-        <i class="fa fa-chevron-left float-left mt-1"></i> 
-        <i class="fa fa-map mr-2"></i> Back To Map
-      </button>
-</div>
+<div class="d-block d-lg-none"></div>
 
 <div class="container-fluid">
-  <div class="row align-items-stretch map-container">
-    <div class="col col-12 col-lg-8 px-0">
+  <div class="row align-items-stretch map-container" [ngClass]="{ open: sidebarMobileShow }">
+    <div class="col col-12 col-lg-8 px-0 map-container-box">
+      <button
+        mat-flat-button
+        class="btn mat-reverse btn-sidebar-toggle d-block d-lg-none"
+        (click)="sidebarMobileShow = true"
+      >
+        <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> Listings
+      </button>
       <app-map-mapbox [locations]="locations" *ngIf="locations?.length"></app-map-mapbox>
     </div>
-    <div class="col col-12 col-lg-4 d-none d-lg-flex"><app-sidebar [formSearch]="formSearch"></app-sidebar></div>
+    <div class="col col-12 col-lg-4 map-container-sidebar">
+        <div class="row">
+                <button
+                mat-flat-button
+                class="btn mat-reverse btn-sidebar-toggle d-block d-lg-none"
+                (click)="sidebarMobileShow = false"
+              >
+                <i class="fa fa-chevron-left float-left mt-2"></i> <i class="fa fa-map mr-2"></i> Back To Map
+              </button>
+        </div>
+     
+      <app-sidebar [formSearch]="formSearch"></app-sidebar>
+    </div>
   </div>
 </div>

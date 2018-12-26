@@ -1,23 +1,24 @@
-:host{
-    background-color:#fff;
-}
+:host{    background-color:#fff;}
 #formLocations {
-  .form-control {
-    width: 75px;
-  }
+  .form-control {    width: 75px;  }
   .input-group-text{min-width:38px;text-align:center;}
 }
 
-.btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;background:#fff;}
+.btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;}
 
-.map-container{height:100vh;
-    .toggles{width:50px;}
-    .map-main{width:calc(100vw - 50px);}
+.map-container{height:100vh;position:relative;
+    .map-container-box{position:relative;left:0;transition: .2s ease-in;}
+    .map-container-sidebar{background:#fff;}
 }
 
+/* Mobile Only */
 @media (max-width: 992px){
     .map-container{
-        .toggles{display:none;}
-        .map-main{width:100vw;}
+        .map-container-sidebar{position: absolute;left: 100%;top:0;transition: .2s ease-in;min-height: 100%;
+        }
+        &.open{
+            .map-container-sidebar{left:0;}
+            .map-container-box{position:relative;left:-100%;}
+        }
     }
 }

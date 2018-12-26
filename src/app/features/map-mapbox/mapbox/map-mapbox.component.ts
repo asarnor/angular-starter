@@ -27,7 +27,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /** Bing API key which can be generated @ https://www.bingmapsportal.com/Application. Defaults to low usage dev key */
   @Input() apiKey = apiKey;
 
-  @Input() zoom = 13;
+  @Input() zoom = 15.5;
 
   /** Has script loaded  */
   public isLoaded = false;
@@ -87,8 +87,11 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           container: this.uniqueId,
           style: 'mapbox://styles/mapbox/dark-v9',
           zoom: this.zoom,
-          // center: [val.coords.longitude, val.coords.latitude],
-          center: [-114.9775958, 36.0080202],
+          center: [val.coords.longitude, val.coords.latitude],
+          // For rotation
+          // zoom: 15.5,
+          pitch: 45
+          // center: [-114.9775958, 36.0080202],
           
         });
 
@@ -96,6 +99,67 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
         if (this.locations) {
           this.mapObjects.addMarkers(this.map, this.locations);
         }
+
+        this.map.on('load', () => {
+
+          this.rotateTo(0);
+
+          /**
+          this.map.flyTo({
+            zoom: 15.5,
+            pitch: 45,
+            speed: 1.2,
+            curve: 1.42,
+            // maxDuration: 2000,
+            easing(t) {
+              return t;
+            }
+          });
+          setTimeout(() => {
+            // Start the animation.
+            this.rotateTo(0);
+          }, 2500);
+           */
+
+          // Add 3d buildings and remove label layers to enhance the map
+          const layers = this.map.getStyle().layers;
+          for (let i = 0; i < layers.length; i++) {
+              if (layers[i].type === 'symbol' && (<any>layers)[i].layout['text-field']) {
+                  // remove text labels
+                  this.map.removeLayer(layers[i].id);
+              }
+          }
+
+
+          this.map.addLayer({
+            'id': '3d-buildings',
+            'source': 'composite',
+            'source-layer': 'building',
+            'filter': ['==', 'extrude', 'true'],
+            'type': 'fill-extrusion',
+            'minzoom': 15,
+            'paint': {
+                'fill-extrusion-color': '#aaa',
+    
+                // use an 'interpolate' expression to add a smooth transition effect to the
+                // buildings as the user zooms in
+                'fill-extrusion-height': [
+                    'interpolate', ['linear'], ['zoom'],
+                    15, 0,
+                    15.05, ['get', 'height']
+                ],
+                'fill-extrusion-base': [
+                    'interpolate', ['linear'], ['zoom'],
+                    15, 0,
+                    15.05, ['get', 'min_height']
+                ],
+                'fill-extrusion-opacity': .6
+            }
+        });
+
+        })
+
+        
 
         /** Add geolocate conrol
         this.map.addControl(new (<any>window).mapboxgl.GeolocateControl({
@@ -108,4 +172,17 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       });
     }
   }
+
+  /**
+   * Slowly rotate the map
+   * https://www.mapbox.com/mapbox-gl-js/example/animate-camera-around-point/
+   */
+  private rotateTo = (timestamp: number) => {
+  // clamp the rotation between 0 -360 degrees
+    // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
+    this.map.rotateTo((timestamp / 300) % 360, {duration: 0});
+    // Request the next frame of the animation.
+    requestAnimationFrame(this.rotateTo);
+  }
+
 }
