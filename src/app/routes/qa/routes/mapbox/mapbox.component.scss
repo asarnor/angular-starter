@@ -8,7 +8,7 @@
 
 .map-container{height:100vh;position:relative;
     .map-container-box{position:relative;left:0;transition: .2s ease-in;}
-    .map-container-sidebar{background:#fff;}
+    .map-container-sidebar{background:#fff;overflow-y: auto;padding-top: 1rem;}
 }
 
 /* Mobile Only */

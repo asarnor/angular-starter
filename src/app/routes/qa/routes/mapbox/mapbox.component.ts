@@ -50,6 +50,7 @@ export class MapboxComponent implements OnInit {
         };
       });
       this.locationsOriginal.length = 500;
+      // this.locations = [...this.locationsOriginal];
       this.ref.markForCheck();
     });
   }

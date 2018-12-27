@@ -39,6 +39,10 @@ export class ListingsComponent implements OnInit, OnChanges {
     this.locations$.next(this.locationsFilter(this.locations, this.pageIndex, this.pageSize));
   }
 
+  public modalLaunch() {
+
+  }
+
   /**
    * Filter the locations based on the paginator information
    * @param locations
