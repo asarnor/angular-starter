@@ -1,104 +1,67 @@
 <div class="py-3">
-  <h2><em class="float-right small">( 87 Locations)</em> <i class="fa fa-home"></i> Listings</h2>
+  <h2><em class="float-right small">( {{ locations | count }} Locations)</em> <i class="fa fa-home"></i> Listings</h2>
 
-  <mat-expansion-panel class="map-options">
-
+  <mat-expansion-panel class="map-options" [expanded]="!locations?.length">
     <!-- Header -->
     <mat-expansion-panel-header>
       <mat-panel-title> <i class="fa fa-map-pin mr-2 mt-1"></i> Map Options </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <form class="form-inline pt-2" id="formSearch" [formGroup]="formSearch">
-      <!-- Results -->
-      <div class="input-group input-group-sm mr-sm-3 mb-2 d-none d-lg-flex">
-        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon1"> 0 / 0 </span></div>
-        <div class="input-group-append"><span class="input-group-text" id="basic-addon1">Results</span></div>
+    <form class="pt-2" id="formSearch" [formGroup]="formSearch" (submit)="submitForm($event)">
+      <div class="mb-1">
+        <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Zip"></app-form-field>
       </div>
 
-      <!-- Map type toggle -->
-      <div class="btn-group mr-sm-3 mb-2 flex-fill">
-        <button mat-button class="btn flex-fill" (click)="heatMap = true" [ngClass]="{ active: heatMap }">
-          <i class="fa fa-thermometer-full" aria-hidden="true"></i> Heatmap
-        </button>
-        <button mat-button class="btn flex-fill" (click)="heatMap = false" [ngClass]="{ active: !heatMap }">
-          <i class="fa fa-map-pin" aria-hidden="true"></i> Pins
-        </button>
-      </div>
-
-      <!-- Zip code -->
-      <div class="input-group input-group-sm mr-sm-3 mb-2 flex-fill">
-        <div class="input-group-prepend"><label for="zip" class="input-group-text" id="basic-addon1">Zip</label></div>
-        <input type="text" class="form-control" placeholder="" id="zip" aria-label="Zip" formControlName="zip" />
-      </div>
-
-      <!-- Price range -->
-      <div class="input-group input-group-sm mr-sm-3 mb-2 flex-fill">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="priceLow"><i class="fa fa-usd" aria-hidden="true"></i></label>
+      <div class="row align-items-center mb-1">
+        <div class="col-2">Price</div>
+        <div class="col-5">
+          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Minimum"></app-form-field>
         </div>
-        <input
-          type="text"
-          id="priceLow"
-          class="form-control form-control-sm"
-          placeholder=""
-          formControlName="priceLow"
-        />
-        <div class="input-group-prepend"><label class="input-group-text" for="priceHigh">-</label></div>
-        <input
-          type="text"
-          class="form-control form-control-sm"
-          id="priceHigh"
-          placeholder=""
-          formControlName="priceHigh"
-        />
-      </div>
-
-      <!-- Bedrooms -->
-      <div class="input-group input-group-sm mr-sm-3 mb-2 flex-fill">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="bedroomsMin"><i class="fa fa-bed" aria-hidden="true"></i></label>
+        <div class="col-5">
+          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Maximum"></app-form-field>
         </div>
-        <input
-          style="width: 30px;"
-          type="text"
-          class="form-control form-control-sm text-center"
-          id="bedroomsMin"
-          placeholder=""
-          formControlName="bedroomsMin"
-        />
-        <div class="input-group-prepend"><label class="input-group-text" for="bedroomsMax">-</label></div>
-        <input
-          style="width: 30px;"
-          type="text"
-          class="form-control form-control-sm text-center"
-          id="bedroomsMax"
-          placeholder=""
-          formControlName="bedroomsMax"
-        />
       </div>
 
-      <!-- Home Type -->
-      <div class="form-group mr-sm-3 mb-2 flex-fill">
-        <button mat-button [matMenuTriggerFor]="appMenu" class="w-100 w-lg-auto text-left">
-          <i class="fa fa-caret-down ml-1 mt-2 float-right" aria-hidden="true"></i>
-          <i class="fa fa-home" aria-hidden="true"></i> Home Type
-        </button>
-        <mat-menu #appMenu="matMenu">
-          <div class="p-2" (click)="$event.stopPropagation()">
-            <div><mat-checkbox formControlName="is_single_family">Single Family</mat-checkbox></div>
-            <div><mat-checkbox formControlName="is_multi_family">Multi Family</mat-checkbox></div>
-            <div><mat-checkbox formControlName="is_townhouse">Townhome</mat-checkbox></div>
-            <div><mat-checkbox formControlName="is_condo">Condo</mat-checkbox></div>
-          </div>
-        </mat-menu>
+      <div class="row align-items-center mb-1">
+        <div class="col-2">Bedrooms</div>
+        <div class="col-5">
+          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Minimum"></app-form-field>
+        </div>
+        <div class="col-5">
+          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Maximum"></app-form-field>
+        </div>
       </div>
+
+      <div class="row align-items-center mb-1">
+        <div class="col-2">Baths</div>
+        <div class="col-5">
+          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Minimum"></app-form-field>
+        </div>
+        <div class="col-5">
+          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Maximum"></app-form-field>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="mb-1">Property Type</div>
+        <mat-button-toggle-group name="propType" aria-label="Font Style" multiple class="w-100 d-flex">
+          <mat-button-toggle value="bold" class="flex-fill">House</mat-button-toggle>
+          <mat-button-toggle value="italic" class="flex-fill">Condo</mat-button-toggle>
+          <mat-button-toggle value="underline" class="flex-fill">Townhouse</mat-button-toggle>
+          <mat-button-toggle value="underline" class="flex-fill">Multi-family</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      
 
       <!-- Search button -->
       <div class="ml-auto mr-0 flex-fill w-100 w-lg-auto">
-        <button class="btn btn-primary btn-sm mr-0 mb-2 w-100 w-lg-auto">
+        <button class="btn btn-primary btn-sm mr-0 mb-2 w-100 w-lg-auto" type="submit">
           <i class="fa fa-search" aria-hidden="true"></i> Search!
         </button>
       </div>
     </form>
   </mat-expansion-panel>
 </div>
+
+<app-listings [locations]="locations"></app-listings>

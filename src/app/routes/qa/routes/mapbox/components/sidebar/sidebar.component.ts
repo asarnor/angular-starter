@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,12 +9,22 @@ import { FormGroup } from '@angular/forms';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input() formSearch: FormGroup;
+  public heatMap = true;
 
-  
+  @Input() formSearch: FormGroup;
+  @Input() locations: Models.LocationMLS[];
+
+  @Output() submit = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public submitForm(e: Event) {
+    this.submit.emit(this.formSearch.value);
+    e.stopPropagation();
+    e.preventDefault();
   }
 
 }

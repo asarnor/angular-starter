@@ -4,6 +4,7 @@ import { SiteModule } from '$site'; // Site modules
 import { MapboxComponent } from './mapbox.component';
 import { MapMapboxModule } from '$features';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ListingsComponent } from './components/listings/listings.component';
 
 const Components = [
   MapboxComponent, SidebarComponent
@@ -15,6 +16,6 @@ const Components = [
     SiteModule,
     MapMapboxModule
   ],
-  declarations: [Components]
+  declarations: [Components, ListingsComponent]
 })
 export class MapboxModule { }

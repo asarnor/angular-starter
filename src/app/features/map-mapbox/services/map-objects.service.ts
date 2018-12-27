@@ -19,6 +19,24 @@ export class MapObjectsService {
     }
   }
 
+  public flyToLocation(map: Map, coords: [number, number]) {
+    setTimeout(() => {
+      map.rotateTo(0, { duration: 500 });
+      setTimeout(() => {
+        map.flyTo({
+          center: coords,
+          zoom: 10,
+          pitch: 0,
+          speed: 1.2,
+          curve: 1.42,
+          easing(t) {
+            return t;
+          }
+        });
+      }, 500);
+    }, 100);
+  }
+
   /**
    * Create a map marker and add to map
    * @param map

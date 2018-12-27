@@ -24,7 +24,7 @@ const apiKey = 'pk.eyJ1Ijoicm9ndXNlciIsImEiOiJjanB1YzFrMmwwZjZnNDNxbGkwY28wdnI5I
 export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /** Any locations such as pushpins or circles */
   @Input() locations: Map.Location[];
-  /** Bing API key which can be generated @ https://www.bingmapsportal.com/Application. Defaults to low usage dev key */
+  /** Mapbox Api key */
   @Input() apiKey = apiKey;
 
   @Input() zoom = 15.5;
@@ -37,16 +37,21 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /** Randomly generated uniqueID for the div that holds the map. Allows for multiple map per page  */
   public uniqueId = 'map-box' + Math.floor(Math.random() * 1000000);
 
+  private isRotating = true;
+
   constructor(private mapObjects: MapObjectsService) {}
 
   ngOnInit() {}
 
   ngOnChanges(model: any) {
-    if (model.locations) {
-      // this.map = null;
-      // this.mapInit();
+    if (model.locations && this.isLoaded) {
+      this.locationsAdd();
+      this.isRotating = false;
+      this.mapObjects.flyToLocation(this.map, [this.locations[0].longitude, this.locations[0].latitude]);
     }
   }
+
+  
 
   ngAfterViewInit() {
     this.scriptsLoad();
@@ -82,27 +87,35 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // Get user's lat long to set initial position
       navigator.geolocation.getCurrentPosition(val => {
         console.log(val);
+
+        // Confirm that lat and long were passed
+        const coords = val && val.coords ? [val.coords.longitude, val.coords.latitude] : [];
+
         // Create new map
         this.map = new (<any>window).mapboxgl.Map({
           container: this.uniqueId,
           style: 'mapbox://styles/mapbox/dark-v9',
           zoom: this.zoom,
-          center: [val.coords.longitude, val.coords.latitude],
+          center: coords,
           // For rotation
           // zoom: 15.5,
-          pitch: 45
+          pitch: 65,
           // center: [-114.9775958, 36.0080202],
-          
         });
 
-        // If locations passed, add markers
-        if (this.locations) {
-          this.mapObjects.addMarkers(this.map, this.locations);
-        }
+        this.locationsAdd();
 
         this.map.on('load', () => {
-
           this.rotateTo(0);
+
+          /**
+          setTimeout(() => {
+           this.isRotating = false;
+           setTimeout(() => {
+            this.map.rotateTo(0, {duration: 500});
+           }, 100);
+          }, 3000);
+           */
 
           /**
           this.map.flyTo({
@@ -124,42 +137,30 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           // Add 3d buildings and remove label layers to enhance the map
           const layers = this.map.getStyle().layers;
           for (let i = 0; i < layers.length; i++) {
-              if (layers[i].type === 'symbol' && (<any>layers)[i].layout['text-field']) {
-                  // remove text labels
-                  this.map.removeLayer(layers[i].id);
-              }
+            if (layers[i].type === 'symbol' && (<any>layers)[i].layout['text-field']) {
+              // remove text labels
+              this.map.removeLayer(layers[i].id);
+            }
           }
 
-
           this.map.addLayer({
-            'id': '3d-buildings',
-            'source': 'composite',
+            id: '3d-buildings',
+            source: 'composite',
             'source-layer': 'building',
-            'filter': ['==', 'extrude', 'true'],
-            'type': 'fill-extrusion',
-            'minzoom': 15,
-            'paint': {
-                'fill-extrusion-color': '#aaa',
-    
-                // use an 'interpolate' expression to add a smooth transition effect to the
-                // buildings as the user zooms in
-                'fill-extrusion-height': [
-                    'interpolate', ['linear'], ['zoom'],
-                    15, 0,
-                    15.05, ['get', 'height']
-                ],
-                'fill-extrusion-base': [
-                    'interpolate', ['linear'], ['zoom'],
-                    15, 0,
-                    15.05, ['get', 'min_height']
-                ],
-                'fill-extrusion-opacity': .6
-            }
+            filter: ['==', 'extrude', 'true'],
+            type: 'fill-extrusion',
+            minzoom: 15,
+            paint: {
+              'fill-extrusion-color': '#aaa',
+
+              // use an 'interpolate' expression to add a smooth transition effect to the
+              // buildings as the user zooms in
+              'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'height']],
+              'fill-extrusion-base': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'min_height']],
+              'fill-extrusion-opacity': 0.6,
+            },
+          });
         });
-
-        })
-
-        
 
         /** Add geolocate conrol
         this.map.addControl(new (<any>window).mapboxgl.GeolocateControl({
@@ -174,15 +175,28 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   /**
+   * Add locations to the map
+   */
+  private locationsAdd() {
+    // If locations passed, add markers
+    if (this.locations && this.locations.length) {
+      this.mapObjects.addMarkers(this.map, this.locations);
+    } else {
+      // TODO: Add condition to remove map markers if null or empty array passe ddown
+    }
+  }
+
+  /**
    * Slowly rotate the map
    * https://www.mapbox.com/mapbox-gl-js/example/animate-camera-around-point/
    */
   private rotateTo = (timestamp: number) => {
-  // clamp the rotation between 0 -360 degrees
+    // clamp the rotation between 0 -360 degrees
     // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
-    this.map.rotateTo((timestamp / 300) % 360, {duration: 0});
-    // Request the next frame of the animation.
-    requestAnimationFrame(this.rotateTo);
-  }
-
+    this.map.rotateTo((timestamp / 300) % 360, { duration: 0 });
+    if (this.isRotating) {
+      // Request the next frame of the animation.
+      requestAnimationFrame(this.rotateTo);
+    }
+  };
 }

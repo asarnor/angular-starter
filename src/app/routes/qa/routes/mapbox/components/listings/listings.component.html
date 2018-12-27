@@ -1,0 +1,9 @@
+<ng-container *ngIf="locations?.length; else NoLocations">
+  <div class="row" *ngIf="locations$ | async as locations">
+    <div class="col col-6">Locations: {{locations | count}}</div>
+    <div class="col col-6">World</div>
+  </div>
+  <mat-paginator [length]="locations.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageChanged($event)"> </mat-paginator>
+</ng-container>
+
+<ng-template #NoLocations> Please enter some search stuff </ng-template>

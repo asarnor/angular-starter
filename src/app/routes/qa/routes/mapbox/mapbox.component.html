@@ -20,7 +20,7 @@
    </div>
 </div>
 -->
-<div class="d-block d-lg-none"></div>
+
 
 <div class="container-fluid">
   <div class="row align-items-stretch map-container" [ngClass]="{ open: sidebarMobileShow }">
@@ -30,9 +30,9 @@
         class="btn mat-reverse btn-sidebar-toggle d-block d-lg-none"
         (click)="sidebarMobileShow = true"
       >
-        <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> Listings
+        <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> Listings ( {{ locations | count }})
       </button>
-      <app-map-mapbox [locations]="locations" *ngIf="locations?.length"></app-map-mapbox>
+      <app-map-mapbox [locations]="locations"></app-map-mapbox>
     </div>
     <div class="col col-12 col-lg-4 map-container-sidebar">
         <div class="row">
@@ -45,7 +45,7 @@
               </button>
         </div>
      
-      <app-sidebar [formSearch]="formSearch"></app-sidebar>
+      <app-sidebar [formSearch]="formSearch" [locations]="locations" (submit)="locationsSearch()"></app-sidebar>
     </div>
   </div>
 </div>
