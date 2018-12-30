@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
 
@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ListingsComponent implements OnInit, OnChanges {
   @Input() locations: Models.LocationMLS[];
+  @Output() listingSelected = new EventEmitter<Models.LocationMLS>();
 
   public locations$ = new BehaviorSubject<Models.LocationMLS[]>(null);
   public pageIndex = 0;

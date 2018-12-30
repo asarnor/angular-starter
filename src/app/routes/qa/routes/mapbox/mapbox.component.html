@@ -45,7 +45,7 @@
               </button>
         </div>
      
-      <app-sidebar [formSearch]="formSearch" [locations]="locations" (submit)="locationsSearch()"></app-sidebar>
+      <app-sidebar [formSearch]="formSearch" [locations]="locations" (submit)="locationsSearch()"  (listingSelected)="listingSelected($event)" ></app-sidebar>
     </div>
   </div>
 </div>

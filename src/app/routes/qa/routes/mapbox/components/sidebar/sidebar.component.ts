@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
   @Input() locations: Models.LocationMLS[];
 
   @Output() submit = new EventEmitter<any>();
+  @Output() listingSelected = new EventEmitter<Models.LocationMLS>();
 
   constructor() { }
 

@@ -5,17 +5,16 @@ import { MapboxComponent } from './mapbox.component';
 import { MapMapboxModule } from '$features';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ListingsComponent } from './components/listings/listings.component';
+import { ListingComponent } from './components/listing/listing.component';
+// import { ListingModalComponent } from './components/listing-modal/listing-modal.component';
+import { ModalService } from './services/modals.service';
 
-const Components = [
-  MapboxComponent, SidebarComponent
-];
+const Components = [MapboxComponent, SidebarComponent, ListingsComponent, ListingComponent]; // , ListingModalComponent
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SiteModule,
-    MapMapboxModule
-  ],
-  declarations: [Components, ListingsComponent]
+  imports: [CommonModule, SiteModule, MapMapboxModule],
+  declarations: [Components],
+  providers: [ModalService],
+  entryComponents: [] // ListingModalComponent
 })
-export class MapboxModule { }
+export class MapboxModule {}

@@ -1,7 +1,7 @@
 <div class="sidebar py-3">
   <h2><em class="float-right small">( {{ locations | count }} Locations)</em> <i class="fa fa-home"></i> Listings</h2>
 
-  <mat-expansion-panel class="map-options" [expanded]="!locations?.length">
+  <mat-expansion-panel class="map-options mb-3" [expanded]="!locations?.length">
     <!-- Header -->
     <mat-expansion-panel-header>
       <mat-panel-title> <i class="fa fa-map-pin mr-2 mt-1"></i> Map Options </mat-panel-title>
@@ -52,11 +52,9 @@
         </mat-button-toggle-group>
       </div>
 
-      
-
       <!-- Search button -->
-      <div class="ml-auto mr-0 flex-fill w-100 w-lg-auto">
-        <button class="btn btn-primary btn-sm mr-0 mb-2 w-100 w-lg-auto" type="submit">
+      <div class="float-right">
+        <button class="btn btn-primary btn-sm mr-0 mb-2" type="submit">
           <i class="fa fa-search" aria-hidden="true"></i> Search!
         </button>
       </div>
@@ -64,6 +62,6 @@
   </mat-expansion-panel>
 
   <!-- Listing -->
-  <app-listings [locations]="locations"></app-listings>
+  <app-listings [locations]="locations" (listingSelected)="listingSelected.emit($event)"></app-listings>
 </div>
 

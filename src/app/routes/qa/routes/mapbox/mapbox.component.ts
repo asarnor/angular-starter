@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ListingModalComponent } from './components/listing-modal/listing-modal.component';
 
 @Component({
   selector: 'app-mapbox',
@@ -17,8 +18,9 @@ export class MapboxComponent implements OnInit {
   public sidebarMobileShow = false;
 
   public formSearch: FormGroup;
+  public listingModal: MatDialogRef<ListingModalComponent>;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private ref: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, public dialog: MatDialog, private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
     // Create searchable locations
@@ -52,6 +54,18 @@ export class MapboxComponent implements OnInit {
       this.locationsOriginal.length = 500;
       // this.locations = [...this.locationsOriginal];
       this.ref.markForCheck();
+    });
+  }
+
+  /**
+   * When a listing is selected or clicked from the list of listings
+   * @param listing 
+   */
+  public listingSelected(listing: Models.LocationMLS) {
+    console.log(listing, ListingModalComponent);
+    this.listingModal = this.dialog.open(ListingModalComponent, {
+      width: '90%',
+      data: listing
     });
   }
 

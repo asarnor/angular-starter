@@ -1,0 +1,22 @@
+<a class="listing d-flex flex-column mb-3" [ngStyle]="{ 'background-image': 'url(' + listing.thumbnail_url + ')' }" (click)="listingSelected.emit(listing)">
+  <div class="listing-gradient mt-auto mb-0">
+    <div class="mt-auto mb-0 d-flex flex-row">
+      <div class="price">{{ listing.listing_price }}</div>
+      <div class="ml-auto mr-0 text-right"></div>
+    </div>
+    <div
+      class="mb-0 d-flex justify-content-between"
+      *ngIf="listing.total_bedrooms || listing.total_bathrooms || listing.square_feet"
+    >
+      <span *ngIf="listing.total_bedrooms">{{ listing.total_bedrooms }} Beds</span>
+      <span *ngIf="listing.total_bathrooms">{{ listing.total_bathrooms }} Baths</span>
+      <span *ngIf="listing.square_feet">{{ listing.square_feet }} Sq. Ft.</span>
+    </div>
+    <div class="mb-0">
+      <span>
+        <strong>{{ listing.display_address }}</strong
+        >, {{ listing.city }} <!--{{ listing.state }}-->, {{ listing.zip_code }}
+      </span>
+    </div>
+  </div>
+</a>

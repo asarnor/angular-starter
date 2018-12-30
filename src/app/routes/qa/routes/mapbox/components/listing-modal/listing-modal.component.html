@@ -1,0 +1,82 @@
+<div class="modal-header">
+  <h3 class="modal-title">
+    <i class="fa fa-home" aria-hidden="true"></i>
+    <strong> {{ data.display_address }} {{ data.city }} CA, {{ data.zip_code }} </strong>
+  </h3>
+  <button type="button" class="close" aria-label="Close" mat-dialog-close>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body" id="modal-body">
+  <div class="row mb-3">
+    <div class="col-12 col-md-6">
+      <div
+        style="min-height:300px;background-size:cover;background-position:center center;"
+        [ngStyle]="{ 'background-image': 'url(' + data.photo_url + ')' }"
+      ></div>
+    </div>
+    <div class="col-12 col-md-6">
+      <h2>Listing Information</h2>
+      <table class="table table-sm table-striped">
+        <tbody>
+          <tr>
+            <td><strong>List Price</strong></td>
+            <td>{{ data.listing_price || 'Unavilable' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Bedrooms</strong></td>
+            <td>{{ data.total_bedrooms || 'Unavilable' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Bathrooms</strong></td>
+            <td>{{ data.total_bathrooms || 'Unavilable' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Property Type</strong></td>
+            <td>
+              <ng-container *ngIf="data?.is_single_family !== ''">Single Family</ng-container>
+              <ng-container *ngIf="data?.is_condo !== ''">Condo</ng-container>
+              <ng-container *ngIf="data?.is_townhouse !== ''">Townhome</ng-container>
+              <ng-container *ngIf="data?.is_multi_family !== ''">Multifamily</ng-container>
+              <ng-container *ngIf="data?.is_lot !== ''">Lot</ng-container>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Days On Market</strong></td>
+            <td>{{ data.days_on_market || 'Unavilable' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Square Feet</strong></td>
+            <td>{{ data.square_feet || 'Unavilable' }}</td>
+          </tr>
+          <tr>
+            <td><strong>Year Built</strong></td>
+            <td>{{ data.year_built || 'Unavilable' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!--
+{ "property_id": 1996542, "display_lat": 36.1615439, "display_lng": -115.3108444,
+ "display_address": "804 Jody Brook Court", "city": "Las Vegas", "county": "Clark County",
+ "zip_code": 89145, "listing_price": "$589,000.00", "total_bedrooms": 3, "total_bathrooms": 3,
+  "is_single_family": "Y", "is_multi_family": "", "is_condo": "", "is_condo_townhouse": "",
+   "is_townhouse": "", "is_lot": "", "square_feet": 2737, "days_on_market": 157, "lot_dimension": "", 
+   "hoa_fee": "$310.00", "year_built": 2000, "listing_status": "Sold", "listing_status_standardized": "", 
+   "photo_url": "http://nv-glvar.photos.mlsfinder.com/photos/1/9/9/6/5/4/2/1996542-1.jpg",
+    "thumbnail_url": "http://nv-glvar.photos.mlsfinder.com/thumbs/1/9/9/6/5/4/2/1996542-1.jpg",
+     "photos": "http://nv-glvar.photos.mlsfinder.com/photos/1/9/9/6/5/4/2/1996542-1.jpg",
+      "metadata": { "title": "804 Jody Brook Court", "description": "Las Vegas, Clark County 89145" }, 
+"latitude": 36.1615439, "longitude": -115.3108444 }
+  -->
+<div class="modal-footer" style="justify-content: space-between;">
+  <button type="button" mat-button class="float-left pull-left dismiss" mat-dialog-close>
+    <i class="fa fa-remove" aria-hidden="true"></i> Close
+  </button>
+  <button type="button" mat-button class="mat-reverse" (click)="submit()" aria-label="Close">
+    <i class="fa fa-check" aria-hidden="true"></i> Confirm
+  </button>
+</div>
