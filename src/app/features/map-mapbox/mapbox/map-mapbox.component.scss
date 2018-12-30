@@ -17,10 +17,13 @@
   transform: translateY(-50%);
 }
 .marker {
-  background-size: cover;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  background-image: url(/assets/img/map-icon.png);
+  background-size: contain;
+  width: 30px;
+  height: 35px;
   cursor: pointer;
-  background: red;
+  background-repeat: no-repeat;
+  &.rog{
+    background-image: url(/assets/img/map-icon-rog.png);
+  }
 }

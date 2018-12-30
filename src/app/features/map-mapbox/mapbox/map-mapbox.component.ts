@@ -86,8 +86,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       (<any>window).mapboxgl.accessToken = this.apiKey;
       // Get user's lat long to set initial position
       navigator.geolocation.getCurrentPosition(val => {
-        console.log(val);
-
+        
         // Confirm that lat and long were passed
         const coords = val && val.coords ? [val.coords.longitude, val.coords.latitude] : [];
 

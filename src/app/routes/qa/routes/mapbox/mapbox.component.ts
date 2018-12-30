@@ -46,6 +46,7 @@ export class MapboxComponent implements OnInit {
           metadata: {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,
+            iconClass: Math.floor(Math.random() * 100) < 8 ? 'marker rog' : null
           },
           latitude: location.display_lat,
           longitude: location.display_lng,
@@ -62,7 +63,6 @@ export class MapboxComponent implements OnInit {
    * @param listing 
    */
   public listingSelected(listing: Models.LocationMLS) {
-    console.log(listing, ListingModalComponent);
     this.listingModal = this.dialog.open(ListingModalComponent, {
       width: '90%',
       data: listing

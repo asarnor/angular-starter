@@ -9,6 +9,7 @@ declare namespace Map {
       infoBoxHtml?: () => string;
       title?: string;
       description?: string;
+      iconClass?: string;
     };
     /** URL to an image to use as the pushpin icon. Will overwrite the global pushpin icon */
     icon?: string;

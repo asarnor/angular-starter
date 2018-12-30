@@ -19,6 +19,11 @@ export class MapObjectsService {
     }
   }
 
+  /**
+   * Fly to a location on a map
+   * @param map 
+   * @param coords 
+   */
   public flyToLocation(map: Map, coords: [number, number]) {
     setTimeout(() => {
       map.rotateTo(0, { duration: 500 });
@@ -46,7 +51,7 @@ export class MapObjectsService {
     return locations.map(location => {
       if (location.latitude && location.longitude) {
         const el = document.createElement('div');
-        el.className = 'marker';
+        el.className = location.metadata && location.metadata.iconClass ? location.metadata.iconClass : 'marker';
         // make a marker for each feature and add to the map
         const marker = new (<any>window).mapboxgl.Marker(el).setLngLat([location.longitude, location.latitude]);
         // If metadata available, create popup

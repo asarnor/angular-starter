@@ -1,6 +1,6 @@
 <ng-container *ngIf="locations?.length; else NoLocations">
   <div class="row" *ngIf="(locations$ | async) as locations">
-    <div class="col col-6" *ngFor="let listing of locations"><app-listing [listing]="listing" (listingSelected)="listingSelected.emit($event)"></app-listing></div>
+    <div class="col col-12 col-xl-6" *ngFor="let listing of locations"><app-listing [listing]="listing" (listingSelected)="listingSelected.emit($event)"></app-listing></div>
   </div>
 
   <!-- Paginator -->
