@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">
     <i class="fa fa-home" aria-hidden="true"></i>
-    <strong> {{ data.display_address }} {{ data.city }} CA, {{ data.zip_code }} </strong>
+    <strong> {{ data.display_address }} {{ data.city }} {{ data.state }}, {{ data.zip_code }} </strong>
   </h3>
   <button type="button" class="close" aria-label="Close" mat-dialog-close>
     <span aria-hidden="true">&times;</span>
@@ -65,7 +65,9 @@
   <button type="button" mat-button class="float-left pull-left dismiss" mat-dialog-close>
     <i class="fa fa-remove" aria-hidden="true"></i> Close
   </button>
+  <!--
   <button type="button" mat-button class="mat-reverse" (click)="submit()" aria-label="Close">
     <i class="fa fa-check" aria-hidden="true"></i> Confirm
   </button>
+  -->
 </div>

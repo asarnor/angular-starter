@@ -46,7 +46,7 @@ export class MapboxComponent implements OnInit {
           metadata: {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,
-            iconClass: Math.floor(Math.random() * 100) < 8 ? 'marker rog' : null
+            iconClass: Math.floor(Math.random() * 100) < 7 ? 'marker rog' : null
           },
           latitude: location.display_lat,
           longitude: location.display_lng,
