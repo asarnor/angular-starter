@@ -58,7 +58,7 @@ export class MapObjectsService {
           pitch: 0,
           speed: 2.2,
           curve: 1.42,
-          easing(t) {
+          easing(t: any) {
             return t;
           },
         });
