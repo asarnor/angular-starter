@@ -12,8 +12,8 @@ import { ListingModalComponent } from './components/listing-modal/listing-modal.
 })
 export class MapboxComponent implements OnInit {
  
-  public locations: any[];
-  private locationsOriginal: any[];
+  public locations: Map.Location[];
+  private locationsOriginal: Map.Location[];
 
   public sidebarMobileShow = false;
 
@@ -85,6 +85,11 @@ export class MapboxComponent implements OnInit {
     this.ref.markForCheck();
   }
 
+  public toggleSelected(action: {event: string, data?: any}) {
+    console.log(action);
+    this.toggleRogListings();
+  }
+
   /**
    * Only show Rog listings
    */
@@ -95,7 +100,6 @@ export class MapboxComponent implements OnInit {
       }
       return false;
     });
-    console.log(this.locations.length);
     this.listingsShowAll = !this.listingsShowAll;
   }
 }

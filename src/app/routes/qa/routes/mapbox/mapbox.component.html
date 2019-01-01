@@ -1,53 +1,36 @@
-<!--
-<mat-expansion-panel class="d-block d-lg-none">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <i class="fa fa-map-pin mr-2"></i> Map Options
-      <em class="ml-auto mr-0">(<i class="fa fa-home"></i> 87 Locations)</em>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <ng-container *ngTemplateOutlet="mapOptions"></ng-container>
-</mat-expansion-panel>
-
-<div class="container-fluid search-bar d-none d-lg-flex">
-  <ng-container *ngTemplateOutlet="mapOptions"></ng-container>
-</div>
-
-<div class="map-container d-flex align-items-stretch">
-  <div class="toggles">Test</div>
-  <div class="map-main">
-      <app-map-mapbox [locations]="locations" *ngIf="locations?.length"></app-map-mapbox>
-   </div>
-</div>
--->
-
-
+<!-- Toggles topbar, move to component -->
 <div class="container-fluid" style="overflow-x: hidden;">
   <div class="row align-items-stretch map-container" [ngClass]="{ open: sidebarMobileShow }">
     <div class="col col-12 col-lg-7 px-0 map-container-box">
-      <button
-        mat-flat-button
-        class="btn mat-reverse btn-sidebar-toggle d-block d-lg-none"
-        (click)="sidebarMobileShow = true"
-      >
-        <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> Listings ({{ locations | count }})
-      </button>
-      <div class="small py-2" style="background-color:#ccc;">
-        Toggles: <button mat-flat-button class="" (click)="toggleRogListings()">ROG Listings</button>
-    </div>
+
+      <div class="d-block d-lg-none">
+        <button mat-flat-button class="btn mat-reverse btn-sidebar-toggle" (click)="sidebarMobileShow = true">
+          <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> Listings ({{
+            locations | count
+          }})
+        </button>
+        <app-toggles [locations]="locations" (toggleSelected)="toggleSelected($event)"></app-toggles>
+      </div>
+
       <app-map-mapbox [locations]="locations"></app-map-mapbox>
     </div>
     <div class="col col-12 col-lg-5 map-container-sidebar">
-        <div class="row">
-                <button
-                mat-flat-button
-                class="btn mat-reverse btn-sidebar-toggle d-block d-lg-none"
-                (click)="sidebarMobileShow = false"
-              >
-                <i class="fa fa-chevron-left float-left mt-2"></i> <i class="fa fa-map mr-2"></i> Back To Map
-              </button>
-        </div>
-      <app-sidebar [formSearch]="formSearch" [locations]="locations" (submit)="locationsSearch()"  (listingSelected)="listingSelected($event)" ></app-sidebar>
+      <div class="row">
+        <button
+          mat-flat-button
+          class="btn mat-reverse btn-sidebar-toggle d-block d-lg-none"
+          (click)="sidebarMobileShow = false"
+        >
+          <i class="fa fa-chevron-left float-left mt-2"></i> <i class="fa fa-map mr-2"></i> Back To Map
+        </button>
+      </div>
+      <app-sidebar
+        [formSearch]="formSearch"
+        [locations]="locations"
+        (submit)="locationsSearch()"
+        (listingSelected)="listingSelected($event)"
+        (toggleSelected)="toggleSelected($event)"
+      ></app-sidebar>
     </div>
   </div>
 </div>
