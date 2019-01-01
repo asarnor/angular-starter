@@ -16,6 +16,7 @@ export class MapObjectsService {
       const markers = this.createMarker(locations);
       // Add markers to map
       markers.forEach(marker => marker.addTo(map));
+      return markers;
     }
   }
 
@@ -32,7 +33,7 @@ export class MapObjectsService {
           center: coords,
           zoom: 10,
           pitch: 0,
-          speed: 1.2,
+          speed: 2.2,
           curve: 1.42,
           easing(t) {
             return t;

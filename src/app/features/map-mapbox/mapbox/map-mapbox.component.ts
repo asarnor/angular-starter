@@ -38,6 +38,8 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   public uniqueId = 'map-box' + Math.floor(Math.random() * 1000000);
 
   private isRotating = true;
+  /** Holds a reference to any created markers. Used to remove */
+  private markers: any[];
 
   constructor(private mapObjects: MapObjectsService) {}
 
@@ -45,6 +47,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(model: any) {
     if (model.locations && this.isLoaded) {
+      this.locationsRemove();
       this.locationsAdd();
       this.isRotating = false;
       this.mapObjects.flyToLocation(this.map, [this.locations[0].longitude, this.locations[0].latitude]);
@@ -106,14 +109,12 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
             latitude: val.coords.latitude,
             longitude: val.coords.longitude,
           };
+          this.locations = [myLocation];
           // Add to map
-          this.mapObjects.addMarkers(this.map, [myLocation]);
-        } else {
-          this.locationsAdd();
+          // this.mapObjects.addMarkers(this.map, [myLocation]);
         }
-
-        
-
+          this.locationsAdd();
+      
         this.map.on('load', () => {
           this.rotateTo(0);
 
@@ -189,10 +190,15 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   private locationsAdd() {
     // If locations passed, add markers
     if (this.locations && this.locations.length) {
-      this.mapObjects.addMarkers(this.map, this.locations);
+      this.markers = this.mapObjects.addMarkers(this.map, this.locations);
     } else {
-      // TODO: Add condition to remove map markers if null or empty array passe ddown
+      this.locationsRemove();
     }
+  }
+
+  /** Remove all created markers */
+  private locationsRemove() {
+    this.markers.forEach(marker => marker.remove());
   }
 
   /**
