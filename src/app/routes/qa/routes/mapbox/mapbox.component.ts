@@ -19,6 +19,8 @@ export class MapboxComponent implements OnInit {
 
   public formSearch: FormGroup;
   public listingModal: MatDialogRef<ListingModalComponent>;
+  /** Show all listings or just ROG ones */
+  public listingsShowAll = true;
 
   constructor(private fb: FormBuilder, private http: HttpClient, public dialog: MatDialog, private ref: ChangeDetectorRef) {}
 
@@ -49,7 +51,8 @@ export class MapboxComponent implements OnInit {
           metadata: {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,
-            iconClass: officeName.indexOf('realtyonegroup') !== -1 ? 'marker rog' : null
+            iconClass: officeName.indexOf('realtyonegroup') !== -1 ? 'marker rog' : null,
+            isRog:  officeName.indexOf('realtyonegroup') !== -1 ? true : false
           },
           latitude: location.display_lat,
           longitude: location.display_lng,
@@ -80,5 +83,19 @@ export class MapboxComponent implements OnInit {
     this.locations = [...this.locationsOriginal];
     this.sidebarMobileShow = false;
     this.ref.markForCheck();
+  }
+
+  /**
+   * Only show Rog listings
+   */
+  public toggleRogListings() {
+    this.locations = this.locationsOriginal.filter(listing => {
+      if ((this.listingsShowAll && listing.metadata.isRog) || !this.listingsShowAll) {
+        return true;
+      }
+      return false;
+    });
+    console.log(this.locations.length);
+    this.listingsShowAll = !this.listingsShowAll;
   }
 }

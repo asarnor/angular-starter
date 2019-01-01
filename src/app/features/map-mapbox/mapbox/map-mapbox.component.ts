@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
   OnChanges,
 } from '@angular/core';
-import { Map } from 'mapbox-gl';
+import { Map, Marker } from 'mapbox-gl';
 import { MapObjectsService } from '../services/map-objects.service';
 
 const scriptSrc = 'https://api.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js';
@@ -39,7 +39,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
   private isRotating = true;
   /** Holds a reference to any created markers. Used to remove */
-  private markers: any[];
+  private markers: Marker[];
 
   constructor(private mapObjects: MapObjectsService) {}
 
@@ -47,10 +47,8 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(model: any) {
     if (model.locations && this.isLoaded) {
-      this.locationsRemove();
       this.locationsAdd();
       this.isRotating = false;
-      this.mapObjects.flyToLocation(this.map, [this.locations[0].longitude, this.locations[0].latitude]);
     }
   }
 
@@ -113,36 +111,11 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           // Add to map
           // this.mapObjects.addMarkers(this.map, [myLocation]);
         }
-          this.locationsAdd();
+        
+        this.locationsAdd();
       
         this.map.on('load', () => {
           this.rotateTo(0);
-
-          /**
-          setTimeout(() => {
-           this.isRotating = false;
-           setTimeout(() => {
-            this.map.rotateTo(0, {duration: 500});
-           }, 100);
-          }, 3000);
-           */
-
-          /**
-          this.map.flyTo({
-            zoom: 15.5,
-            pitch: 45,
-            speed: 1.2,
-            curve: 1.42,
-            // maxDuration: 2000,
-            easing(t) {
-              return t;
-            }
-          });
-          setTimeout(() => {
-            // Start the animation.
-            this.rotateTo(0);
-          }, 2500);
-           */
 
           // Add 3d buildings and remove label layers to enhance the map
           const layers = this.map.getStyle().layers;
@@ -190,7 +163,10 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   private locationsAdd() {
     // If locations passed, add markers
     if (this.locations && this.locations.length) {
+      // Remove any existing markers
+      this.locationsRemove();
       this.markers = this.mapObjects.addMarkers(this.map, this.locations);
+      this.mapObjects.mapFitBounds(this.map, this.markers);
     } else {
       this.locationsRemove();
     }
@@ -198,7 +174,9 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
   /** Remove all created markers */
   private locationsRemove() {
-    this.markers.forEach(marker => marker.remove());
+    if (this.markers && this.markers.length) {
+      this.markers.forEach(marker => marker.remove());
+    }
   }
 
   /**

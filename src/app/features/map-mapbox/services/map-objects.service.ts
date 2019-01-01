@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Map } from 'mapbox-gl';
+import { Map, Marker } from 'mapbox-gl';
 
 @Injectable()
 export class MapObjectsService {
@@ -21,9 +21,32 @@ export class MapObjectsService {
   }
 
   /**
+   * Fit the map to container the markers
+   * @param map
+   * @param markers
+   */
+  public mapFitBounds(map: Map, markers: Marker[]) {
+    if (markers && markers.length) {
+      setTimeout(() => {
+        // Rotate to 0
+        map.rotateTo(0, { duration: 500 });
+        // After rotation is finished, go to bounds
+        setTimeout(() => {
+          const bounds = new (<any>window).mapboxgl.LngLatBounds();
+          markers.forEach(feature => {
+            bounds.extend(feature.getLngLat());
+          });
+          map.fitBounds(bounds);
+        }, 500);
+      }, 100);
+
+    }
+  }
+
+  /**
    * Fly to a location on a map
-   * @param map 
-   * @param coords 
+   * @param map
+   * @param coords
    */
   public flyToLocation(map: Map, coords: [number, number]) {
     setTimeout(() => {
@@ -37,7 +60,7 @@ export class MapObjectsService {
           curve: 1.42,
           easing(t) {
             return t;
-          }
+          },
         });
       }, 500);
     }, 100);
@@ -54,7 +77,7 @@ export class MapObjectsService {
         const el = document.createElement('div');
         el.className = location.metadata && location.metadata.iconClass ? location.metadata.iconClass : 'marker';
         // make a marker for each feature and add to the map
-        const marker = new (<any>window).mapboxgl.Marker(el).setLngLat([location.longitude, location.latitude]);
+        const marker: Marker = new (<any>window).mapboxgl.Marker(el).setLngLat([location.longitude, location.latitude]);
         // If metadata available, create popup
         if (location.metadata && location.metadata.title) {
           this.createPopup(marker, location);
