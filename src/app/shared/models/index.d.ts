@@ -26,6 +26,7 @@ declare namespace Models {
     display_lng: number;
     hoa_fee: string;
     is_condo: string;
+    state: string;
     is_condo_townhouse: string;
     is_lot: string;
     is_multi_family: string;
