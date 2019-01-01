@@ -51,8 +51,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  
-
   ngAfterViewInit() {
     this.scriptsLoad();
   }
@@ -86,7 +84,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       (<any>window).mapboxgl.accessToken = this.apiKey;
       // Get user's lat long to set initial position
       navigator.geolocation.getCurrentPosition(val => {
-        
         // Confirm that lat and long were passed
         const coords = val && val.coords ? [val.coords.longitude, val.coords.latitude] : [];
 
@@ -102,7 +99,20 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           // center: [-114.9775958, 36.0080202],
         });
 
-        this.locationsAdd();
+        // If no locations supplied on map create, plot the user's current location
+        if (!this.locations) {
+          // Create location
+          const myLocation: Map.Location = {
+            latitude: val.coords.latitude,
+            longitude: val.coords.longitude,
+          };
+          // Add to map
+          this.mapObjects.addMarkers(this.map, [myLocation]);
+        } else {
+          this.locationsAdd();
+        }
+
+        
 
         this.map.on('load', () => {
           this.rotateTo(0);

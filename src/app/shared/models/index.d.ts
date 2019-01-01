@@ -29,6 +29,8 @@ declare namespace Models {
     is_condo_townhouse: string;
     is_lot: string;
     is_multi_family: string;
+    listing_office_name: string;
+    office_name: string;
     is_single_family: string;
     is_townhouse: string;
     listing_price: string;

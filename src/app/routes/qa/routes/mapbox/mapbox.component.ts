@@ -41,12 +41,15 @@ export class MapboxComponent implements OnInit {
 
     this.http.get<Models.LocationMLS[]>('assets/mock-data/properties.json').subscribe(locations => {
       this.locationsOriginal = locations.map(location => {
+       
+        const officeName = location.office_name.toLowerCase().replace(/[^A-Z0-9]/ig, '');
+        // console.log(location.office_name, officeName);
         return {
           ...location,
           metadata: {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,
-            iconClass: Math.floor(Math.random() * 100) < 7 ? 'marker rog' : null
+            iconClass: officeName.indexOf('realtyonegroup') !== -1 ? 'marker rog' : null
           },
           latitude: location.display_lat,
           longitude: location.display_lng,
