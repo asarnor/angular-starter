@@ -86,8 +86,20 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // Get user's lat long to set initial position
       navigator.geolocation.getCurrentPosition(val => {
         // Confirm that lat and long were passed
-        const coords = val && val.coords ? [val.coords.longitude, val.coords.latitude] : [];
+        this.mapCreate([val.coords.longitude, val.coords.latitude]);
+      }, error => {
+        console.log(error);
+        this.mapCreate([-115.172813, 36.114647]);
+      });
+    }
+  }
 
+  /**
+   * Create the map after getting user coords
+   * @param coords 
+   */
+  private mapCreate(coords: [number, number]) {
+    
         // Create new map
         this.map = new (<any>window).mapboxgl.Map({
           container: this.uniqueId,
@@ -104,8 +116,8 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
         if (!this.locations) {
           // Create location
           const myLocation: Map.Location = {
-            latitude: val.coords.latitude,
-            longitude: val.coords.longitude,
+            latitude: coords[1],
+            longitude: coords[0],
           };
           this.locations = [myLocation];
           // Add to map
@@ -145,16 +157,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           });
         });
 
-        /** Add geolocate conrol
-        this.map.addControl(new (<any>window).mapboxgl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
-            trackUserLocation: true
-        }));
-        */
-      });
-    }
   }
 
   /**

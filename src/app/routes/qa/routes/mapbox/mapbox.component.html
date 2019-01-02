@@ -2,7 +2,6 @@
 <div class="container-fluid" style="overflow-x: hidden;">
   <div class="row align-items-stretch map-container" [ngClass]="{ open: sidebarMobileShow }">
     <div class="col col-12 col-lg-7 px-0 map-container-box">
-
       <div class="d-block d-lg-none">
         <button mat-flat-button class="btn mat-reverse btn-sidebar-toggle" (click)="sidebarMobileShow = true">
           <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> Listings ({{
@@ -12,7 +11,7 @@
         <app-toggles [locations]="locations" (toggleSelected)="toggleSelected($event)"></app-toggles>
       </div>
 
-      <app-map-mapbox [locations]="locations"></app-map-mapbox>
+      <div class="map-container-main"><app-map-mapbox [locations]="locations"></app-map-mapbox></div>
     </div>
     <div class="col col-12 col-lg-5 map-container-sidebar">
       <div class="row">
