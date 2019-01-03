@@ -120,23 +120,29 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // center: [-114.9775958, 36.0080202],
     });
 
-    // If no locations supplied on map create, plot the user's current location
-    if (!this.locations) {
-      // Create location
-      const myLocation: Map.Location = {
-        latitude: coords[1],
-        longitude: coords[0],
-      };
-      this.locations = [myLocation];
-      this.locationsAdd();
-    }
-
-    if (!this.heatmap) {
-      this.locationsAdd();
-    }
-
+    // When the map finishes loading
     this.map.on('load', () => {
       this.rotateTo(0);
+      // If heatmap is true and locations are supplied
+      if (this.heatmap && this.locations) {
+        this.mapObjects.heatMapAdd(this.map, this.locations);
+      }
+
+      // If heatmap not specified, add locations
+      if (!this.heatmap) {
+        this.locationsAdd();
+      }
+
+      // If no locations supplied on map create, plot the user's current location
+      if (!this.locations) {
+        // Create location
+        const myLocation: Map.Location = {
+          latitude: coords[1],
+          longitude: coords[0],
+        };
+        this.locations = [myLocation];
+        this.locationsAdd();
+      }
 
       // Add 3d buildings and remove label layers to enhance the map
       const layers = this.map.getStyle().layers;
@@ -145,10 +151,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           // remove text labels
           this.map.removeLayer(layers[i].id);
         }
-      }
-
-      if (this.heatmap) {
-        this.mapObjects.heatMapAdd(this.map, this.locations);
       }
 
       // Add 3D layer
@@ -228,4 +230,5 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       requestAnimationFrame(this.rotateTo);
     }
   }
+  
 }
