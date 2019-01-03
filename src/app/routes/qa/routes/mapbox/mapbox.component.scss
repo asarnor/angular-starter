@@ -3,11 +3,12 @@
   .form-control {    width: 75px;  }
   .input-group-text{min-width:38px;text-align:center;}
 }
+.header-rog{background:#000;}
 
-.btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;}
+.btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;position:sticky; top:0;z-index:5;}
 
-.map-container{height:100vh;position:relative;
-    .map-container-main{height:100vh;}
+.map-container{height:calc(100vh - 46px);position:relative;
+    .map-container-main{height:calc(100vh - 46px);}
     .map-container-box{position:relative;left:0;transition: .2s ease-in;}
     .map-container-sidebar{background:#fff;overflow-y: auto;}
 }

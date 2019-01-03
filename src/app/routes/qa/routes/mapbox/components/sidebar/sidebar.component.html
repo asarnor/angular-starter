@@ -3,7 +3,7 @@
     <em class="float-right small">( {{ locations | count }} Locations)</em> <i class="fa fa-home"></i> Listings
   </h2>
 
-  <div class="map-options top"><app-toggles [locations]="locations" (toggleSelected)="toggleSelected.emit($event)"></app-toggles></div>
+  <div class="map-options top d-none d-lg-block"><app-toggles [locations]="locations" (toggleSelected)="toggleSelected.emit($event)"></app-toggles></div>
 
   <mat-expansion-panel class="map-options mb-3" [expanded]="!locations?.length">
     <!-- Header -->

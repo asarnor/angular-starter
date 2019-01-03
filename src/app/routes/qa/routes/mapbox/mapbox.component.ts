@@ -13,7 +13,7 @@ import { ListingModalComponent } from './components/listing-modal/listing-modal.
 export class MapboxComponent implements OnInit {
  
   public locations: Map.Location[];
-  private locationsOriginal: Map.Location[];
+  public locationsOriginal: Map.Location[];
 
   public sidebarMobileShow = false;
 
