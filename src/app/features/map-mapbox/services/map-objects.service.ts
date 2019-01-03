@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Map, Marker } from 'mapbox-gl';
+import { Geometry, Feature } from 'geojson';
 
 @Injectable()
 export class MapObjectsService {
@@ -10,13 +11,151 @@ export class MapObjectsService {
    * @param map
    * @param locations
    */
-  public addMarkers(map: Map, locations: Map.Location[]) {
-    if (locations) {
-      // Create markers with popups
-      const markers = this.createMarker(locations);
-      // Add markers to map
+  public markersAdd(map: Map, markers: Marker[]) {
+    if (markers) {
       markers.forEach(marker => marker.addTo(map));
-      return markers;
+    }
+  }
+
+  /**
+   * Add a heatmap to the map
+   * @param map
+   * @param locations
+   */
+  public heatMapAdd(map: Map, locations: Map.Location[]) {
+    // Turn the locations into the format needed by the heatmap layer
+    const features = locations.map(location => {
+      return <Feature<Geometry>>{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [location.longitude, location.latitude],
+        },
+      };
+    });
+
+    map.addSource('heatmap', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        crs: { type: 'name', properties: { name: 'urn:ogc:def:crs:OGC:1.3:CRS84' } },
+        features: features,
+      },
+    });
+    map.addLayer(
+      {
+        id: 'heatmap',
+        type: 'heatmap',
+        source: 'heatmap',
+        // maxzoom: 9,
+        paint: {
+          'heatmap-color': [
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0,
+            'rgba(199,168,73,0)',
+            0.25,
+            'rgb(103,169,207)',
+            0.5,
+            'rgb(209,229,240)',
+            0.75,
+            'rgb(253,219,199)',
+            1,
+            'rgba(199,168,73,1)',
+          ],
+          'heatmap-weight': [
+            'interpolate',
+            ['exponential', 1.5],
+            ['zoom'],
+            0,
+            ['interpolate', ['linear'], ['get', 'density'], 0, 0, 25, 1],
+            18.1,
+            ['interpolate', ['linear'], ['get', 'density'], 0, 0, 15, 1],
+          ],
+           // Adjust the heatmap radius by zoom level
+           'heatmap-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            0, 2,
+            9, 20
+        ],
+          'heatmap-intensity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            0,
+            0.25,
+            0.99,
+            1,
+            1,
+            0.25,
+            1.99,
+            1,
+            2,
+            0.25,
+            2.99,
+            1,
+            3,
+            0.25,
+            3.99,
+            1,
+            4,
+            0.25,
+            4.99,
+            1,
+            5,
+            0.25,
+            5.99,
+            1,
+            6,
+            0.25,
+            6.99,
+            1,
+            7,
+            0.25,
+            7.99,
+            1,
+            8,
+            0.25,
+            8.99,
+            1,
+            9,
+            0.25,
+            9.99,
+            1,
+            10,
+            0.25,
+            10.99,
+            1,
+            11,
+            0.25,
+            11.99,
+            1,
+            12,
+            0.25,
+            18.99,
+            2,
+          ],
+          'heatmap-opacity': ['interpolate', ['exponential', 1.5], ['zoom'], 16, 1, 18.1, 0.6],
+        },
+      },
+      'water',
+    );
+  }
+
+  /**
+   * Remove the existing heatmap layer
+   * @param map
+   */
+  public heatMapRemove(map: Map) {
+    // Check if heatmap layer already exists, remove it if so
+    const hasMap = map.getLayer('heatmap');
+    if (typeof hasMap !== 'undefined') {
+      // Remove map layer & source.
+      map.removeLayer('heatmap');
+      map.removeSource('heatmap');
     }
   }
 
@@ -39,7 +178,6 @@ export class MapObjectsService {
           map.fitBounds(bounds);
         }, 500);
       }, 100);
-
     }
   }
 
@@ -71,7 +209,7 @@ export class MapObjectsService {
    * @param map
    * @param locations
    */
-  private createMarker(locations: Map.Location[]) {
+  public markersCreate(locations: Map.Location[]) {
     return locations.map(location => {
       if (location.latitude && location.longitude) {
         const el = document.createElement('div');

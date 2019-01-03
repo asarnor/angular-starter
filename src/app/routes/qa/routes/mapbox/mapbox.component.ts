@@ -43,11 +43,12 @@ export class MapboxComponent implements OnInit {
 
     this.http.get<Models.LocationMLS[]>('assets/mock-data/properties.json').subscribe(locations => {
       this.locationsOriginal = locations.map(location => {
-       
+
         const officeName = location.office_name.toLowerCase().replace(/[^A-Z0-9]/ig, '');
         // console.log(location.office_name, officeName);
         return {
           ...location,
+          // thumbnail_url: location.thumbnail_url.replace('http', 'https'), // Make images https
           metadata: {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,

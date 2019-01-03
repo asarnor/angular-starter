@@ -27,7 +27,9 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /** Mapbox Api key */
   @Input() apiKey = apiKey;
 
-  @Input() zoom = 15.5;
+  @Input() zoom = 16;
+
+  @Input() heatmap = true;
 
   /** Has script loaded  */
   public isLoaded = false;
@@ -47,8 +49,12 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(model: any) {
     if (model.locations && this.isLoaded) {
-      this.locationsAdd();
       this.isRotating = false;
+      if (this.heatmap) {
+        this.heatMapAdd();
+      } else {
+        this.locationsAdd();
+      }
     }
   }
 
@@ -84,79 +90,103 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     if (!this.map && document.getElementById(this.uniqueId)) {
       (<any>window).mapboxgl.accessToken = this.apiKey;
       // Get user's lat long to set initial position
-      navigator.geolocation.getCurrentPosition(val => {
-        // Confirm that lat and long were passed
-        this.mapCreate([val.coords.longitude, val.coords.latitude]);
-      }, error => {
-        console.log(error);
-        this.mapCreate([-115.172813, 36.114647]);
-      });
+      navigator.geolocation.getCurrentPosition(
+        val => {
+          // Confirm that lat and long were passed
+          this.mapCreate([val.coords.longitude, val.coords.latitude]);
+        },
+        error => {
+          console.log(error);
+          this.mapCreate([-115.172813, 36.114647]);
+        },
+      );
     }
   }
 
   /**
    * Create the map after getting user coords
-   * @param coords 
+   * @param coords
    */
   private mapCreate(coords: [number, number]) {
-    
-        // Create new map
-        this.map = new (<any>window).mapboxgl.Map({
-          container: this.uniqueId,
-          style: 'mapbox://styles/mapbox/dark-v9',
-          zoom: this.zoom,
-          center: coords,
-          // For rotation
-          // zoom: 15.5,
-          pitch: 65,
-          // center: [-114.9775958, 36.0080202],
-        });
+    // Create new map
+    this.map = new (<any>window).mapboxgl.Map({
+      container: this.uniqueId,
+      style: 'mapbox://styles/mapbox/dark-v9', // basic-v9
+      zoom: this.zoom,
+      center: coords,
+      // For rotation
+      // zoom: 15.5,
+      pitch: 65,
+      // center: [-114.9775958, 36.0080202],
+    });
 
-        // If no locations supplied on map create, plot the user's current location
-        if (!this.locations) {
-          // Create location
-          const myLocation: Map.Location = {
-            latitude: coords[1],
-            longitude: coords[0],
-          };
-          this.locations = [myLocation];
-          // Add to map
-          // this.mapObjects.addMarkers(this.map, [myLocation]);
+    // If no locations supplied on map create, plot the user's current location
+    if (!this.locations) {
+      // Create location
+      const myLocation: Map.Location = {
+        latitude: coords[1],
+        longitude: coords[0],
+      };
+      this.locations = [myLocation];
+      this.locationsAdd();
+    }
+
+    if (!this.heatmap) {
+      this.locationsAdd();
+    }
+
+    this.map.on('load', () => {
+      this.rotateTo(0);
+
+      // Add 3d buildings and remove label layers to enhance the map
+      const layers = this.map.getStyle().layers;
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol' && (<any>layers)[i].layout['text-field']) {
+          // remove text labels
+          this.map.removeLayer(layers[i].id);
         }
-        
-        this.locationsAdd();
-      
-        this.map.on('load', () => {
-          this.rotateTo(0);
+      }
 
-          // Add 3d buildings and remove label layers to enhance the map
-          const layers = this.map.getStyle().layers;
-          for (let i = 0; i < layers.length; i++) {
-            if (layers[i].type === 'symbol' && (<any>layers)[i].layout['text-field']) {
-              // remove text labels
-              this.map.removeLayer(layers[i].id);
-            }
-          }
+      if (this.heatmap) {
+        this.mapObjects.heatMapAdd(this.map, this.locations);
+      }
 
-          this.map.addLayer({
-            id: '3d-buildings',
-            source: 'composite',
-            'source-layer': 'building',
-            filter: ['==', 'extrude', 'true'],
-            type: 'fill-extrusion',
-            minzoom: 15,
-            paint: {
-              'fill-extrusion-color': '#aaa',
+      // Add 3D layer
+      this.map.addLayer({
+        id: '3d-buildings',
+        source: 'composite',
+        'source-layer': 'building',
+        filter: ['==', 'extrude', 'true'],
+        type: 'fill-extrusion',
+        // minzoom: 15,
+        paint: {
+          'fill-extrusion-color': '#aaa',
 
-              // use an 'interpolate' expression to add a smooth transition effect to the
-              // buildings as the user zooms in
-              'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'height']],
-              'fill-extrusion-base': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'min_height']],
-              'fill-extrusion-opacity': 0.6,
-            },
-          });
-        });
+          // use an 'interpolate' expression to add a smooth transition effect to the
+          // buildings as the user zooms in
+          'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'height']],
+          'fill-extrusion-base': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'min_height']],
+          'fill-extrusion-opacity': 0.6,
+        },
+      });
+      // End 3d layer
+    });
+  }
 
+  /**
+   * Add the heatmap
+   */
+  private heatMapAdd() {
+    // Remove any markers/locations on the map
+    this.locationsRemove();
+    // Remove any preexisting heatmap
+    this.mapObjects.heatMapRemove(this.map);
+    // Add existing heatmap
+    this.mapObjects.heatMapAdd(this.map, this.locations);
+    // Create map makers but do NOT add them to the map
+    this.markers = this.mapObjects.markersCreate(this.locations);
+    // Pass map markers to fit bounds to recenter the map on the heatmap
+    this.mapObjects.mapFitBounds(this.map, this.markers);
   }
 
   /**
@@ -167,7 +197,11 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.locations && this.locations.length) {
       // Remove any existing markers
       this.locationsRemove();
-      this.markers = this.mapObjects.addMarkers(this.map, this.locations);
+      // Create markers
+      this.markers = this.mapObjects.markersCreate(this.locations);
+      // Add markers to map
+      this.mapObjects.markersAdd(this.map, this.markers);
+      // Recenter and zoom map to fit markers
       this.mapObjects.mapFitBounds(this.map, this.markers);
     } else {
       this.locationsRemove();
@@ -193,5 +227,5 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // Request the next frame of the animation.
       requestAnimationFrame(this.rotateTo);
     }
-  };
+  }
 }
