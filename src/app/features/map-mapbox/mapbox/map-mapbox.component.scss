@@ -24,6 +24,7 @@
   height: 35px;
   cursor: pointer;
   background-repeat: no-repeat;
+  opacity:0;animation: fade .3s ease-in;animation-fill-mode:forwards;
   &.rog{
     background-image: url(/assets/img/map-icon-rog.png);
   }

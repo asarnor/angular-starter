@@ -146,6 +146,9 @@ export class MapObjectsService {
    * @param map
    */
   public heatMapRemove(map: Map) {
+    if (!map) {
+      return;
+    }
     // Check if heatmap layer already exists, remove it if so
     const hasMap = map.getLayer('heatmap');
     if (typeof hasMap !== 'undefined') {

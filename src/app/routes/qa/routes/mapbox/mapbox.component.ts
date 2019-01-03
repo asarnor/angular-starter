@@ -21,6 +21,7 @@ export class MapboxComponent implements OnInit {
   public listingModal: MatDialogRef<ListingModalComponent>;
   /** Show all listings or just ROG ones */
   public listingsShowAll = true;
+  public heatmap = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, public dialog: MatDialog, private ref: ChangeDetectorRef) {}
 
@@ -52,7 +53,7 @@ export class MapboxComponent implements OnInit {
           metadata: {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,
-            iconClass: officeName.indexOf('realtyonegroup') !== -1 ? 'marker rog' : null,
+            iconClass: officeName.indexOf('realtyonegroup') !== -1 ? 'marker rog ' : null,
             isRog:  officeName.indexOf('realtyonegroup') !== -1 ? true : false
           },
           latitude: location.display_lat,
@@ -86,9 +87,19 @@ export class MapboxComponent implements OnInit {
     document.getElementById('map-container').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  public toggleSelected(action: {event: string, data?: any}) {
+
+  public toggleSelected(action: {event: 'listingsRog' | 'heatmap', data?: any}) {
     console.log(action);
-    this.toggleRogListings();
+   
+    switch (action.event) {
+      case 'listingsRog':
+      this.toggleRogListings();
+      break;
+      case 'heatmap':
+      this.heatmap = !this.heatmap;
+      break;
+    }
+    
   }
 
   /**

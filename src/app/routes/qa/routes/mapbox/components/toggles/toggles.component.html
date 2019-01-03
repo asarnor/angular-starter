@@ -1,3 +1,4 @@
 <div class="container-fluid pt-2 pb-2">
-  <button class="btn btn-rog" (click)="toggleSelected.emit({event: 'listingsRog'})" [disabled]="!locations?.length" title=""></button>
+  <button class="btn btn-rog mr-2" (click)="toggleSelected.emit({event: 'listingsRog'})" [disabled]="!locations?.length" title=""></button>
+  <button class="btn btn-heatmap mr-2" (click)="toggleSelected.emit({event: 'heatmap'})" [disabled]="!locations?.length" title=""></button>
 </div>

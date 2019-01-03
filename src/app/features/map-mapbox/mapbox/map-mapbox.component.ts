@@ -59,11 +59,15 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     // If heatmap toggle changes
-    if (model.heatmap) {
+    // TODO: Fix ugly nested if statements
+    if (model.heatmap && this.isLoaded) {
       if (this.heatmap) {
         this.heatMapAdd();
       } else {
         this.heatMapRemove();
+        if (this.locations) {
+          this.locationsAdd();
+        }
       }
     }
   }

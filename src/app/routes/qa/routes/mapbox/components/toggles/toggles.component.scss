@@ -1,11 +1,13 @@
 .container-fluid{ background-color:#f4f4f4;}
 .btn:disabled{opacity:.3;}
-.btn-rog {
-  background-image: url(/assets/img/btn-one.png);
-  background-color: transparent;
-  background-size: contain;
+.btn{
   width: 25px;
   height: 25px;
+  background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
   cursor: pointer;
-  background-repeat: no-repeat;
+  &.btn-rog {background-image: url(/assets/img/btn-one.png); }
+  &.btn-heatmap{background-image: url(/assets/img/btn-heatmap.png);}
 }
+
