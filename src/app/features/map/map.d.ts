@@ -6,7 +6,7 @@
 declare namespace Map {
   export interface Location {
     metadata?: {
-      isRog: boolean;
+      isBrand?: boolean;
       infoBoxHtml?: () => string;
       title?: string;
       description?: string;

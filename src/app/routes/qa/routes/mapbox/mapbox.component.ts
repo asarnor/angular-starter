@@ -28,19 +28,23 @@ export class MapboxComponent implements OnInit {
   ngOnInit() {
     // Create searchable locations
     this.formSearch = this.fb.group({
-      zip: ['', []],
+      zip: [{value: '89147', disabled: true}, []],
       priceLow: ['', []],
       priceHigh: ['', []],
       bedroomsMin: ['', []],
       bedroomsMax: ['', []],
+      bathsMin: ['', []],
+      bathsMax: ['', []],
       homeTypes: ['', []],
       sqFootageMin: ['', []],
       sqFootageMax: ['', []],
-      is_single_family: [false, []],
+      is_single_family: ['Y', []],
       is_multi_family: [false, []],
       is_townhouse: [false, []],
       is_condo: [false, []],
     });
+
+    this.formSearch.valueChanges.subscribe(val => console.log(val));
 
     this.http.get<Models.LocationMLS[]>('assets/mock-data/properties.json').subscribe(locations => {
       this.locationsOriginal = locations.map(location => {
@@ -54,14 +58,14 @@ export class MapboxComponent implements OnInit {
             title: location.display_address,
             description: location.city + ', ' + location.county + ' ' + location.zip_code,
             iconClass: officeName.indexOf('realtyonegroup') !== -1 ? 'marker rog ' : null,
-            isRog:  officeName.indexOf('realtyonegroup') !== -1 ? true : false
+            isBrand:  officeName.indexOf('realtyonegroup') !== -1 ? true : false
           },
           latitude: location.display_lat,
           longitude: location.display_lng,
         };
       });
       this.locationsOriginal.length = 500;
-      // this.locations = [...this.locationsOriginal];
+      this.locations = [...this.locationsOriginal];
       this.ref.markForCheck();
     });
   }
@@ -107,7 +111,7 @@ export class MapboxComponent implements OnInit {
    */
   public toggleRogListings() {
     this.locations = this.locationsOriginal.filter(listing => {
-      if ((this.listingsShowAll && listing.metadata.isRog) || !this.listingsShowAll) {
+      if ((this.listingsShowAll && listing.metadata.isBrand) || !this.listingsShowAll) {
         return true;
       }
       return false;

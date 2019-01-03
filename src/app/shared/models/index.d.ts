@@ -47,6 +47,7 @@ declare namespace Models {
     total_bedrooms: string;
     year_built: string;
     zip_code: number;
+    metadata: any;
   }
 
   export interface User {

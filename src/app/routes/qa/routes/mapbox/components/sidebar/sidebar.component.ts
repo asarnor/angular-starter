@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatButtonToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,6 +22,17 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  /**
+   * When prop type changes, update form. Button toggle does not support reactive forms
+   * @param change 
+   * @param type 
+   */
+  public propTypeChanged(change: MatButtonToggleChange, type: string ) {
+    const val: {[key: string]: boolean} = {};
+    val[type] = change.source.checked;
+    this.formSearch.patchValue(val);
   }
 
   public submitForm(e: Event) {

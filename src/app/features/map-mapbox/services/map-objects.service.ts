@@ -12,7 +12,7 @@ export class MapObjectsService {
    * @param locations
    */
   public markersAdd(map: Map, markers: Marker[]) {
-    if (markers) {
+    if (map && markers && markers.length) {
       markers.forEach(marker => marker.addTo(map));
     }
   }
@@ -164,7 +164,7 @@ export class MapObjectsService {
    * @param markers
    */
   public mapFitBounds(map: Map, markers: Marker[]) {
-    if (markers && markers.length) {
+    if (map && markers && markers.length) {
       setTimeout(() => {
         // Rotate to 0
         map.rotateTo(0, { duration: 500 });

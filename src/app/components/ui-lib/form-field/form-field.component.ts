@@ -24,6 +24,10 @@ export class FormFieldComponent implements OnInit, OnDestroy {
   @Input() controlName: string;
   /** Placeholder text */
   @Input() placeholder: string;
+  /** Form field type */
+  @Input() type: 'text' | 'select' = 'text';
+  /** If form field type is select, supply list of options */
+  @Input() options: any[];
   /** Is this field required */
   public required = false;
   /** Does this field have a validation error? */

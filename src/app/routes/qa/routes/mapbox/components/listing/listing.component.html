@@ -1,4 +1,5 @@
 <a class="listing d-flex flex-column mb-3" [ngStyle]="{ 'background-image': 'url(' + listing.thumbnail_url + ')' }" (click)="listingSelected.emit(listing)">
+  <img src="assets/img/brand-square.png" class="listing-img" *ngIf="listing?.metadata?.isBrand"/>
   <div class="listing-gradient mt-auto mb-0">
     <div class="mt-auto mb-0 d-flex flex-row">
       <div class="price">{{ listing.listing_price }}</div>

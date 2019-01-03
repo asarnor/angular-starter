@@ -18,41 +18,41 @@
 
       <div class="row align-items-center mb-1">
         <div class="col-2">Price</div>
-        <div class="col-5">
-          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Minimum"></app-form-field>
+        <div class="col-5"><!-- type="select" [options]="optionsPrice" -->
+          <app-form-field [formGroup]="formSearch" controlName="priceLow" placeholder="Minimum"></app-form-field>
         </div>
         <div class="col-5">
-          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Maximum"></app-form-field>
+          <app-form-field [formGroup]="formSearch" controlName="priceHigh" placeholder="Maximum"></app-form-field>
         </div>
       </div>
 
       <div class="row align-items-center mb-1">
         <div class="col-2">Beds</div>
         <div class="col-5">
-          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Minimum"></app-form-field>
+          <app-form-field [formGroup]="formSearch" controlName="bedroomsMin" placeholder="Minimum"></app-form-field>
         </div>
         <div class="col-5">
-          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Maximum"></app-form-field>
+          <app-form-field [formGroup]="formSearch" controlName="bedroomsMax" placeholder="Maximum"></app-form-field>
         </div>
       </div>
 
       <div class="row align-items-center mb-1">
         <div class="col-2">Baths</div>
         <div class="col-5">
-          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Minimum"></app-form-field>
+          <app-form-field [formGroup]="formSearch" controlName="bathsMin" placeholder="Minimum"></app-form-field>
         </div>
         <div class="col-5">
-          <app-form-field [formGroup]="formSearch" controlName="zip" placeholder="Maximum"></app-form-field>
+          <app-form-field [formGroup]="formSearch" controlName="bathsMax" placeholder="Maximum"></app-form-field>
         </div>
       </div>
 
       <div class="mb-3">
         <div class="mb-1">Property Type</div>
-        <mat-button-toggle-group name="propType" aria-label="Font Style" multiple class="w-100 d-flex">
-          <mat-button-toggle value="bold" class="flex-fill">House</mat-button-toggle>
-          <mat-button-toggle value="italic" class="flex-fill">Condo</mat-button-toggle>
-          <mat-button-toggle value="underline" class="flex-fill">Townhouse</mat-button-toggle>
-          <mat-button-toggle value="underline" class="flex-fill">Multi-family</mat-button-toggle>
+        <mat-button-toggle-group name="propType" multiple class="w-100 d-flex" #group>
+          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_single_family')">House</mat-button-toggle>
+          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_condo')">Condo</mat-button-toggle>
+          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_townhouse')">Townhouse</mat-button-toggle>
+          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_multi_family')">Multi-family</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 

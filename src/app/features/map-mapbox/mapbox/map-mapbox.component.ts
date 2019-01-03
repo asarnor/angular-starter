@@ -27,7 +27,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /** Mapbox Api key */
   @Input() apiKey = apiKey;
 
-  @Input() zoom = 16;
+  @Input() zoom = 15.5;
 
   @Input() heatmap = true;
 
@@ -81,7 +81,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
    */
   public scriptsLoad() {
     if ((<any>window).mapboxgl) {
-      this.mapInit(); // Bing already loaded, init map
+      this.mapInit(); // Mapbox already loaded, init map
       this.isLoaded = true;
     } else {
       // Dynamically load bing js
@@ -91,7 +91,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       script.src = scriptSrc;
       script.onload = () => {
         this.mapInit();
-        this.isLoaded = true;
       }; // After load, init chart
       document.head.appendChild(script);
     }
@@ -127,15 +126,16 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       container: this.uniqueId,
       style: 'mapbox://styles/mapbox/streets-v9', // basic-v9
       zoom: this.zoom,
-      center: coords,
+      center: [-115.156665, 36.1383415], // 36.1383415,"display_lng":-115.156665
+      // center: coords,
       // For rotation
-      // zoom: 15.5,
-      pitch: 65,
+      pitch: 60,
       // center: [-114.9775958, 36.0080202],
     });
 
     // When the map finishes loading
     this.map.on('load', () => {
+      // Start rotation
       this.rotateTo(0);
       // If heatmap is true and locations are supplied
       if (this.heatmap && this.locations) {
@@ -144,7 +144,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
       // If heatmap not specified, add locations
       if (!this.heatmap) {
-        this.locationsAdd();
+        this.locationsAdd(false);
       }
 
       // If no locations supplied on map create, plot the user's current location
@@ -155,7 +155,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           longitude: coords[0],
         };
         this.locations = [myLocation];
-        this.locationsAdd();
+        this.locationsAdd(false);
       }
 
       // Add 3d buildings and remove label layers to enhance the map
@@ -185,6 +185,10 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
         },
       });
       // End 3d layer
+
+      // Mark as loaded
+      this.isLoaded = true;
+      
     });
   }
 
@@ -214,7 +218,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   /**
    * Add locations to the map
    */
-  private locationsAdd() {
+  private locationsAdd(fitBounds = true) {
     // If locations passed, add markers
     if (this.locations && this.locations.length) {
       // Remove any existing markers
@@ -223,8 +227,10 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       this.markers = this.mapObjects.markersCreate(this.locations);
       // Add markers to map
       this.mapObjects.markersAdd(this.map, this.markers);
-      // Recenter and zoom map to fit markers
-      this.mapObjects.mapFitBounds(this.map, this.markers);
+      if (fitBounds) {
+        // Recenter and zoom map to fit markers
+        this.mapObjects.mapFitBounds(this.map, this.markers);
+      }
     } else {
       this.locationsRemove();
     }
@@ -249,6 +255,5 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // Request the next frame of the animation.
       requestAnimationFrame(this.rotateTo);
     }
-  }
-
+  };
 }

@@ -1,8 +1,9 @@
 a.listing{
-    color: #fff;border:2px solid rgb(231, 231, 231); background:#ccc;position:relative;min-height:200px;font-family: Roboto, "Helvetica Neue", sans-serif;background-size: cover;background-repeat: no-repeat;background-position: center center;
+    color: #fff;border:2px solid rgb(231, 231, 231); background:#ccc;position:relative;z-index:1;min-height:200px;font-family: Roboto, "Helvetica Neue", sans-serif;background-size: cover;background-repeat: no-repeat;background-position: center center;
     text-shadow: 1px 1px 3px rgba(0,0,0,.75);
     .price{font-size: 1.3rem;}
     .listing-gradient{padding:1rem;background: linear-gradient(180deg,transparent,rgba(0,0,0,.8));}
     .prop-info{border-right:1px solid #fff;}
     &:hover{color:#fff;border-color:rgb(46, 46, 46);}
+    .listing-img{position: absolute;z-index:2;max-width:30px;top:10px;right:10px;}
 }
