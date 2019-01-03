@@ -80,6 +80,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
     // If flyto is passed down, jump the map to that location
     if (model.flyTo && this.isLoaded) {
+      this.isRotating = false;
       this.mapObjects.flyToLocation(this.map, this.flyTo.coords, {zoom: 15, speed: 3});
     }
 
