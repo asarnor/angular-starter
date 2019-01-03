@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Map, Marker } from 'mapbox-gl';
 import { Geometry, Feature } from 'geojson';
+import { Mapbox } from '../mapbox';
 
 @Injectable()
 export class MapObjectsService {
@@ -185,7 +186,11 @@ export class MapObjectsService {
    * @param map
    * @param coords
    */
-  public flyToLocation(map: Map, coords: [number, number]) {
+  public flyToLocation(
+    map: Map,
+    coords: [number, number],
+    options?: { zoom?: number; pitch?: number; speed?: number; curve?: number },
+  ) {
     setTimeout(() => {
       map.rotateTo(0, { duration: 500 });
       setTimeout(() => {
@@ -198,6 +203,7 @@ export class MapObjectsService {
           easing(t: any) {
             return t;
           },
+          ...options,
         });
       }, 500);
     }, 100);
@@ -214,11 +220,16 @@ export class MapObjectsService {
         const el = document.createElement('div');
         el.className = location.metadata && location.metadata.iconClass ? location.metadata.iconClass : 'marker';
         // make a marker for each feature and add to the map
-        const marker: Marker = new (<any>window).mapboxgl.Marker(el).setLngLat([location.longitude, location.latitude]);
+        const marker: Mapbox.MarkerWithLocation = new (<any>window).mapboxgl.Marker(el).setLngLat([
+          location.longitude,
+          location.latitude,
+        ]);
         // If metadata available, create popup
         if (location.metadata && location.metadata.title) {
-          this.createPopup(marker, location);
+          // this.createPopup(marker, location);
         }
+        // Attach previous location data
+        marker.location = { ...location };
         return marker;
       }
     });
@@ -229,7 +240,7 @@ export class MapObjectsService {
    * @param marker
    * @param location
    */
-  private createPopup(marker: any, location: Map.Location) {
+  public createPopup(marker: any, location: Map.Location) {
     // Hold html string for building
     let html = '';
     // Add title if available

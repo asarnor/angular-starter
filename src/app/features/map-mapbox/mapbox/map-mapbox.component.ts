@@ -6,9 +6,12 @@ import {
   AfterViewInit,
   ViewEncapsulation,
   OnChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
-import { Map, Marker } from 'mapbox-gl';
+import { Map } from 'mapbox-gl';
 import { MapObjectsService } from '../services/map-objects.service';
+import { Mapbox } from '../mapbox';
 
 const scriptSrc = 'https://api.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js';
 const apiKey = 'pk.eyJ1Ijoicm9ndXNlciIsImEiOiJjanB1YzFrMmwwZjZnNDNxbGkwY28wdnI5In0.Xe4QgRnvsvP3WAncobSxqg';
@@ -26,10 +29,14 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() locations: Map.Location[];
   /** Mapbox Api key */
   @Input() apiKey = apiKey;
-
+/** Default zoom level. 15.5 is optimical for 3d buildings */
   @Input() zoom = 15.5;
-
-  @Input() heatmap = true;
+/**Show/hide heatmap on default */
+  @Input() heatmap = false;
+  /** Fly and zoom to this location, coords should be lat long */
+  @Input() flyTo: {zoom: number, coords: [number, number]};
+  /** When a pin is clicked on */
+  @Output() pinClicked = new EventEmitter<any>();
 
   /** Has script loaded  */
   public isLoaded = false;
@@ -41,7 +48,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
   private isRotating = true;
   /** Holds a reference to any created markers. Used to remove */
-  private markers: Marker[];
+  private markers: Mapbox.MarkerWithLocation[];
 
   constructor(private mapObjects: MapObjectsService) {}
 
@@ -70,6 +77,12 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
         }
       }
     }
+
+    // If flyto is passed down, jump the map to that location
+    if (model.flyTo && this.isLoaded) {
+      this.mapObjects.flyToLocation(this.map, this.flyTo.coords, {zoom: 15, speed: 3});
+    }
+
   }
 
   ngAfterViewInit() {
@@ -133,6 +146,16 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // center: [-114.9775958, 36.0080202],
     });
 
+    // When a use clicks on the map the first time only
+    // Stop the rotation and fit bounds
+    const resetMap = () => {
+      this.isRotating = false;
+      setTimeout(() => {
+        this.mapObjects.mapFitBounds(this.map, this.markers);
+      }, 100);
+    };
+    this.map.once('click', resetMap);
+
     // When the map finishes loading
     this.map.on('load', () => {
       // Start rotation
@@ -158,6 +181,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
         this.locationsAdd(false);
       }
 
+      /**
       // Add 3d buildings and remove label layers to enhance the map
       const layers = this.map.getStyle().layers;
       for (let i = 0; i < layers.length; i++) {
@@ -166,6 +190,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
           this.map.removeLayer(layers[i].id);
         }
       }
+      */
 
       // Add 3D layer
       this.map.addLayer({
@@ -188,7 +213,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
 
       // Mark as loaded
       this.isLoaded = true;
-      
     });
   }
 
@@ -225,6 +249,14 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       this.locationsRemove();
       // Create markers
       this.markers = this.mapObjects.markersCreate(this.locations);
+      // Add click event for markers, emits up via pinClicked
+      this.markers.forEach(marker => {
+        marker.getElement().addEventListener('click', (e: MouseEvent) => {
+          this.pinClicked.emit(marker.location);
+          e.stopPropagation();
+        });
+      });
+     
       // Add markers to map
       this.mapObjects.markersAdd(this.map, this.markers);
       if (fitBounds) {

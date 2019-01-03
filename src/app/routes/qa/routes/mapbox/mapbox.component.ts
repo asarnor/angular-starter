@@ -22,6 +22,7 @@ export class MapboxComponent implements OnInit {
   /** Show all listings or just ROG ones */
   public listingsShowAll = true;
   public heatmap = false;
+  public flyTo: { zoom: number, coords: [number, number] };
 
   constructor(private fb: FormBuilder, private http: HttpClient, public dialog: MatDialog, private ref: ChangeDetectorRef) {}
 
@@ -74,7 +75,23 @@ export class MapboxComponent implements OnInit {
    * When a listing is selected or clicked from the list of listings
    * @param listing 
    */
-  public listingSelected(listing: Models.LocationMLS) {
+  public listingSelected(location: Models.LocationMLS) {
+    this.flyTo = {
+      zoom: 15.5,
+      coords: [location.display_lng, location.display_lat]
+    };
+    this.modalOpen(location);
+  }
+
+  /**
+   * When a pin click is emitted up from the map component
+   * @param location 
+   */
+  public pinClicked(location: Models.LocationMLS) {
+    this.modalOpen(location);
+  }
+
+  public modalOpen(listing: Models.LocationMLS) {
     this.listingModal = this.dialog.open(ListingModalComponent, {
       width: '90%',
       data: listing

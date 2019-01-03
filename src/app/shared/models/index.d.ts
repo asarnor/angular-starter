@@ -18,36 +18,36 @@ declare namespace Models {
    *  BEGIN NSWAG STUDIO COPY/PASTE
    ********************************/
   export interface LocationMLS {
-    city: string;
-    county: string;
-    days_on_market: number;
-    display_address: string;
-    display_lat: number;
-    display_lng: number;
-    hoa_fee: string;
-    is_condo: string;
-    state: string;
-    is_condo_townhouse: string;
-    is_lot: string;
-    is_multi_family: string;
-    listing_office_name: string;
-    office_name: string;
-    is_single_family: string;
-    is_townhouse: string;
-    listing_price: string;
-    listing_status: string;
-    listing_status_standardized: string;
-    lot_dimension: string;
-    photo_url: string;
-    photos: string;
-    property_id: number;
-    square_feet: string;
-    thumbnail_url: string;
-    total_bathrooms: string;
-    total_bedrooms: string;
-    year_built: string;
-    zip_code: number;
-    metadata: any;
+    city?: string;
+    county?: string;
+    days_on_market?: number;
+    display_address?: string;
+    display_lat?: number;
+    display_lng?: number;
+    hoa_fee?: string;
+    is_condo?: string;
+    state?: string;
+    is_condo_townhouse?: string;
+    is_lot?: string;
+    is_multi_family?: string;
+    listing_office_name?: string;
+    office_name?: string;
+    is_single_family?: string;
+    is_townhouse?: string;
+    listing_price?: string;
+    listing_status?: string;
+    listing_status_standardized?: string;
+    lot_dimension?: string;
+    photo_url?: string;
+    photos?: string;
+    property_id?: number;
+    square_feet?: string;
+    thumbnail_url?: string;
+    total_bathrooms?: string;
+    total_bedrooms?: string;
+    year_built?: string;
+    zip_code?: number;
+    metadata?: any;
   }
 
   export interface User {

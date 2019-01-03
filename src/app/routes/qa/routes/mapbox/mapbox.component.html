@@ -1,6 +1,4 @@
 <div class="container-fluid" style="overflow-x: hidden;" id="map-container">
-
-
   <div class="row header-rog p-2"><img src="assets/img/logo-brand.png" style="max-height:30px;" /></div>
 
   <div class="row align-items-stretch map-container" [ngClass]="{ open: sidebarMobileShow }">
@@ -15,7 +13,13 @@
       </div>
 
       <div class="map-container-main">
-        <app-map-mapbox [locations]="locations" [heatmap]="heatmap"></app-map-mapbox>
+        <app-map-mapbox
+          [locations]="locations"
+          [flyTo]="flyTo"
+          [heatmap]="heatmap"
+          (pinClicked)="pinClicked($event)"
+        ></app-map-mapbox>
+        
       </div>
     </div>
     <div class="col col-12 col-lg-5 map-container-sidebar">
