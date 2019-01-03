@@ -54,15 +54,17 @@ export class MapObjectsService {
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(199,168,73,0)',
-            0.25,
+            'rgba(33,102,172,0)',
+            0.2,
             'rgb(103,169,207)',
-            0.5,
+            0.4,
             'rgb(209,229,240)',
-            0.75,
+            0.6,
             'rgb(253,219,199)',
+            0.8,
+            'rgb(239,138,98)',
             1,
-            'rgba(199,168,73,1)',
+            'rgb(178,24,43)',
           ],
           'heatmap-weight': [
             'interpolate',
@@ -73,14 +75,8 @@ export class MapObjectsService {
             18.1,
             ['interpolate', ['linear'], ['get', 'density'], 0, 0, 15, 1],
           ],
-           // Adjust the heatmap radius by zoom level
-           'heatmap-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            0, 2,
-            9, 20
-        ],
+          // Adjust the heatmap radius by zoom level
+          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
           'heatmap-intensity': [
             'interpolate',
             ['linear'],

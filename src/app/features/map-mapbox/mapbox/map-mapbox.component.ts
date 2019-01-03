@@ -48,12 +48,22 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(model: any) {
+    // If locations change
     if (model.locations && this.isLoaded) {
       this.isRotating = false;
       if (this.heatmap) {
         this.heatMapAdd();
       } else {
         this.locationsAdd();
+      }
+    }
+
+    // If heatmap toggle changes
+    if (model.heatmap) {
+      if (this.heatmap) {
+        this.heatMapAdd();
+      } else {
+        this.heatMapRemove();
       }
     }
   }
@@ -111,7 +121,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     // Create new map
     this.map = new (<any>window).mapboxgl.Map({
       container: this.uniqueId,
-      style: 'mapbox://styles/mapbox/dark-v9', // basic-v9
+      style: 'mapbox://styles/mapbox/streets-v9', // basic-v9
       zoom: this.zoom,
       center: coords,
       // For rotation
@@ -163,7 +173,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
         // minzoom: 15,
         paint: {
           'fill-extrusion-color': '#aaa',
-
           // use an 'interpolate' expression to add a smooth transition effect to the
           // buildings as the user zooms in
           'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 15, 0, 15.05, ['get', 'height']],
@@ -182,13 +191,20 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     // Remove any markers/locations on the map
     this.locationsRemove();
     // Remove any preexisting heatmap
-    this.mapObjects.heatMapRemove(this.map);
+    this.heatMapRemove();
     // Add existing heatmap
     this.mapObjects.heatMapAdd(this.map, this.locations);
     // Create map makers but do NOT add them to the map
     this.markers = this.mapObjects.markersCreate(this.locations);
     // Pass map markers to fit bounds to recenter the map on the heatmap
     this.mapObjects.mapFitBounds(this.map, this.markers);
+  }
+
+  /**
+   * Remove existing heatmap
+   */
+  private heatMapRemove() {
+    this.mapObjects.heatMapRemove(this.map);
   }
 
   /**
@@ -230,5 +246,5 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       requestAnimationFrame(this.rotateTo);
     }
   }
-  
+
 }

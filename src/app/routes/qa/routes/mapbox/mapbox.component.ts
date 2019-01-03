@@ -77,13 +77,13 @@ export class MapboxComponent implements OnInit {
   }
 
   /**
-   * 
+   * Search locations
    * @param val 
    */
   public locationsSearch() {
     this.locations = [...this.locationsOriginal];
     this.sidebarMobileShow = false;
-    this.ref.markForCheck();
+    document.getElementById('map-container').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   public toggleSelected(action: {event: string, data?: any}) {
