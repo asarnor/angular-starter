@@ -57,7 +57,12 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnChanges(model: any) {
     // If locations change
     if (model.locations && this.isLoaded) {
-      this.isRotating = false;
+
+       // Stop rotating
+       // this.isRotating = false;
+
+
+
       if (this.heatmap) {
         this.heatMapAdd();
       } else {
@@ -253,6 +258,8 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // Add click event for markers, emits up via pinClicked
       this.markers.forEach(marker => {
         marker.getElement().addEventListener('click', (e: MouseEvent) => {
+          this.isRotating = false;
+          this.mapObjects.mapFitBounds(this.map, this.markers);
           this.pinClicked.emit(marker.location);
           e.stopPropagation();
         });

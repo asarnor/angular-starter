@@ -19,7 +19,7 @@ export class MapboxComponent implements OnInit {
   public formSearch: FormGroup;
   public listingModal: MatDialogRef<ListingModalComponent>;
   /** Show all listings or just ROG ones */
-  public listingsShowAll = true;
+  public showBrandOnly = false;
   public heatmap = false;
   public flyTo: { zoom: number; coords: [number, number] };
 
@@ -34,6 +34,7 @@ export class MapboxComponent implements OnInit {
     // Create searchable locations
     this.formSearch = this.fb.group({
       zip: [{ value: '89147', disabled: false }, []],
+      isBrand: ['', []],
       priceLow: ['', []],
       priceHigh: ['', []],
       bedroomsMin: ['', []],
@@ -93,6 +94,10 @@ export class MapboxComponent implements OnInit {
     this.modalOpen(location);
   }
 
+  /**
+   * 
+   * @param listing 
+   */
   public modalOpen(listing: Models.LocationMLS) {
     this.listingModal = this.dialog.open(ListingModalComponent, {
       width: '95%',
@@ -112,6 +117,12 @@ export class MapboxComponent implements OnInit {
       // Zip code check
       if (formValue.zip.toString() !== '' && location.zip_code.toString() !== formValue.zip.toString()) {
         // return false;
+      }
+
+      // Check if this is a branded location
+      // if ((this.listingsShowAll && listing.metadata.isBrand) || !this.listingsShowAll) {
+      if (formValue.isBrand === true && location.metadata.isBrand !== true  ) {
+        return false;
       }
 
       const price = parseInt(location.listing_price.split('.')[0].replace(/[^a-zA-Z0-9]/g, ''));
@@ -194,7 +205,10 @@ export class MapboxComponent implements OnInit {
   public toggleSelected(action: { event: 'listingsRog' | 'heatmap'; data?: any }) {
     switch (action.event) {
       case 'listingsRog':
-        this.toggleRogListings();
+        this.showBrandOnly = !this.showBrandOnly;
+        this.formSearch.patchValue({isBrand: this.showBrandOnly});
+        this.locationsSearch();
+        // this.toggleRogListings();
         break;
       case 'heatmap':
         this.heatmap = !this.heatmap;
@@ -204,7 +218,7 @@ export class MapboxComponent implements OnInit {
 
   /**
    * Only show Rog listings
-   */
+  
   public toggleRogListings() {
     this.locations = this.locationsOriginal.filter(listing => {
       if ((this.listingsShowAll && listing.metadata.isBrand) || !this.listingsShowAll) {
@@ -214,4 +228,5 @@ export class MapboxComponent implements OnInit {
     });
     this.listingsShowAll = !this.listingsShowAll;
   }
+   */
 }
