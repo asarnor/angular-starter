@@ -100,12 +100,12 @@
       </div>
 
       <div class="mb-3">
-        <div class="mb-1"> Property Type</div>
+        <div class="mb-2"> Property Type</div>
         <mat-button-toggle-group name="propType" multiple class="w-100 d-flex" #group>
-          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_single_family')">House</mat-button-toggle>
-          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_condo')">Condo</mat-button-toggle>
-          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_townhouse')">Townhouse</mat-button-toggle>
-          <mat-button-toggle class="flex-fill" (change)="propTypeChanged($event, 'is_multi_family')">Multi-family</mat-button-toggle>
+          <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_single_family')">House</mat-button-toggle>
+          <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_condo')">Condo</mat-button-toggle>
+          <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_townhouse')">Townhouse</mat-button-toggle>
+          <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_multi_family')">Multi-family</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 

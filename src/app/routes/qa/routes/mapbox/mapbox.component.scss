@@ -8,9 +8,23 @@
 .btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;position:sticky; top:0;z-index:5;}
 
 .map-container{height:calc(100vh - 46px);position:relative;
-    .map-container-main{height:calc(100vh - 46px);}
+    .map-container-main{height:calc(100vh - 46px);position:relative;}
     .map-container-box{position:relative;left:0;transition: .2s ease-in;}
     .map-container-sidebar{background:#fff;overflow-y: auto;}
+    
+    /* */
+    .maps-loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        text-align: center;
+        font-size: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+     
 }
 
 /* Mobile Only */

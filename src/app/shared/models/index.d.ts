@@ -43,8 +43,8 @@ declare namespace Models {
     property_id?: number;
     square_feet?: string;
     thumbnail_url?: string;
-    total_bathrooms?: string;
-    total_bedrooms?: string;
+    total_bathrooms?: number;
+    total_bedrooms?: number;
     year_built?: string;
     zip_code?: number;
     metadata?: any;
