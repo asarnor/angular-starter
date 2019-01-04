@@ -12,7 +12,8 @@ body .mat-dialog-container { padding: 0;
   .close:focus { outline: 0; }
 }
 
-@include media-breakpoint-down(md){
+@include media-breakpoint-down(lg){
     .mat-dialog-container{margin-top:1rem;margin-bottom:1rem; }
     .cdk-overlay-pane{max-width: 95vw!important;width: 95%!important;}
+    .cdk-global-overlay-wrapper{overflow-y: auto;}
 }

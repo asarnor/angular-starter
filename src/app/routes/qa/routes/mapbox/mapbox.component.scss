@@ -7,10 +7,10 @@
 
 .btn-sidebar-toggle{border-radius:0;box-shadow:0;width:100%;position:sticky; top:0;z-index:5;}
 
-.map-container{height:calc(100vh - 46px);position:relative;
+.map-container{height:calc(100vh - 46px);position:relative;overflow-x: hidden;
     .map-container-main{height:calc(100vh - 46px);position:relative;}
     .map-container-box{position:relative;left:0;transition: .2s ease-in;}
-    .map-container-sidebar{background:#fff;overflow-y: auto;}
+    .map-container-sidebar{height:calc(100vh - 46px);background:#fff;overflow-y: auto;}
     
     /* */
     .maps-loading {
