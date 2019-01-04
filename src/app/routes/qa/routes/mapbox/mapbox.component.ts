@@ -95,7 +95,7 @@ export class MapboxComponent implements OnInit {
 
   public modalOpen(listing: Models.LocationMLS) {
     this.listingModal = this.dialog.open(ListingModalComponent, {
-      width: '90%',
+      width: '95%',
       data: listing,
     });
   }
