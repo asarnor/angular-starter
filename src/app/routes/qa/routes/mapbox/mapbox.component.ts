@@ -109,9 +109,8 @@ export class MapboxComponent implements OnInit {
   }
 
 
+  /** When a toggle event is emitted up from the toggles component */
   public toggleSelected(action: {event: 'listingsRog' | 'heatmap', data?: any}) {
-    console.log(action);
-   
     switch (action.event) {
       case 'listingsRog':
       this.toggleRogListings();
