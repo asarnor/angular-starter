@@ -68,7 +68,6 @@ export class MapboxComponent implements OnInit {
           longitude: location.display_lng,
         };
       });
-      this.locationsOriginal.length = 400;
       this.locations = [...this.locationsOriginal];
       this.ref.markForCheck();
     });
