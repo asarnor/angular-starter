@@ -210,7 +210,7 @@ export class MapboxComponent implements OnInit {
     console.log(action);
     switch (action.event) {
       case 'listingsRog':
-        this.showBrandOnly = !this.showBrandOnly;
+        this.showBrandOnly = action.data;
         this.formSearch.patchValue({isBrand: this.showBrandOnly});
         this.locationsSearch();
         // this.toggleRogListings();

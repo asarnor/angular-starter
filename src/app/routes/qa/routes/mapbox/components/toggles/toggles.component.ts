@@ -12,6 +12,15 @@ export class TogglesComponent implements OnInit {
 
   @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
 
+  public toggleMenu = {
+    rogListings: false
+  };
+
+  public toggleActive = {
+    rogListings: false,
+    heatmap: false
+  };
+
   constructor() { }
 
   ngOnInit() {

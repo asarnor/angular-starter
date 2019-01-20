@@ -1,37 +1,77 @@
 <div class="toggles">
+  <div class="flyout" *ngIf="toggleMenu?.rogListings">
+    <div class="btn-group">
+      <button
+        type="button"
+        class="btn btn-pin"
+        [disabled]="!locations?.length"
+        [ngClass]="{'active' : !toggleActive.rogListings }"
+        (click)="toggleSelected.emit({ event: 'listingsRog', data: false });toggleActive.rogListings = false; toggleMenu.rogListings = false;"
+        title="Toggle ROG only listings"
+      ></button>
+      <button
+      type="button"
+      class="btn btn-pin-rog"
+      [disabled]="!locations?.length"
+      [ngClass]="{'active' : toggleActive.rogListings }"
+      (click)="toggleSelected.emit({ event: 'listingsRog', data: true });toggleActive.rogListings = true;toggleMenu.rogListings = false;"
+      title="Toggle ROG only listings"
+    ></button>
+    </div>
+  </div>
+  <p class="mb-2">
+    <button type="button" class="btn btn-rog" [disabled]="!locations?.length" 
+    (click)="toggleMenu.rogListings = !toggleMenu.rogListings"
+    title="Toggle ROG only listings"></button>
+  </p>
+<!--
   <p class="mb-2">
     <button
-    type="button"
+      type="button"
       class="btn btn-rog"
-      (click)="toggleSelected.emit({ event: 'listingsRog' })"
+      (click)="toggleMenu.rogListings = !toggleMenu.rogListings"
       [disabled]="!locations?.length"
       title="Toggle ROG only listings"
     ></button>
   </p>
+  -->
   <p class="mb-2">
     <button
-    type="button"
+      type="button"
       class="btn btn-heatmap"
-      (click)="toggleSelected.emit({ event: 'heatmap' })"
+      [ngClass]="{'active' : toggleActive.heatmap }"
+      (click)="toggleSelected.emit({ event: 'heatmap' });toggleActive.heatmap = !toggleActive.heatmap "
       [disabled]="!locations?.length"
       title="Toggle Heatmap"
     ></button>
   </p>
   <p class="mb-2">
     <button
-    type="button"
+      type="button"
       [matMenuTriggerFor]="appMenu"
       class="btn btn-maptype"
       [disabled]="!locations?.length"
       title="Choose different map styles"
     ></button>
     <mat-menu #appMenu="matMenu" xPosition="before" yPosition="below">
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'basic' })">Basic</button> 
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'streets' })">Streets</button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'bright' })">Bright</button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'light' })">Light</button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'dark' })">Dark</button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'satellite' })">Satellite</button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'basic' })">
+        Basic
+      </button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'streets' })">
+        Streets
+      </button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'bright' })">
+        Bright
+      </button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'light' })">
+        Light
+      </button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'dark' })">
+        Dark
+      </button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'satellite' })">
+        Satellite
+      </button>
     </mat-menu>
   </p>
 </div>
