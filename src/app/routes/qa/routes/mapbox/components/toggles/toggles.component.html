@@ -5,42 +5,69 @@
         type="button"
         class="btn btn-pin"
         [disabled]="!locations?.length"
-        [ngClass]="{'active' : !toggleActive.rogListings }"
-        (click)="toggleSelected.emit({ event: 'listingsRog', data: false });toggleActive.rogListings = false; toggleMenu.rogListings = false;"
+        [ngClass]="{ active: !toggleActive.rogListings }"
+        (click)="
+          toggleSelected.emit({ event: 'listingsRog', data: false });
+          toggleActive.rogListings = false;
+          toggleMenu.rogListings = false
+        "
         title="Toggle ROG only listings"
       ></button>
       <button
-      type="button"
-      class="btn btn-pin-rog"
-      [disabled]="!locations?.length"
-      [ngClass]="{'active' : toggleActive.rogListings }"
-      (click)="toggleSelected.emit({ event: 'listingsRog', data: true });toggleActive.rogListings = true;toggleMenu.rogListings = false;"
-      title="Toggle ROG only listings"
-    ></button>
+        type="button"
+        class="btn btn-pin-rog"
+        [disabled]="!locations?.length"
+        [ngClass]="{ active: toggleActive.rogListings }"
+        (click)="
+          toggleSelected.emit({ event: 'listingsRog', data: true });
+          toggleActive.rogListings = true;
+          toggleMenu.rogListings = false
+        "
+        title="Toggle ROG only listings"
+      ></button>
     </div>
   </div>
-  <p class="mb-2">
-    <button type="button" class="btn btn-rog" [disabled]="!locations?.length" 
-    (click)="toggleMenu.rogListings = !toggleMenu.rogListings"
-    title="Toggle ROG only listings"></button>
-  </p>
-<!--
   <p class="mb-2">
     <button
       type="button"
       class="btn btn-rog"
-      (click)="toggleMenu.rogListings = !toggleMenu.rogListings"
       [disabled]="!locations?.length"
+      (click)="toggleOpen('rogListings', !toggleMenu.rogListings);"
       title="Toggle ROG only listings"
     ></button>
   </p>
+
+  <!--
+    MLS STATUS
+  -->
+  <div class="flyout" *ngIf="toggleMenu?.mlsStatus" style="margin-top:-1rem;">
+    <mat-button-toggle-group multiple>
+      <mat-button-toggle value="Active" [checked]="toggleActive.mlsStatusActive" >Active</mat-button-toggle>
+      <mat-button-toggle value="Pending" [checked]="toggleActive.mlsStatusPending">Pending</mat-button-toggle>
+      <mat-button-toggle value="Withdrawn" [checked]="toggleActive.mlsStatusWithdrawn">Withdrawn</mat-button-toggle>
+      <mat-button-toggle value="Sold" [checked]="toggleActive.mlsStatusSold">Sold</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <p class="mb-2">
+    <button
+      type="button"
+      class="btn p-0"
+      [disabled]="!locations?.length"
+      (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus);"
+    >
+    <i class="fa fa-home" aria-hidden="true"></i>
+    </button>
+  </p>
+
+  <!--
+    Heatmap Toggle
   -->
   <p class="mb-2">
     <button
       type="button"
       class="btn btn-heatmap"
-      [ngClass]="{'active' : toggleActive.heatmap }"
-      (click)="toggleSelected.emit({ event: 'heatmap' });toggleActive.heatmap = !toggleActive.heatmap "
+      [ngClass]="{ active: toggleActive.heatmap }"
+      (click)="toggleSelected.emit({ event: 'heatmap' }); toggleActive.heatmap = !toggleActive.heatmap"
       [disabled]="!locations?.length"
       title="Toggle Heatmap"
     ></button>

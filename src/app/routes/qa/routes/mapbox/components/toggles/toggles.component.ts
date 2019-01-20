@@ -12,18 +12,35 @@ export class TogglesComponent implements OnInit {
 
   @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
 
-  public toggleMenu = {
-    rogListings: false
+  public toggleMenu: { [key: string]: boolean} = {
+    rogListings: false,
+    mlsStatus: false
   };
 
-  public toggleActive = {
+  public toggleActive: { [key: string]: boolean} = {
     rogListings: false,
-    heatmap: false
+    heatmap: false,
+    mlsStatusActive: true,
+    mlsStatusPending: false,
+    mlsStatusWithdrawn: false,
+    mlsStatusSold: false,
   };
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+
+  /**
+   * Open a flyout menu, close all others first
+   * @param key 
+   * @param val 
+   */
+  public toggleOpen(key: string, val: boolean) {
+    console.log(key, val);
+    Object.keys(this.toggleMenu).forEach(key2 => this.toggleMenu[key2] = false);
+    this.toggleMenu[key] = val;
   }
 
 }
