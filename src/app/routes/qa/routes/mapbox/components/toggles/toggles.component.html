@@ -32,7 +32,7 @@
       type="button"
       class="btn btn-rog"
       [disabled]="!locations?.length"
-      (click)="toggleOpen('rogListings', !toggleMenu.rogListings);"
+      (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
       title="Toggle ROG only listings"
     ></button>
   </p>
@@ -42,7 +42,7 @@
   -->
   <div class="flyout" *ngIf="toggleMenu?.mlsStatus">
     <mat-button-toggle-group multiple>
-      <mat-button-toggle value="Active" [checked]="toggleActive.mlsStatusActive" >Active</mat-button-toggle>
+      <mat-button-toggle value="Active" [checked]="toggleActive.mlsStatusActive">Active</mat-button-toggle>
       <mat-button-toggle value="Pending" [checked]="toggleActive.mlsStatusPending">Pending</mat-button-toggle>
       <mat-button-toggle value="Withdrawn" [checked]="toggleActive.mlsStatusWithdrawn">Withdrawn</mat-button-toggle>
       <mat-button-toggle value="Sold" [checked]="toggleActive.mlsStatusSold">Sold</mat-button-toggle>
@@ -53,30 +53,114 @@
       type="button"
       class="btn p-0"
       [disabled]="!locations?.length"
-      (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus);"
+      (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
     >
-    <i class="fa fa-home" aria-hidden="true"></i>
+      <i class="fa fa-home" aria-hidden="true"></i>
     </button>
   </p>
 
-   <!--
+  <!--
     Days On The Market
   -->
   <div class="flyout" *ngIf="toggleMenu?.daysOnMarket">
-      <mat-button-toggle-group>
-        <mat-button-toggle value="Active" [checked]="true" >0 - 30</mat-button-toggle>
-        <mat-button-toggle value="Pending" [checked]="false">31-60</mat-button-toggle>
-        <mat-button-toggle value="Withdrawn" [checked]="false">90+</mat-button-toggle>
-      </mat-button-toggle-group>
+    <mat-button-toggle-group>
+      <mat-button-toggle value="Active" [checked]="true">0 - 30</mat-button-toggle>
+      <mat-button-toggle value="Pending" [checked]="false">31-60</mat-button-toggle>
+      <mat-button-toggle value="Withdrawn" [checked]="false">90+</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <p class="mb-2">
+    <button
+      type="button"
+      class="btn p-0"
+      [disabled]="!locations?.length"
+      (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)"
+    >
+      <i class="fa fa-sun-o" aria-hidden="true"></i>
+    </button>
+  </p>
+
+  <!--
+    Beds
+  -->
+  <div class="flyout" *ngIf="toggleMenu?.beds">
+    <div class="d-flex flex-row">
+      <div class="mr-2">
+        <mat-form-field appearance="outline" style="max-width:130px;">
+          <mat-select placeholder="Min Beds">
+            <mat-option value="option">1</mat-option>
+            <mat-option value="option">2</mat-option>
+            <mat-option value="option">3</mat-option>
+            <mat-option value="option">4</mat-option>
+            <mat-option value="option">5+</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="mr-2">
+        <mat-form-field appearance="outline" style="max-width:130px;">
+          <mat-select placeholder="Max Beds">
+            <mat-option value="option">2</mat-option>
+            <mat-option value="option">3</mat-option>
+            <mat-option value="option">4</mat-option>
+            <mat-option value="option">5+</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <a><i class="fa fa-ban fa-2x mt-2" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+  <p class="mb-2">
+    <button
+      type="button"
+      class="btn p-0"
+      [disabled]="!locations?.length"
+      (click)="toggleOpen('beds', !toggleMenu.beds)"
+    >
+      <i class="fa fa-bed" aria-hidden="true"></i>
+    </button>
+  </p>
+
+    <!--
+Baths
+  -->
+  <div class="flyout" *ngIf="toggleMenu?.baths">
+      <div class="d-flex flex-row">
+        <div class="mr-2">
+          <mat-form-field appearance="outline" style="max-width:130px;">
+            <mat-select placeholder="Min Baths">
+              <mat-option value="option">1</mat-option>
+              <mat-option value="option">2</mat-option>
+              <mat-option value="option">3</mat-option>
+              <mat-option value="option">4</mat-option>
+              <mat-option value="option">5+</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="mr-2">
+          <mat-form-field appearance="outline" style="max-width:130px;">
+            <mat-select placeholder="Max Baths">
+              <mat-option value="option">2</mat-option>
+              <mat-option value="option">3</mat-option>
+              <mat-option value="option">4</mat-option>
+              <mat-option value="option">5+</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <a><i class="fa fa-ban fa-2x mt-2" aria-hidden="true"></i></a>
+        </div>
+      </div>
     </div>
     <p class="mb-2">
       <button
         type="button"
         class="btn p-0"
         [disabled]="!locations?.length"
-        (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket);"
+        (click)="toggleOpen('baths', !toggleMenu.baths)"
       >
-        <i class="fa fa-sun-o" aria-hidden="true"></i>
+        <i class="fa fa-bath" aria-hidden="true"></i>
       </button>
     </p>
 
