@@ -29,12 +29,14 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() locations: Map.Location[];
   /** Mapbox Api key */
   @Input() apiKey = apiKey;
-/** Default zoom level. 15.5 is optimical for 3d buildings */
+  /** Default zoom level. 15.5 is optimical for 3d buildings */
   @Input() zoom = 15.5;
-/**Show/hide heatmap on default */
+  /**Show/hide heatmap on default */
+  @Input() style = 'streets';
+  /**Show/hide heatmap on default */
   @Input() heatmap = false;
   /** Fly and zoom to this location, coords should be lat long */
-  @Input() flyTo: {zoom: number, coords: [number, number]};
+  @Input() flyTo: { zoom: number; coords: [number, number] };
   /** When a pin is clicked on */
   @Output() pinClicked = new EventEmitter<any>();
 
@@ -55,17 +57,18 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(model: any) {
+
+    // On style changes
+    if (model.style && this.isLoaded) {
+      this.map.setStyle(`mapbox://styles/mapbox/${this.style}-v9`);
+    }
+
     // If locations change
     if (model.locations && this.isLoaded) {
-
-       // Stop rotating
-       // this.isRotating = false;
-
-
-
       if (this.heatmap) {
         this.heatMapAdd();
       } else {
+        this.isRotating = false;
         this.locationsAdd();
       }
     }
@@ -86,9 +89,8 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     // If flyto is passed down, jump the map to that location
     if (model.flyTo && this.isLoaded) {
       this.isRotating = false;
-      this.mapObjects.flyToLocation(this.map, this.flyTo.coords, {zoom: 15, speed: 3});
+      this.mapObjects.flyToLocation(this.map, this.flyTo.coords, { zoom: 15, speed: 3 });
     }
-
   }
 
   ngAfterViewInit() {
@@ -103,10 +105,10 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       this.mapInit(); // Mapbox already loaded, init map
       this.isLoaded = true;
     } else {
-      // Dynamically load bing js
+      // Dynamically load mapbox js
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      // Callback query param will fire after bing maps successfully loads
+      // Callback query param will fire after mapbox maps successfully loads
       script.src = scriptSrc;
       script.onload = () => {
         this.mapInit();
@@ -143,7 +145,7 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
     // Create new map
     this.map = new (<any>window).mapboxgl.Map({
       container: this.uniqueId,
-      style: 'mapbox://styles/mapbox/streets-v9', // basic-v9
+      style: `mapbox://styles/mapbox/${this.style}-v9`, // basic-v9
       zoom: this.zoom,
       center: [-115.156665, 36.1383415], // 36.1383415,"display_lng":-115.156665
       // center: coords,
@@ -259,12 +261,12 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       this.markers.forEach(marker => {
         marker.getElement().addEventListener('click', (e: MouseEvent) => {
           this.isRotating = false;
-          this.mapObjects.mapFitBounds(this.map, this.markers);
+          // this.mapObjects.mapFitBounds(this.map, this.markers);
           this.pinClicked.emit(marker.location);
           e.stopPropagation();
         });
       });
-     
+
       // Add markers to map
       this.mapObjects.markersAdd(this.map, this.markers);
       if (fitBounds) {

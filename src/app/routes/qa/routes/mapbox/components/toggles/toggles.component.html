@@ -1,4 +1,37 @@
-<div class="container-fluid pt-2 pb-2">
-  <button class="btn btn-rog mr-2" (click)="toggleSelected.emit({event: 'listingsRog'})" [disabled]="!locations?.length" title=""></button>
-  <button class="btn btn-heatmap mr-2" (click)="toggleSelected.emit({event: 'heatmap'})" [disabled]="!locations?.length" title=""></button>
+<div class="toggles">
+  <p class="mb-2">
+    <button
+    type="button"
+      class="btn btn-rog"
+      (click)="toggleSelected.emit({ event: 'listingsRog' })"
+      [disabled]="!locations?.length"
+      title="Toggle ROG only listings"
+    ></button>
+  </p>
+  <p class="mb-2">
+    <button
+    type="button"
+      class="btn btn-heatmap"
+      (click)="toggleSelected.emit({ event: 'heatmap' })"
+      [disabled]="!locations?.length"
+      title="Toggle Heatmap"
+    ></button>
+  </p>
+  <p class="mb-2">
+    <button
+    type="button"
+      [matMenuTriggerFor]="appMenu"
+      class="btn btn-maptype"
+      [disabled]="!locations?.length"
+      title="Choose different map styles"
+    ></button>
+    <mat-menu #appMenu="matMenu" xPosition="before" yPosition="below">
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'basic' })">Basic</button> 
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'streets' })">Streets</button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'bright' })">Bright</button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'light' })">Light</button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'dark' })">Dark</button>
+      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'satellite' })">Satellite</button>
+    </mat-menu>
+  </p>
 </div>

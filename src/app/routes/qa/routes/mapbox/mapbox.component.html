@@ -12,15 +12,18 @@
             locationsOriginal | count
           }}) Listings in your area
         </button>
-        <app-toggles [locations]="locations" (toggleSelected)="toggleSelected($event)"></app-toggles>
       </div>
 
       <div class="map-container-main">
+        <div style="position:absolute;left:0px;top:0px;z-index:10;background-color:#e3e3e3;padding: .5rem;height: 100%;box-shadow: 1px 1px 6px rgba(0,0,0,.25);">
+            <app-toggles [locations]="locations" (toggleSelected)="toggleSelected($event)"></app-toggles>
+        </div>
         <!-- Main map -->
         <app-map-mapbox *ngIf="locations"
           [locations]="locations"
           [flyTo]="flyTo"
           [heatmap]="heatmap"
+          [style]="mapStyle"
           (pinClicked)="pinClicked($event)"
         ></app-map-mapbox>
         <div *ngIf="!locations" class="maps-loading"><i class="fa fa-spinner fa-spin"></i> Loading Map...</div>

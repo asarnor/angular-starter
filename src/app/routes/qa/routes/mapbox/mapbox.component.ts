@@ -20,7 +20,9 @@ export class MapboxComponent implements OnInit {
   public listingModal: MatDialogRef<ListingModalComponent>;
   /** Show all listings or just ROG ones */
   public showBrandOnly = false;
+
   public heatmap = false;
+  public mapStyle = 'streets';
   public flyTo: { zoom: number; coords: [number, number] };
 
   constructor(
@@ -49,6 +51,7 @@ export class MapboxComponent implements OnInit {
       is_townhouse: [true, []],
       is_condo: [true, []],
     });
+    this.formSearch.controls['zip'].disable();
 
     this.formSearch.valueChanges.subscribe(val => console.log(val));
 
@@ -101,6 +104,7 @@ export class MapboxComponent implements OnInit {
   public modalOpen(listing: Models.LocationMLS) {
     this.listingModal = this.dialog.open(ListingModalComponent, {
       width: '95%',
+      maxHeight: '90vh',
       data: listing,
     });
   }
@@ -112,7 +116,7 @@ export class MapboxComponent implements OnInit {
   public locationsSearch() {
     // this.locations = [...this.locationsOriginal];
 
-    const formValue = this.formSearch.value;
+    const formValue = this.formSearch.getRawValue();
     this.locations = this.locationsOriginal.filter(location => {
       // Zip code check
       if (formValue.zip.toString() !== '' && location.zip_code.toString() !== formValue.zip.toString()) {
@@ -196,13 +200,14 @@ export class MapboxComponent implements OnInit {
 
       return true;
     });
-    console.log(this.locations.length);
+
     this.sidebarMobileShow = false;
     document.getElementById('map-container').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /** When a toggle event is emitted up from the toggles component */
-  public toggleSelected(action: { event: 'listingsRog' | 'heatmap'; data?: any }) {
+  public toggleSelected(action: { event: 'listingsRog' | 'heatmap' | 'mapStyle'; data?: any }) {
+    console.log(action);
     switch (action.event) {
       case 'listingsRog':
         this.showBrandOnly = !this.showBrandOnly;
@@ -212,6 +217,9 @@ export class MapboxComponent implements OnInit {
         break;
       case 'heatmap':
         this.heatmap = !this.heatmap;
+        break;
+        case 'mapStyle':
+        this.mapStyle = action.data;
         break;
     }
   }

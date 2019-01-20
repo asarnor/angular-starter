@@ -94,4 +94,9 @@ body {
     }
     &.mat-stroked-button{background-image: linear-gradient(to bottom, #fff 20%, #e9ecef 100%);}
   }
+
+  // Button toggle
+  .mat-button-toggle{
+    &.mat-button-toggle-checked{background-image: linear-gradient(to bottom, $interact-primary-lt 0%, $interact-primary 100%);color:#fff;}
+  }
 }

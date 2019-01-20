@@ -19,11 +19,15 @@ interface Statuses {
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
   /** Formgroup reference */
+  @Input() appearance = 'outline';
+  /** Formgroup reference */
   @Input() formGroup: FormGroup;
   /** The formControlName of this field */
   @Input() controlName: string;
   /** Placeholder text */
   @Input() placeholder: string;
+  /** Is disabled */
+  @Input() disabled = false;
   /** Form field type */
   @Input() type: 'text' | 'select' = 'text';
   /** If form field type is select, supply list of options */
@@ -50,6 +54,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         this.required = true;
       }
     }
+
+    // Easily disable control
+    if (this.disabled) {
+      this.formGroup.controls[this.controlName].disable();
+    }
+
     // When this form control value changes, update the status
     this.formGroup.controls[this.controlName].valueChanges.subscribe(val => this.statusUpdate(val));
   }

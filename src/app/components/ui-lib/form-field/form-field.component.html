@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup" *ngIf="formGroup && controlName" class="w-100">
-  <mat-form-field appearance="outline">
+  <mat-form-field [appearance]="appearance">
     <mat-label>{{ placeholder }}</mat-label>
     <ng-container *ngIf="status.dirty">
       <i
@@ -9,9 +9,10 @@
       ></i>
       <i class="fa fa-warning red field-icon anim-bounce-in" aria-hidden="true" *ngIf="status.invalid"></i>
     </ng-container>
-
+    
     <!-- Text/input field -->
     <input matInput [formControlName]="controlName" [required]="required" *ngIf="type === 'text'" />
+
     <!-- Select field-->
     <mat-select
       [placeholder]="placeholder"

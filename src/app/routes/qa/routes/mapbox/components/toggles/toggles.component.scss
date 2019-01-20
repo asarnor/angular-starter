@@ -1,13 +1,9 @@
-.container-fluid{ background-color:#f4f4f4;}
+.container-fluid{}
 .btn:disabled{opacity:.3;}
-.btn{
-  width: 25px;
-  height: 25px;
-  background-color: transparent;
-    background-size: contain;
-    background-repeat: no-repeat;
-  cursor: pointer;
-  &.btn-rog {background-image: url(/assets/img/btn-brand.png); }
+.btn{width: 35px;height: 35px;background-color: transparent;background-size: contain;background-repeat: no-repeat;cursor: pointer;background-color:#fff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.32), 0 2px 10px 0 rgba(0, 0, 0, 0.24);
+  &.btn-rog {background-image: url(/assets/img/btn-brand.png);}
   &.btn-heatmap{background-image: url(/assets/img/btn-heatmap.png);}
+  &.btn-maptype{background-image: url(/assets/img/btn-maptype.png);}
 }
 
