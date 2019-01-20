@@ -98,5 +98,6 @@ body {
   // Button toggle
   .mat-button-toggle{
     &.mat-button-toggle-checked{background-image: linear-gradient(to bottom, $interact-primary-lt 0%, $interact-primary 100%);color:#fff;}
+    .mat-button-toggle-label-content {line-height: 36px;}
   }
 }

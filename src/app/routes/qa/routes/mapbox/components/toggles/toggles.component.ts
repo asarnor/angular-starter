@@ -14,7 +14,8 @@ export class TogglesComponent implements OnInit {
 
   public toggleMenu: { [key: string]: boolean} = {
     rogListings: false,
-    mlsStatus: false
+    mlsStatus: false,
+    daysOnMarket: false
   };
 
   public toggleActive: { [key: string]: boolean} = {

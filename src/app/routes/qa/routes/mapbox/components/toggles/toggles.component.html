@@ -40,7 +40,7 @@
   <!--
     MLS STATUS
   -->
-  <div class="flyout" *ngIf="toggleMenu?.mlsStatus" style="margin-top:-1rem;">
+  <div class="flyout" *ngIf="toggleMenu?.mlsStatus">
     <mat-button-toggle-group multiple>
       <mat-button-toggle value="Active" [checked]="toggleActive.mlsStatusActive" >Active</mat-button-toggle>
       <mat-button-toggle value="Pending" [checked]="toggleActive.mlsStatusPending">Pending</mat-button-toggle>
@@ -58,6 +58,27 @@
     <i class="fa fa-home" aria-hidden="true"></i>
     </button>
   </p>
+
+   <!--
+    Days On The Market
+  -->
+  <div class="flyout" *ngIf="toggleMenu?.daysOnMarket">
+      <mat-button-toggle-group>
+        <mat-button-toggle value="Active" [checked]="true" >0 - 30</mat-button-toggle>
+        <mat-button-toggle value="Pending" [checked]="false">31-60</mat-button-toggle>
+        <mat-button-toggle value="Withdrawn" [checked]="false">90+</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket);"
+      >
+        <i class="fa fa-sun-o" aria-hidden="true"></i>
+      </button>
+    </p>
 
   <!--
     Heatmap Toggle
