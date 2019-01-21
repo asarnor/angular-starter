@@ -3,7 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ListingModalComponent } from './components/listing-modal/listing-modal.component';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-mapbox',
   templateUrl: './mapbox.component.html',
@@ -18,8 +20,6 @@ export class MapboxComponent implements OnInit {
 
   public formSearch: FormGroup;
   public listingModal: MatDialogRef<ListingModalComponent>;
-  /** Show all listings or just ROG ones */
-  public showBrandOnly = false;
 
   public heatmap = false;
   public mapStyle = 'streets';
@@ -58,8 +58,7 @@ export class MapboxComponent implements OnInit {
     });
     this.formSearch.controls['zip'].disable();
 
-    this.formSearch.valueChanges.subscribe(val => {
-      console.log(val);
+    this.formSearch.valueChanges.subscribe(() => {
       this.locationsSearch();
     });
 
@@ -268,15 +267,8 @@ export class MapboxComponent implements OnInit {
   }
 
   /** When a toggle event is emitted up from the toggles component */
-  public toggleSelected(action: { event: 'listingsRog' | 'heatmap' | 'mapStyle'; data?: any }) {
-    console.log(action);
+  public toggleSelected(action: { event: 'heatmap' | 'mapStyle'; data?: any }) {
     switch (action.event) {
-      case 'listingsRog':
-        this.showBrandOnly = action.data;
-        this.formSearch.patchValue({isBrand: this.showBrandOnly});
-        this.locationsSearch();
-        // this.toggleRogListings();
-        break;
       case 'heatmap':
         this.heatmap = !this.heatmap;
         break;

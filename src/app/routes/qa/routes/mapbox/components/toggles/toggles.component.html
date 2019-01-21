@@ -33,6 +33,59 @@
     </p>
 
     <!--
+    Property Type
+    -->
+    <div class="flyout small" *ngIf="toggleMenu?.propertyType">
+      <mat-button-toggle-group name="propType" multiple class="w-100 d-flex" #group>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_single_family"
+          (click)="formChangeValue('is_single_family', !formSearch.value.is_single_family)"
+        >
+          House
+        </mat-button-toggle>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_condo"
+          (click)="formChangeValue('is_condo', !formSearch.value.is_condo)"
+        >
+          Condo
+        </mat-button-toggle>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_townhouse"
+          (click)="formChangeValue('is_townhouse', !formSearch.value.is_townhouse)"
+        >
+          Townhome
+        </mat-button-toggle>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_multi_family"
+          (click)="formChangeValue('is_multi_family', !formSearch.value.is_multi_family)"
+        >
+          Multi-family
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('propertyType', !toggleMenu.propertyType)"
+        [ngClass]="{
+          selected: toggleMenu.propertyType,
+          active:
+            !formSearch.value.is_single_family ||
+            !formSearch.value.is_condo ||
+            !formSearch.value.is_townhouse ||
+            !formSearch.value.is_multi_family
+        }"
+      >
+        <i class="fa fa-home" aria-hidden="true"></i>
+      </button>
+    </p>
+
+    <!--
     MLS STATUS
     -->
     <div class="flyout" *ngIf="toggleMenu?.mlsStatus">
@@ -68,7 +121,14 @@
         type="button"
         class="btn p-0"
         (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
-        [ngClass]="{ selected: toggleMenu.mlsStatus }"
+        [ngClass]="{
+          selected: toggleMenu.mlsStatus,
+          active:
+            !formSearch.value.listing_status_active ||
+            !formSearch.value.listing_status_pending ||
+            !formSearch.value.listing_status_withdrawn ||
+            !formSearch.value.listing_status_sold
+        }"
       >
         <i class="fa fa-info-circle" aria-hidden="true"></i>
       </button>
@@ -85,7 +145,12 @@
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)" [ngClass]="{ 'selected' : toggleMenu.daysOnMarket }">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)"
+        [ngClass]="{ 'selected': toggleMenu.daysOnMarket, 'active': formSearch.value.days_on_market !== '2' }"
+      >
         <i class="fa fa-calendar" aria-hidden="true"></i>
       </button>
     </p>
@@ -97,24 +162,49 @@
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="mr-2" formControlName="bedroomsMin">
           <mat-button-toggle value="">No Min</mat-button-toggle>
-          <mat-button-toggle value="1">1</mat-button-toggle>
-          <mat-button-toggle value="2">2</mat-button-toggle>
-          <mat-button-toggle value="3">3</mat-button-toggle>
-          <mat-button-toggle value="4">4</mat-button-toggle>
-          <mat-button-toggle value="5">5+</mat-button-toggle>
+          <mat-button-toggle
+            value="1"
+            [disabled]="formSearch.value.bedroomsMax < 1 && formSearch.value.bedroomsMax !== ''"
+            >1</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="2"
+            [disabled]="formSearch.value.bedroomsMax < 2 && formSearch.value.bedroomsMax !== ''"
+            >2</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="3"
+            [disabled]="formSearch.value.bedroomsMax < 3 && formSearch.value.bedroomsMax !== ''"
+            >3</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="4"
+            [disabled]="formSearch.value.bedroomsMax < 4 && formSearch.value.bedroomsMax !== ''"
+            >4</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="5"
+            [disabled]="formSearch.value.bedroomsMax < 5 && formSearch.value.bedroomsMax !== ''"
+            >5+</mat-button-toggle
+          >
         </mat-button-toggle-group>
         <mat-button-toggle-group vertical class="mr-2" formControlName="bedroomsMax">
           <mat-button-toggle value="">No Max</mat-button-toggle>
-          <mat-button-toggle value="1">1</mat-button-toggle>
-          <mat-button-toggle value="2">2</mat-button-toggle>
-          <mat-button-toggle value="3">3</mat-button-toggle>
-          <mat-button-toggle value="4">4</mat-button-toggle>
-          <mat-button-toggle value="5">5+</mat-button-toggle>
+          <mat-button-toggle value="1" [disabled]="formSearch.value.bedroomsMin > 1">1</mat-button-toggle>
+          <mat-button-toggle value="2" [disabled]="formSearch.value.bedroomsMin > 2">2</mat-button-toggle>
+          <mat-button-toggle value="3" [disabled]="formSearch.value.bedroomsMin > 3">3</mat-button-toggle>
+          <mat-button-toggle value="4" [disabled]="formSearch.value.bedroomsMin > 4">4</mat-button-toggle>
+          <mat-button-toggle value="5" [disabled]="formSearch.value.bedroomsMin > 5">5+</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('beds', !toggleMenu.beds)" [ngClass]="{ 'selected' : toggleMenu.beds }">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('beds', !toggleMenu.beds)"
+        [ngClass]="{ selected: toggleMenu.beds, 'active': formSearch.value.bedroomsMin !== '' || formSearch.value.bedroomsMax !== '' }"
+      >
         <i class="fa fa-bed" aria-hidden="true"></i>
       </button>
     </p>
@@ -126,11 +216,21 @@
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMin">
           <mat-button-toggle value="">No Min</mat-button-toggle>
-          <mat-button-toggle value="1">1</mat-button-toggle>
-          <mat-button-toggle value="2">2</mat-button-toggle>
-          <mat-button-toggle value="3">3</mat-button-toggle>
-          <mat-button-toggle value="4">4</mat-button-toggle>
-          <mat-button-toggle value="5">5+</mat-button-toggle>
+          <mat-button-toggle value="1" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''"
+            >1</mat-button-toggle
+          >
+          <mat-button-toggle value="2" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''"
+            >2</mat-button-toggle
+          >
+          <mat-button-toggle value="3" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''"
+            >3</mat-button-toggle
+          >
+          <mat-button-toggle value="4" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''"
+            >4</mat-button-toggle
+          >
+          <mat-button-toggle value="5" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''"
+            >5+</mat-button-toggle
+          >
         </mat-button-toggle-group>
         <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMax">
           <mat-button-toggle value="">No Max</mat-button-toggle>
@@ -143,7 +243,12 @@
       </div>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('baths', !toggleMenu.baths)" [ngClass]="{ 'selected' : toggleMenu.baths }">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('baths', !toggleMenu.baths)"
+        [ngClass]="{ selected: toggleMenu.baths, 'active': formSearch.value.bathsMin !== '' || formSearch.value.bathsMax !== '' }"
+      >
         <i class="fa fa-bath" aria-hidden="true"></i>
       </button>
     </p>
@@ -155,44 +260,49 @@
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="sm mr-2" formControlName="priceLow">
           <mat-button-toggle value="">No Min Price</mat-button-toggle>
-          <mat-button-toggle value="50000" [checked]="">$50k</mat-button-toggle>
-          <mat-button-toggle value="10000" [checked]="">$100k</mat-button-toggle>
-          <mat-button-toggle value="150000" [checked]="">$150k</mat-button-toggle>
-          <mat-button-toggle value="200000" [checked]="">$200k</mat-button-toggle>
-          <mat-button-toggle value="250000" [checked]="">$250k</mat-button-toggle>
-          <mat-button-toggle value="300000" [checked]="">$300k</mat-button-toggle>
-          <mat-button-toggle value="400000" [checked]="">$400k</mat-button-toggle>
-          <mat-button-toggle value="450000" [checked]="">$450k</mat-button-toggle>
-          <mat-button-toggle value="500000" [checked]="">$500k</mat-button-toggle>
-          <mat-button-toggle value="600000" [checked]="">$600k</mat-button-toggle>
-          <mat-button-toggle value="700000" [checked]="">$700k</mat-button-toggle>
-          <mat-button-toggle value="800000" [checked]="">$800k</mat-button-toggle>
-          <mat-button-toggle value="900000" [checked]="">$900k</mat-button-toggle>
-          <mat-button-toggle value="1000000" [checked]="">$1M+</mat-button-toggle>
+          <mat-button-toggle value="50000">$50k</mat-button-toggle>
+          <mat-button-toggle value="10000">$100k</mat-button-toggle>
+          <mat-button-toggle value="150000">$150k</mat-button-toggle>
+          <mat-button-toggle value="200000">$200k</mat-button-toggle>
+          <mat-button-toggle value="250000">$250k</mat-button-toggle>
+          <mat-button-toggle value="300000">$300k</mat-button-toggle>
+          <mat-button-toggle value="400000">$400k</mat-button-toggle>
+          <mat-button-toggle value="450000">$450k</mat-button-toggle>
+          <mat-button-toggle value="500000">$500k</mat-button-toggle>
+          <mat-button-toggle value="600000">$600k</mat-button-toggle>
+          <mat-button-toggle value="700000">$700k</mat-button-toggle>
+          <mat-button-toggle value="800000">$800k</mat-button-toggle>
+          <mat-button-toggle value="900000">$900k</mat-button-toggle>
+          <mat-button-toggle value="1000000">$1M+</mat-button-toggle>
         </mat-button-toggle-group>
 
         <mat-button-toggle-group vertical class="sm" formControlName="priceHigh">
           <mat-button-toggle value="">No Max Price</mat-button-toggle>
-          <mat-button-toggle value="50000" [checked]="">$50k</mat-button-toggle>
-          <mat-button-toggle value="10000" [checked]="">$100k</mat-button-toggle>
-          <mat-button-toggle value="150000" [checked]="">$150k</mat-button-toggle>
-          <mat-button-toggle value="200000" [checked]="">$200k</mat-button-toggle>
-          <mat-button-toggle value="250000" [checked]="">$250k</mat-button-toggle>
-          <mat-button-toggle value="300000" [checked]="">$300k</mat-button-toggle>
-          <mat-button-toggle value="400000" [checked]="">$400k</mat-button-toggle>
-          <mat-button-toggle value="450000" [checked]="">$450k</mat-button-toggle>
-          <mat-button-toggle value="500000" [checked]="">$500k</mat-button-toggle>
-          <mat-button-toggle value="600000" [checked]="">$600k</mat-button-toggle>
-          <mat-button-toggle value="700000" [checked]="">$700k</mat-button-toggle>
-          <mat-button-toggle value="800000" [checked]="">$800k</mat-button-toggle>
-          <mat-button-toggle value="900000" [checked]="">$900k</mat-button-toggle>
-          <mat-button-toggle value="1000000" [checked]="">$1M+</mat-button-toggle>
+          <mat-button-toggle value="50000">$50k</mat-button-toggle>
+          <mat-button-toggle value="10000">$100k</mat-button-toggle>
+          <mat-button-toggle value="150000">$150k</mat-button-toggle>
+          <mat-button-toggle value="200000">$200k</mat-button-toggle>
+          <mat-button-toggle value="250000">$250k</mat-button-toggle>
+          <mat-button-toggle value="300000">$300k</mat-button-toggle>
+          <mat-button-toggle value="400000">$400k</mat-button-toggle>
+          <mat-button-toggle value="450000">$450k</mat-button-toggle>
+          <mat-button-toggle value="500000">$500k</mat-button-toggle>
+          <mat-button-toggle value="600000">$600k</mat-button-toggle>
+          <mat-button-toggle value="700000">$700k</mat-button-toggle>
+          <mat-button-toggle value="800000">$800k</mat-button-toggle>
+          <mat-button-toggle value="900000">$900k</mat-button-toggle>
+          <mat-button-toggle value="1000000">$1M+</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
 
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('price', !toggleMenu.price)" [ngClass]="{ 'selected' : toggleMenu.price }">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('price', !toggleMenu.price)"
+        [ngClass]="{ selected: toggleMenu.price, 'active': formSearch.value.priceLow !== '' || formSearch.value.priceHigh !== '' }"
+      >
         <i class="fa fa-dollar" aria-hidden="true"></i>
       </button>
     </p>
@@ -204,80 +314,44 @@
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="sm mr-2" formControlName="sqFootageMin">
           <mat-button-toggle value="">No Min Sq Ft</mat-button-toggle>
-          <mat-button-toggle value="250" [checked]="">250</mat-button-toggle>
-          <mat-button-toggle value="500" [checked]="">500</mat-button-toggle>
-          <mat-button-toggle value="750" [checked]="">750</mat-button-toggle>
-          <mat-button-toggle value="1000" [checked]="">1000</mat-button-toggle>
-          <mat-button-toggle value="1250" [checked]="">1250</mat-button-toggle>
-          <mat-button-toggle value="1500" [checked]="">1500</mat-button-toggle>
-          <mat-button-toggle value="1750" [checked]="">1750</mat-button-toggle>
-          <mat-button-toggle value="2000" [checked]="">2000</mat-button-toggle>
-          <mat-button-toggle value="2500" [checked]="">2500</mat-button-toggle>
-          <mat-button-toggle value="3000" [checked]="">3000</mat-button-toggle>
-          <mat-button-toggle value="3500" [checked]="">3500</mat-button-toggle>
-          <mat-button-toggle value="4000" [checked]="">4000+</mat-button-toggle>
+          <mat-button-toggle value="250">250</mat-button-toggle>
+          <mat-button-toggle value="500">500</mat-button-toggle>
+          <mat-button-toggle value="750">750</mat-button-toggle>
+          <mat-button-toggle value="1000">1000</mat-button-toggle>
+          <mat-button-toggle value="1250">1250</mat-button-toggle>
+          <mat-button-toggle value="1500">1500</mat-button-toggle>
+          <mat-button-toggle value="1750">1750</mat-button-toggle>
+          <mat-button-toggle value="2000">2000</mat-button-toggle>
+          <mat-button-toggle value="2500">2500</mat-button-toggle>
+          <mat-button-toggle value="3000">3000</mat-button-toggle>
+          <mat-button-toggle value="3500">3500</mat-button-toggle>
+          <mat-button-toggle value="4000">4000+</mat-button-toggle>
         </mat-button-toggle-group>
         <mat-button-toggle-group vertical class="sm" formControlName="sqFootageMax">
           <mat-button-toggle value="">No Max Sq Ft</mat-button-toggle>
-          <mat-button-toggle value="250" [checked]="">250</mat-button-toggle>
-          <mat-button-toggle value="500" [checked]="">500</mat-button-toggle>
-          <mat-button-toggle value="750" [checked]="">750</mat-button-toggle>
-          <mat-button-toggle value="1000" [checked]="">1000</mat-button-toggle>
-          <mat-button-toggle value="1250" [checked]="">1250</mat-button-toggle>
-          <mat-button-toggle value="1500" [checked]="">1500</mat-button-toggle>
-          <mat-button-toggle value="1750" [checked]="">1750</mat-button-toggle>
-          <mat-button-toggle value="2000" [checked]="">2000</mat-button-toggle>
-          <mat-button-toggle value="2500" [checked]="">2500</mat-button-toggle>
-          <mat-button-toggle value="3000" [checked]="">3000</mat-button-toggle>
-          <mat-button-toggle value="3500" [checked]="">3500</mat-button-toggle>
-          <mat-button-toggle value="4000" [checked]="">4000+</mat-button-toggle>
+          <mat-button-toggle value="250">250</mat-button-toggle>
+          <mat-button-toggle value="500">500</mat-button-toggle>
+          <mat-button-toggle value="750">750</mat-button-toggle>
+          <mat-button-toggle value="1000">1000</mat-button-toggle>
+          <mat-button-toggle value="1250">1250</mat-button-toggle>
+          <mat-button-toggle value="1500">1500</mat-button-toggle>
+          <mat-button-toggle value="1750">1750</mat-button-toggle>
+          <mat-button-toggle value="2000">2000</mat-button-toggle>
+          <mat-button-toggle value="2500">2500</mat-button-toggle>
+          <mat-button-toggle value="3000">3000</mat-button-toggle>
+          <mat-button-toggle value="3500">3500</mat-button-toggle>
+          <mat-button-toggle value="4000">4000+</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('sqft', !toggleMenu.sqft)" [ngClass]="{ 'selected' : toggleMenu.sqft }">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('sqft', !toggleMenu.sqft)"
+        [ngClass]="{ selected: toggleMenu.sqft, 'active': formSearch.value.sqFootageMin !== '' || formSearch.value.sqFootageMax !== '' }"
+      >
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-      </button>
-    </p>
-
-    <!--
-   Property Type
-  -->
-    <div class="flyout small" *ngIf="toggleMenu?.propertyType">
-      <mat-button-toggle-group name="propType" multiple class="w-100 d-flex" #group>
-        <mat-button-toggle
-          class="flex-fill"
-          [checked]="formSearch.value.is_single_family"
-          (click)="formChangeValue('is_single_family', !formSearch.value.is_single_family)"
-        >
-          House
-        </mat-button-toggle>
-        <mat-button-toggle
-          class="flex-fill"
-          [checked]="formSearch.value.is_condo"
-          (click)="formChangeValue('is_condo', !formSearch.value.is_condo)"
-        >
-          Condo
-        </mat-button-toggle>
-        <mat-button-toggle
-          class="flex-fill"
-          [checked]="formSearch.value.is_townhouse"
-          (click)="formChangeValue('is_townhouse', !formSearch.value.is_townhouse)"
-        >
-          Townhome
-        </mat-button-toggle>
-        <mat-button-toggle
-          class="flex-fill"
-          [checked]="formSearch.value.is_multi_family"
-          (click)="formChangeValue('is_multi_family', !formSearch.value.is_multi_family)"
-        >
-          Multi-family
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-    <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('propertyType', !toggleMenu.propertyType)" [ngClass]="{ 'selected' : toggleMenu.propertyType }">
-        <i class="fa fa-home" aria-hidden="true"></i>
       </button>
     </p>
 

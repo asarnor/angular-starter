@@ -98,6 +98,7 @@ body {
   // Button toggle
   .mat-button-toggle{
     &.mat-button-toggle-checked{background-image: linear-gradient(to bottom, $interact-primary-lt 0%, $interact-primary 100%);color:#fff;}
+    &.mat-button-toggle-disabled { color: dimgray; border-color: #a7a7a7; background: #dcdcdc; }
   }
 
   // Button toggle group
