@@ -17,7 +17,10 @@ export class TogglesComponent implements OnInit {
     mlsStatus: false,
     daysOnMarket: false,
     beds: false,
-    baths: false
+    baths: false,
+    price: false,
+    sqft: false,
+    propertyType: false
   };
 
   public toggleActive: { [key: string]: boolean} = {
