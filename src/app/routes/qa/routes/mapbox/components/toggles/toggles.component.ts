@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ export class TogglesComponent implements OnInit {
 
   @Input() locations: Map.Location[];
   @Input() formSearch: FormGroup;
-  // @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
+  @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
 
   public toggleMenu: { [key: string]: boolean} = {
     rogListings: false,
@@ -50,7 +50,7 @@ export class TogglesComponent implements OnInit {
       bedroomsMin: '',
       days_on_market: '2',
       homeTypes: null,
-      isBrand: '',
+      isBrand: false,
       is_condo: true,
       is_multi_family: true,
       is_single_family: true,
@@ -75,9 +75,11 @@ export class TogglesComponent implements OnInit {
   public toggleOpen(key?: string, val?: boolean) {
     this.toggleBackgroundShow = false;
     // Disable all flyouts
-    Object.keys(this.toggleMenu).forEach(key2 => this.toggleMenu[key2] = false);
+    this.toggleClose();
     if (key && val) {
-      this.toggleMenu[key] = val;
+      const toggleMenu = {...this.toggleMenu};
+      toggleMenu[key] = val;
+      this.toggleMenu = toggleMenu;
       this.toggleBackgroundShow = true;
     }
   }
@@ -91,6 +93,13 @@ export class TogglesComponent implements OnInit {
     const obj: { [key: string]: any} = {};
     obj[field] = value;
     this.formSearch.patchValue(obj);
+  }
+
+  /** Close all toggles */
+  public toggleClose() {
+    const toggleMenu = {...this.toggleMenu};
+    Object.keys(toggleMenu).forEach(key2 => toggleMenu[key2] = false);
+    this.toggleMenu = toggleMenu;
   }
   
 }

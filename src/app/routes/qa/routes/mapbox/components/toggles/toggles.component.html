@@ -5,12 +5,8 @@
         <button
           type="button"
           class="btn p-0"
-          [ngClass]="{ active: !toggleActive.rogListings }"
-          (click)="
-            toggleSelected.emit({ event: 'listingsRog', data: false });
-            toggleActive.rogListings = false;
-            toggleMenu.rogListings = false
-          "
+          [ngClass]="{ active: !formSearch.value.isBrand }"
+          (click)="formChangeValue('isBrand', !formSearch.value.isBrand);toggleBackgroundShow = false;toggleClose();"
           title="Toggle ROG only listings"
         >
           <img src="assets/img/map-icon.png" style="max-width:30px;max-height:30px;" />
@@ -18,12 +14,8 @@
         <button
           type="button"
           class="btn p-0"
-          [ngClass]="{ active: toggleActive.rogListings }"
-          (click)="
-            toggleSelected.emit({ event: 'listingsRog', data: true });
-            toggleActive.rogListings = true;
-            toggleMenu.rogListings = false
-          "
+          [ngClass]="{ active: formSearch.value.isBrand }"
+          (click)="formChangeValue('isBrand', !formSearch.value.isBrand);toggleBackgroundShow = false;toggleClose();"
           title="Toggle ROG only listings"
         >
           <img src="assets/img/map-icon-rog.png" style="max-width:30px;max-height:30px;" />
@@ -41,7 +33,7 @@
 
     <!--
     MLS STATUS
-  -->
+    -->
     <div class="flyout" *ngIf="toggleMenu?.mlsStatus">
       <mat-button-toggle-group multiple>
         <mat-button-toggle
@@ -78,7 +70,7 @@
 
     <!--
     Days On The Market
-  -->
+    -->
     <div class="flyout" *ngIf="toggleMenu?.daysOnMarket">
       <mat-button-toggle-group formControlName="days_on_market">
         <mat-button-toggle value="0">0 - 30</mat-button-toggle>
@@ -94,7 +86,7 @@
 
     <!--
     Beds
-  -->
+    -->
     <div class="flyout" *ngIf="toggleMenu?.beds">
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="mr-2" formControlName="bedroomsMin">
@@ -122,8 +114,8 @@
     </p>
 
     <!--
-Baths
-  -->
+    Baths
+    -->
     <div class="flyout" *ngIf="toggleMenu?.baths">
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMin">
@@ -151,8 +143,8 @@ Baths
     </p>
 
     <!--
-Price
-  -->
+    Price
+    -->
     <div class="flyout" *ngIf="toggleMenu?.price" style="top: 20%;">
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="sm mr-2" formControlName="priceLow">

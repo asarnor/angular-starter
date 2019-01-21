@@ -15,7 +15,11 @@
       </div>
 
       <div class="map-container-main">
-        <app-toggles [locations]="locations" [formSearch]="formSearch"></app-toggles>
+        <app-toggles
+          [locations]="locations"
+          [formSearch]="formSearch"
+          (toggleSelected)="toggleSelected($event)"
+        ></app-toggles>
         <!-- Main map -->
         <app-map-mapbox
           *ngIf="locations"

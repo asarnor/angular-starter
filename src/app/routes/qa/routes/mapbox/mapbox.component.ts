@@ -36,7 +36,7 @@ export class MapboxComponent implements OnInit {
     // Create searchable locations
     this.formSearch = this.fb.group({
       zip: [{ value: '89147', disabled: false }, []],
-      isBrand: ['', []],
+      isBrand: [false, []],
       priceLow: ['', []],
       priceHigh: ['', []],
       bedroomsMin: ['', []],
@@ -267,7 +267,7 @@ export class MapboxComponent implements OnInit {
     document.getElementById('map-container').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /** When a toggle event is emitted up from the toggles component
+  /** When a toggle event is emitted up from the toggles component */
   public toggleSelected(action: { event: 'listingsRog' | 'heatmap' | 'mapStyle'; data?: any }) {
     console.log(action);
     switch (action.event) {
@@ -285,7 +285,7 @@ export class MapboxComponent implements OnInit {
         break;
     }
   }
-   */
+  
 
   /**
    * Only show Rog listings
