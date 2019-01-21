@@ -5,7 +5,6 @@
         <button
           type="button"
           class="btn p-0"
-          [disabled]="!locations?.length"
           [ngClass]="{ active: !toggleActive.rogListings }"
           (click)="
             toggleSelected.emit({ event: 'listingsRog', data: false });
@@ -19,7 +18,6 @@
         <button
           type="button"
           class="btn p-0"
-          [disabled]="!locations?.length"
           [ngClass]="{ active: toggleActive.rogListings }"
           (click)="
             toggleSelected.emit({ event: 'listingsRog', data: true });
@@ -36,7 +34,6 @@
       <button
         type="button"
         class="btn btn-rog"
-        [disabled]="!locations?.length"
         (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
         title="Toggle ROG only listings"
       ></button>
@@ -74,12 +71,7 @@
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)">
         <i class="fa fa-info-circle" aria-hidden="true"></i>
       </button>
     </p>
@@ -95,12 +87,7 @@
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)">
         <i class="fa fa-calendar" aria-hidden="true"></i>
       </button>
     </p>
@@ -129,12 +116,7 @@
       </div>
     </div>
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('beds', !toggleMenu.beds)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('beds', !toggleMenu.beds)">
         <i class="fa fa-bed" aria-hidden="true"></i>
       </button>
     </p>
@@ -163,12 +145,7 @@ Baths
       </div>
     </div>
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('baths', !toggleMenu.baths)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('baths', !toggleMenu.baths)">
         <i class="fa fa-bath" aria-hidden="true"></i>
       </button>
     </p>
@@ -217,12 +194,7 @@ Price
     </div>
 
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('price', !toggleMenu.price)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('price', !toggleMenu.price)">
         <i class="fa fa-dollar" aria-hidden="true"></i>
       </button>
     </p>
@@ -265,12 +237,7 @@ Price
       </div>
     </div>
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('sqft', !toggleMenu.sqft)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('sqft', !toggleMenu.sqft)">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </button>
     </p>
@@ -311,12 +278,7 @@ Price
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        (click)="toggleOpen('propertyType', !toggleMenu.propertyType)"
-      >
+      <button type="button" class="btn p-0" (click)="toggleOpen('propertyType', !toggleMenu.propertyType)">
         <i class="fa fa-home" aria-hidden="true"></i>
       </button>
     </p>
@@ -330,20 +292,13 @@ Price
         class="btn p-0"
         [ngClass]="{ active: toggleActive.heatmap }"
         (click)="toggleSelected.emit({ event: 'heatmap' }); toggleActive.heatmap = !toggleActive.heatmap"
-        [disabled]="!locations?.length"
         title="Toggle Heatmap"
       >
         <i class="fa fa-map" aria-hidden="true"></i>
       </button>
     </p>
     <p class="mb-2">
-      <button
-        type="button"
-        [matMenuTriggerFor]="appMenu"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        title="Choose different map styles"
-      >
+      <button type="button" [matMenuTriggerFor]="appMenu" class="btn p-0" title="Choose different map styles">
         <i class="fa fa-street-view" aria-hidden="true"></i>
       </button>
       <mat-menu #appMenu="matMenu" xPosition="before" yPosition="below">
@@ -372,23 +327,15 @@ Price
       Reset All Options
     -->
     <div style="position:absolute;bottom:20px;">
-        <button
-          type="button"
-          class="btn p-0"
-          [disabled]="!locations?.length"
-          (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
-          title="Toggle ROG only listings"
-        ><i class="fa fa-ban fa-2x"></i>
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="formReset()"
+        title="Reset Form"
+      >
+        <i class="fa fa-ban fa-2x"></i>
       </button>
-      </div>
-
-
-
-
-
-
-
-
+    </div>
   </div>
   <div class="flyout-bg" (click)="toggleOpen()" (dragstart)="toggleOpen()" draggable *ngIf="toggleBackgroundShow"></div>
 </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ export class TogglesComponent implements OnInit {
 
   @Input() locations: Map.Location[];
   @Input() formSearch: FormGroup;
-  @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
+  // @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
 
   public toggleMenu: { [key: string]: boolean} = {
     rogListings: false,
@@ -41,6 +41,31 @@ export class TogglesComponent implements OnInit {
     // this.formSearch.valueChanges.subscribe(() => this.toggleBackgroundShow = false);
   }
 
+  
+  public formReset() {
+    this.formSearch.patchValue({
+      bathsMax: '',
+      bathsMin: '',
+      bedroomsMax: '',
+      bedroomsMin: '',
+      days_on_market: '2',
+      homeTypes: null,
+      isBrand: '',
+      is_condo: true,
+      is_multi_family: true,
+      is_single_family: true,
+      is_townhouse: true,
+      listing_status_active: true,
+      listing_status_pending: true,
+      listing_status_sold: true,
+      listing_status_withdrawn: true,
+      priceHigh: '',
+      priceLow: '',
+      sqFootageMax: '',
+      sqFootageMin: '',
+    });
+  }
+
 
   /**
    * Open a flyout menu, close all others first
@@ -68,8 +93,4 @@ export class TogglesComponent implements OnInit {
     this.formSearch.patchValue(obj);
   }
   
-  public propTypeChanged() {
-
-  }
-
 }

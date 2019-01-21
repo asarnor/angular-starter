@@ -43,21 +43,20 @@ export class MapboxComponent implements OnInit {
       bedroomsMax: ['', []],
       bathsMin: ['', []],
       bathsMax: ['', []],
-      days_on_market: ['0', []],
+      days_on_market: ['2', []],
       homeTypes: [null, []],
       sqFootageMin: ['', []],
       sqFootageMax: ['', []],
-      listing_status_active: [true, []], 
-      listing_status_pending: [false, []], 
-      listing_status_withdrawn: [false, []], 
-      listing_status_sold: [false, []], 
+      listing_status_active: [true, []],
+      listing_status_pending: [true, []],
+      listing_status_withdrawn: [true, []],
+      listing_status_sold: [true, []],
       is_single_family: [true, []],
       is_multi_family: [true, []],
       is_townhouse: [true, []],
       is_condo: [true, []],
     });
     this.formSearch.controls['zip'].disable();
-
 
     this.formSearch.valueChanges.subscribe(val => {
       console.log(val);
@@ -81,7 +80,8 @@ export class MapboxComponent implements OnInit {
           longitude: location.display_lng,
         };
       });
-      this.locations = [...this.locationsOriginal];
+      // this.locations = [...this.locationsOriginal];
+      this.locationsSearch();
       this.ref.markForCheck();
     });
   }
@@ -107,8 +107,8 @@ export class MapboxComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param listing 
+   *
+   * @param listing
    */
   public modalOpen(listing: Models.LocationMLS) {
     this.listingModal = this.dialog.open(ListingModalComponent, {
@@ -134,7 +134,7 @@ export class MapboxComponent implements OnInit {
 
       // Check if this is a branded location
       // if ((this.listingsShowAll && listing.metadata.isBrand) || !this.listingsShowAll) {
-      if (formValue.isBrand === true && location.metadata.isBrand !== true  ) {
+      if (formValue.isBrand === true && location.metadata.isBrand !== true) {
         return false;
       }
 
@@ -170,6 +170,60 @@ export class MapboxComponent implements OnInit {
         return false;
       }
 
+      // Min sq ft
+      if (formValue.sqFootageMin !== '' && location.square_feet < parseInt(formValue.sqFootageMin)) {
+        return false;
+      }
+
+      // Min sq ft
+      if (formValue.sqFootageMax !== '' && location.square_feet > parseInt(formValue.sqFootageMax)) {
+        return false;
+      }
+
+      // Days on market
+      if (formValue.days_on_market !== '') {
+        // Under 30
+        if (formValue.days_on_market === '0' && location.days_on_market > 30) {
+          return false;
+          // Between 31 and 60
+        } else if (
+          formValue.days_on_market === '1' &&
+          (location.days_on_market > 60 || location.days_on_market <= 31)
+        ) {
+          return false;
+          // Over 90
+        } else if (formValue.days_on_market === '2' && location.days_on_market < 90) {
+          return false;
+        }
+      }
+
+      // Only one status type has to match
+      let statusMatch = false;
+
+      // Listing Status Active
+      if (formValue.listing_status_active === true && location.listing_status === 'Active') {
+        statusMatch = true;
+      }
+
+      // Listing Status Pending
+      if (formValue.listing_status_pending === true && location.listing_status === 'Pending') {
+        statusMatch = true;
+      }
+
+      // Listing Status Sold
+      if (formValue.listing_status_sold === true && location.listing_status === 'Sold') {
+        statusMatch = true;
+      }
+
+      // Listing Status Withdrawn
+      if (formValue.listing_status_withdrawn === true && location.listing_status === 'Withdrawn') {
+        statusMatch = true;
+      }
+
+      if (!statusMatch) {
+        return false;
+      }
+
       // Home types need to match on ANY, if a single hometype parameter matches then return true
       let hasHomeType = false;
 
@@ -200,7 +254,7 @@ export class MapboxComponent implements OnInit {
         formValue.is_townhouse === false &&
         formValue.is_condo === false
       ) {
-        hasHomeType = true;
+        // hasHomeType = true;
       }
 
       if (!hasHomeType) {
@@ -209,12 +263,11 @@ export class MapboxComponent implements OnInit {
 
       return true;
     });
-    console.log(this.locations.length)
     this.sidebarMobileShow = false;
     document.getElementById('map-container').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /** When a toggle event is emitted up from the toggles component */
+  /** When a toggle event is emitted up from the toggles component
   public toggleSelected(action: { event: 'listingsRog' | 'heatmap' | 'mapStyle'; data?: any }) {
     console.log(action);
     switch (action.event) {
@@ -232,6 +285,7 @@ export class MapboxComponent implements OnInit {
         break;
     }
   }
+   */
 
   /**
    * Only show Rog listings

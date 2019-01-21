@@ -41,7 +41,7 @@ declare namespace Models {
     photo_url?: string;
     photos?: string;
     property_id?: number;
-    square_feet?: string;
+    square_feet?: number;
     thumbnail_url?: string;
     total_bathrooms?: number;
     total_bedrooms?: number;
