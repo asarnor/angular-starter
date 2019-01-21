@@ -1,394 +1,394 @@
-<div class="toggles">
-  <div class="flyout" *ngIf="toggleMenu?.rogListings">
-    <div class="btn-group">
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        [ngClass]="{ active: !toggleActive.rogListings }"
-        (click)="
-          toggleSelected.emit({ event: 'listingsRog', data: false });
-          toggleActive.rogListings = false;
-          toggleMenu.rogListings = false
-        "
-        title="Toggle ROG only listings"
-      >
-        <img src="assets/img/map-icon.png" style="max-width:30px;max-height:30px;" />
-      </button>
-      <button
-        type="button"
-        class="btn p-0"
-        [disabled]="!locations?.length"
-        [ngClass]="{ active: toggleActive.rogListings }"
-        (click)="
-          toggleSelected.emit({ event: 'listingsRog', data: true });
-          toggleActive.rogListings = true;
-          toggleMenu.rogListings = false
-        "
-        title="Toggle ROG only listings"
-      >
-        <img src="assets/img/map-icon-rog.png" style="max-width:30px;max-height:30px;" />
-      </button>
+<form [formGroup]="formSearch">
+  <div class="toggles">
+    <div class="flyout" *ngIf="toggleMenu?.rogListings">
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn p-0"
+          [disabled]="!locations?.length"
+          [ngClass]="{ active: !toggleActive.rogListings }"
+          (click)="
+            toggleSelected.emit({ event: 'listingsRog', data: false });
+            toggleActive.rogListings = false;
+            toggleMenu.rogListings = false
+          "
+          title="Toggle ROG only listings"
+        >
+          <img src="assets/img/map-icon.png" style="max-width:30px;max-height:30px;" />
+        </button>
+        <button
+          type="button"
+          class="btn p-0"
+          [disabled]="!locations?.length"
+          [ngClass]="{ active: toggleActive.rogListings }"
+          (click)="
+            toggleSelected.emit({ event: 'listingsRog', data: true });
+            toggleActive.rogListings = true;
+            toggleMenu.rogListings = false
+          "
+          title="Toggle ROG only listings"
+        >
+          <img src="assets/img/map-icon-rog.png" style="max-width:30px;max-height:30px;" />
+        </button>
+      </div>
     </div>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn btn-rog"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
-      title="Toggle ROG only listings"
-    ></button>
-  </p>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn btn-rog"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
+        title="Toggle ROG only listings"
+      ></button>
+    </p>
 
-  <!--
+    <!--
     MLS STATUS
   -->
-  <div class="flyout" *ngIf="toggleMenu?.mlsStatus">
-    <mat-button-toggle-group multiple>
-      <mat-button-toggle value="Active" [checked]="toggleActive.mlsStatusActive">Active</mat-button-toggle>
-      <mat-button-toggle value="Pending" [checked]="toggleActive.mlsStatusPending">Pending</mat-button-toggle>
-      <mat-button-toggle value="Withdrawn" [checked]="toggleActive.mlsStatusWithdrawn">Withdrawn</mat-button-toggle>
-      <mat-button-toggle value="Sold" [checked]="toggleActive.mlsStatusSold">Sold</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
-    >
-      <i class="fa fa-info-circle" aria-hidden="true"></i>
-    </button>
-  </p>
+    <div class="flyout" *ngIf="toggleMenu?.mlsStatus">
+      <mat-button-toggle-group multiple>
+        <mat-button-toggle
+          value="Active"
+          [checked]="formSearch.value.listing_status_active"
+          (click)="formChangeValue('listing_status_active', !formSearch.value.listing_status_active)"
+          >Active</mat-button-toggle
+        >
+        <mat-button-toggle
+          value="Pending"
+          [checked]="formSearch.value.listing_status_pending"
+          (click)="formChangeValue('listing_status_pending', !formSearch.value.listing_status_pending)"
+          >Pending</mat-button-toggle
+        >
+        <mat-button-toggle
+          value="Withdrawn"
+          [checked]="formSearch.value.listing_status_withdrawn"
+          (click)="formChangeValue('listing_status_withdrawn', !formSearch.value.listing_status_withdrawn)"
+          >Withdrawn</mat-button-toggle
+        >
+        <mat-button-toggle
+          value="Sold"
+          [checked]="formSearch.value.listing_status_sold"
+          (click)="formChangeValue('listing_status_sold', !formSearch.value.listing_status_sold)"
+          >Sold</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
+      >
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+      </button>
+    </p>
 
-  <!--
+    <!--
     Days On The Market
   -->
-  <div class="flyout" *ngIf="toggleMenu?.daysOnMarket">
-    <mat-button-toggle-group>
-      <mat-button-toggle value="Active" [checked]="true">0 - 30</mat-button-toggle>
-      <mat-button-toggle value="Pending" [checked]="false">31-60</mat-button-toggle>
-      <mat-button-toggle value="Withdrawn" [checked]="false">90+</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)"
-    >
-      <i class="fa fa-calendar" aria-hidden="true"></i>
-    </button>
-  </p>
+    <div class="flyout" *ngIf="toggleMenu?.daysOnMarket">
+      <mat-button-toggle-group formControlName="days_on_market">
+        <mat-button-toggle value="0">0 - 30</mat-button-toggle>
+        <mat-button-toggle value="1">31-60</mat-button-toggle>
+        <mat-button-toggle value="2">90+</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)"
+      >
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+      </button>
+    </p>
 
-  <!--
+    <!--
     Beds
   -->
-  <div class="flyout" *ngIf="toggleMenu?.beds">
-    <div class="d-flex flex-row">
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Min Beds">
-            <mat-option value="option">1</mat-option>
-            <mat-option value="option">2</mat-option>
-            <mat-option value="option">3</mat-option>
-            <mat-option value="option">4</mat-option>
-            <mat-option value="option">5+</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Max Beds">
-            <mat-option value="option">2</mat-option>
-            <mat-option value="option">3</mat-option>
-            <mat-option value="option">4</mat-option>
-            <mat-option value="option">5+</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <a><i class="fa fa-ban fa-2x mt-2" aria-hidden="true"></i></a>
+    <div class="flyout" *ngIf="toggleMenu?.beds">
+      <div class="d-flex flex-row">
+        <mat-button-toggle-group vertical class="mr-2" formControlName="bedroomsMin">
+          <mat-button-toggle value="">No Min</mat-button-toggle>
+          <mat-button-toggle value="1">1</mat-button-toggle>
+          <mat-button-toggle value="2">2</mat-button-toggle>
+          <mat-button-toggle value="3">3</mat-button-toggle>
+          <mat-button-toggle value="4">4</mat-button-toggle>
+          <mat-button-toggle value="5">5+</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-button-toggle-group vertical class="mr-2" formControlName="bedroomsMax">
+          <mat-button-toggle value="">No Max</mat-button-toggle>
+          <mat-button-toggle value="1">1</mat-button-toggle>
+          <mat-button-toggle value="2">2</mat-button-toggle>
+          <mat-button-toggle value="3">3</mat-button-toggle>
+          <mat-button-toggle value="4">4</mat-button-toggle>
+          <mat-button-toggle value="5">5+</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
     </div>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('beds', !toggleMenu.beds)"
-    >
-      <i class="fa fa-bed" aria-hidden="true"></i>
-    </button>
-  </p>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('beds', !toggleMenu.beds)"
+      >
+        <i class="fa fa-bed" aria-hidden="true"></i>
+      </button>
+    </p>
 
-  <!--
+    <!--
 Baths
   -->
-  <div class="flyout" *ngIf="toggleMenu?.baths">
-    <div class="d-flex flex-row">
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Min Baths">
-            <mat-option value="option">1</mat-option>
-            <mat-option value="option">2</mat-option>
-            <mat-option value="option">3</mat-option>
-            <mat-option value="option">4</mat-option>
-            <mat-option value="option">5+</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Max Baths">
-            <mat-option value="option">2</mat-option>
-            <mat-option value="option">3</mat-option>
-            <mat-option value="option">4</mat-option>
-            <mat-option value="option">5+</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <a><i class="fa fa-ban fa-2x mt-2" aria-hidden="true"></i></a>
+    <div class="flyout" *ngIf="toggleMenu?.baths">
+      <div class="d-flex flex-row">
+        <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMin">
+          <mat-button-toggle value="">No Min</mat-button-toggle>
+          <mat-button-toggle value="1">1</mat-button-toggle>
+          <mat-button-toggle value="2">2</mat-button-toggle>
+          <mat-button-toggle value="3">3</mat-button-toggle>
+          <mat-button-toggle value="4">4</mat-button-toggle>
+          <mat-button-toggle value="5">5+</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMax">
+          <mat-button-toggle value="">No Max</mat-button-toggle>
+          <mat-button-toggle value="1">1</mat-button-toggle>
+          <mat-button-toggle value="2">2</mat-button-toggle>
+          <mat-button-toggle value="3">3</mat-button-toggle>
+          <mat-button-toggle value="4">4</mat-button-toggle>
+          <mat-button-toggle value="5">5+</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
     </div>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('baths', !toggleMenu.baths)"
-    >
-      <i class="fa fa-bath" aria-hidden="true"></i>
-    </button>
-  </p>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('baths', !toggleMenu.baths)"
+      >
+        <i class="fa fa-bath" aria-hidden="true"></i>
+      </button>
+    </p>
 
-  <!--
+    <!--
 Price
   -->
-  <div class="flyout" *ngIf="toggleMenu?.price">
-    <div class="d-flex flex-row">
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Min Price">
-            <mat-option value="" selected>No Min</mat-option><mat-option value="50000">$50k</mat-option
-            ><mat-option value="75000">$75k</mat-option><mat-option value="100000">$100k</mat-option
-            ><mat-option value="125000">$125k</mat-option><mat-option value="150000">$150k</mat-option
-            ><mat-option value="175000">$175k</mat-option><mat-option value="200000">$200k</mat-option
-            ><mat-option value="225000">$225k</mat-option><mat-option value="250000">$250k</mat-option
-            ><mat-option value="275000">$275k</mat-option><mat-option value="300000">$300k</mat-option
-            ><mat-option value="325000">$325k</mat-option><mat-option value="350000">$350k</mat-option
-            ><mat-option value="375000">$375k</mat-option><mat-option value="400000">$400k</mat-option
-            ><mat-option value="425000">$425k</mat-option><mat-option value="450000">$450k</mat-option
-            ><mat-option value="475000">$475k</mat-option><mat-option value="500000">$500k</mat-option
-            ><mat-option value="550000">$550k</mat-option><mat-option value="600000">$600k</mat-option
-            ><mat-option value="650000">$650k</mat-option><mat-option value="700000">$700k</mat-option
-            ><mat-option value="750000">$750k</mat-option><mat-option value="800000">$800k</mat-option
-            ><mat-option value="850000">$850k</mat-option><mat-option value="900000">$900k</mat-option
-            ><mat-option value="950000">$950k</mat-option><mat-option value="1000000">$1M</mat-option
-            ><mat-option value="1250000">$1.25M</mat-option><mat-option value="1500000">$1.5M</mat-option
-            ><mat-option value="1750000">$1.75M</mat-option><mat-option value="2000000">$2M</mat-option
-            ><mat-option value="2250000">$2.25M</mat-option><mat-option value="2500000">$2.5M</mat-option
-            ><mat-option value="2750000">$2.75M</mat-option><mat-option value="3000000">$3M</mat-option
-            ><mat-option value="3250000">$3.25M</mat-option><mat-option value="3500000">$3.5M</mat-option
-            ><mat-option value="3750000">$3.75M</mat-option><mat-option value="4000000">$4M</mat-option
-            ><mat-option value="4250000">$4.25M</mat-option><mat-option value="4500000">$4.5M</mat-option
-            ><mat-option value="4750000">$4.75M</mat-option><mat-option value="5000000">$5M</mat-option
-            ><mat-option value="6000000">$6M</mat-option> <mat-option value="7000000">$7M</mat-option
-            ><mat-option value="8000000">$8M</mat-option><mat-option value="9000000">$9M</mat-option
-            ><mat-option value="10000000">$10M</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Max Price">
-            <mat-option value="" selected>No Max</mat-option><mat-option value="50000">$50k</mat-option
-            ><mat-option value="75000">$75k</mat-option><mat-option value="100000">$100k</mat-option
-            ><mat-option value="125000">$125k</mat-option><mat-option value="150000">$150k</mat-option
-            ><mat-option value="175000">$175k</mat-option><mat-option value="200000">$200k</mat-option
-            ><mat-option value="225000">$225k</mat-option><mat-option value="250000">$250k</mat-option
-            ><mat-option value="275000">$275k</mat-option><mat-option value="300000">$300k</mat-option
-            ><mat-option value="325000">$325k</mat-option><mat-option value="350000">$350k</mat-option
-            ><mat-option value="375000">$375k</mat-option><mat-option value="400000">$400k</mat-option
-            ><mat-option value="425000">$425k</mat-option><mat-option value="450000">$450k</mat-option
-            ><mat-option value="475000">$475k</mat-option><mat-option value="500000">$500k</mat-option
-            ><mat-option value="550000">$550k</mat-option><mat-option value="600000">$600k</mat-option
-            ><mat-option value="650000">$650k</mat-option><mat-option value="700000">$700k</mat-option
-            ><mat-option value="750000">$750k</mat-option><mat-option value="800000">$800k</mat-option
-            ><mat-option value="850000">$850k</mat-option><mat-option value="900000">$900k</mat-option
-            ><mat-option value="950000">$950k</mat-option><mat-option value="1000000">$1M</mat-option
-            ><mat-option value="1250000">$1.25M</mat-option><mat-option value="1500000">$1.5M</mat-option
-            ><mat-option value="1750000">$1.75M</mat-option><mat-option value="2000000">$2M</mat-option
-            ><mat-option value="2250000">$2.25M</mat-option><mat-option value="2500000">$2.5M</mat-option
-            ><mat-option value="2750000">$2.75M</mat-option><mat-option value="3000000">$3M</mat-option
-            ><mat-option value="3250000">$3.25M</mat-option><mat-option value="3500000">$3.5M</mat-option
-            ><mat-option value="3750000">$3.75M</mat-option><mat-option value="4000000">$4M</mat-option
-            ><mat-option value="4250000">$4.25M</mat-option><mat-option value="4500000">$4.5M</mat-option
-            ><mat-option value="4750000">$4.75M</mat-option><mat-option value="5000000">$5M</mat-option
-            ><mat-option value="6000000">$6M</mat-option> <mat-option value="7000000">$7M</mat-option
-            ><mat-option value="8000000">$8M</mat-option><mat-option value="9000000">$9M</mat-option
-            ><mat-option value="10000000">$10M</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <a><i class="fa fa-ban fa-2x mt-2" aria-hidden="true"></i></a>
+    <div class="flyout" *ngIf="toggleMenu?.price" style="top: 20%;">
+      <div class="d-flex flex-row">
+        <mat-button-toggle-group vertical class="sm mr-2" formControlName="priceLow">
+          <mat-button-toggle value="">No Min Price</mat-button-toggle>
+          <mat-button-toggle value="50000" [checked]="">$50k</mat-button-toggle>
+          <mat-button-toggle value="10000" [checked]="">$100k</mat-button-toggle>
+          <mat-button-toggle value="150000" [checked]="">$150k</mat-button-toggle>
+          <mat-button-toggle value="200000" [checked]="">$200k</mat-button-toggle>
+          <mat-button-toggle value="250000" [checked]="">$250k</mat-button-toggle>
+          <mat-button-toggle value="300000" [checked]="">$300k</mat-button-toggle>
+          <mat-button-toggle value="400000" [checked]="">$400k</mat-button-toggle>
+          <mat-button-toggle value="450000" [checked]="">$450k</mat-button-toggle>
+          <mat-button-toggle value="500000" [checked]="">$500k</mat-button-toggle>
+          <mat-button-toggle value="600000" [checked]="">$600k</mat-button-toggle>
+          <mat-button-toggle value="700000" [checked]="">$700k</mat-button-toggle>
+          <mat-button-toggle value="800000" [checked]="">$800k</mat-button-toggle>
+          <mat-button-toggle value="900000" [checked]="">$900k</mat-button-toggle>
+          <mat-button-toggle value="1000000" [checked]="">$1M+</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-button-toggle-group vertical class="sm" formControlName="priceHigh">
+          <mat-button-toggle value="">No Max Price</mat-button-toggle>
+          <mat-button-toggle value="50000" [checked]="">$50k</mat-button-toggle>
+          <mat-button-toggle value="10000" [checked]="">$100k</mat-button-toggle>
+          <mat-button-toggle value="150000" [checked]="">$150k</mat-button-toggle>
+          <mat-button-toggle value="200000" [checked]="">$200k</mat-button-toggle>
+          <mat-button-toggle value="250000" [checked]="">$250k</mat-button-toggle>
+          <mat-button-toggle value="300000" [checked]="">$300k</mat-button-toggle>
+          <mat-button-toggle value="400000" [checked]="">$400k</mat-button-toggle>
+          <mat-button-toggle value="450000" [checked]="">$450k</mat-button-toggle>
+          <mat-button-toggle value="500000" [checked]="">$500k</mat-button-toggle>
+          <mat-button-toggle value="600000" [checked]="">$600k</mat-button-toggle>
+          <mat-button-toggle value="700000" [checked]="">$700k</mat-button-toggle>
+          <mat-button-toggle value="800000" [checked]="">$800k</mat-button-toggle>
+          <mat-button-toggle value="900000" [checked]="">$900k</mat-button-toggle>
+          <mat-button-toggle value="1000000" [checked]="">$1M+</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
     </div>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('price', !toggleMenu.price)"
-    >
-      <i class="fa fa-dollar" aria-hidden="true"></i>
-    </button>
-  </p>
 
-  <!--
-Square footage
-  -->
-  <div class="flyout" *ngIf="toggleMenu?.sqft">
-    <div class="d-flex flex-row">
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Min Sq Ft">
-            <mat-option value="" selected>No Min</mat-option>
-            <mat-option value="500">500</mat-option>
-            <mat-option value="750">750</mat-option>
-            <mat-option value="1000">1000</mat-option>
-            <mat-option value="1250">1250</mat-option>
-            <mat-option value="1500">1050</mat-option>
-            <mat-option value="1750">1750</mat-option>
-            <mat-option value="2000">2000</mat-option>
-            <mat-option value="2250">2250</mat-option>
-            <mat-option value="2500">2500</mat-option>
-            <mat-option value="2750">2750</mat-option>
-            <mat-option value="3000">3000</mat-option>
-            <mat-option value="3500">3500</mat-option>
-            <mat-option value="4000">4000+</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="mr-2">
-        <mat-form-field appearance="outline" style="max-width:130px;">
-          <mat-select placeholder="Max Sq Ft">
-            <mat-option value="" selected>No Max</mat-option>
-            <mat-option value="500">500</mat-option>
-            <mat-option value="750">750</mat-option>
-            <mat-option value="1000">1000</mat-option>
-            <mat-option value="1250">1250</mat-option>
-            <mat-option value="1500">1050</mat-option>
-            <mat-option value="1750">1750</mat-option>
-            <mat-option value="2000">2000</mat-option>
-            <mat-option value="2250">2250</mat-option>
-            <mat-option value="2500">2500</mat-option>
-            <mat-option value="2750">2750</mat-option>
-            <mat-option value="3000">3000</mat-option>
-            <mat-option value="3500">3500</mat-option>
-            <mat-option value="4000">4000+</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <a><i class="fa fa-ban fa-2x mt-2" aria-hidden="true"></i></a>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('price', !toggleMenu.price)"
+      >
+        <i class="fa fa-dollar" aria-hidden="true"></i>
+      </button>
+    </p>
+
+    <!--
+    Square footage
+    -->
+    <div class="flyout" *ngIf="toggleMenu?.sqft" style="top: 20%;">
+      <div class="d-flex flex-row">
+        <mat-button-toggle-group vertical class="sm mr-2" formControlName="sqFootageMin">
+          <mat-button-toggle value="">No Min Sq Ft</mat-button-toggle>
+          <mat-button-toggle value="250" [checked]="">250</mat-button-toggle>
+          <mat-button-toggle value="500" [checked]="">500</mat-button-toggle>
+          <mat-button-toggle value="750" [checked]="">750</mat-button-toggle>
+          <mat-button-toggle value="1000" [checked]="">1000</mat-button-toggle>
+          <mat-button-toggle value="1250" [checked]="">1250</mat-button-toggle>
+          <mat-button-toggle value="1500" [checked]="">1500</mat-button-toggle>
+          <mat-button-toggle value="1750" [checked]="">1750</mat-button-toggle>
+          <mat-button-toggle value="2000" [checked]="">2000</mat-button-toggle>
+          <mat-button-toggle value="2500" [checked]="">2500</mat-button-toggle>
+          <mat-button-toggle value="3000" [checked]="">3000</mat-button-toggle>
+          <mat-button-toggle value="3500" [checked]="">3500</mat-button-toggle>
+          <mat-button-toggle value="4000" [checked]="">4000+</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-button-toggle-group vertical class="sm" formControlName="sqFootageMax">
+          <mat-button-toggle value="">No Max Sq Ft</mat-button-toggle>
+          <mat-button-toggle value="250" [checked]="">250</mat-button-toggle>
+          <mat-button-toggle value="500" [checked]="">500</mat-button-toggle>
+          <mat-button-toggle value="750" [checked]="">750</mat-button-toggle>
+          <mat-button-toggle value="1000" [checked]="">1000</mat-button-toggle>
+          <mat-button-toggle value="1250" [checked]="">1250</mat-button-toggle>
+          <mat-button-toggle value="1500" [checked]="">1500</mat-button-toggle>
+          <mat-button-toggle value="1750" [checked]="">1750</mat-button-toggle>
+          <mat-button-toggle value="2000" [checked]="">2000</mat-button-toggle>
+          <mat-button-toggle value="2500" [checked]="">2500</mat-button-toggle>
+          <mat-button-toggle value="3000" [checked]="">3000</mat-button-toggle>
+          <mat-button-toggle value="3500" [checked]="">3500</mat-button-toggle>
+          <mat-button-toggle value="4000" [checked]="">4000+</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
     </div>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('sqft', !toggleMenu.sqft)"
-    >
-      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-    </button>
-  </p>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('sqft', !toggleMenu.sqft)"
+      >
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      </button>
+    </p>
 
-  <!--
+    <!--
    Property Type
   -->
-  <div class="flyout small" *ngIf="toggleMenu?.propertyType">
-    <mat-button-toggle-group name="propType" multiple class="w-100 d-flex" #group>
-      <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_single_family')">
-        House
-      </mat-button-toggle>
-      <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_condo')">
-        Condo
-      </mat-button-toggle>
-      <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_townhouse')">
-        Townhome
-      </mat-button-toggle>
-      <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_multi_family')">
-        Multi-family
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      (click)="toggleOpen('propertyType', !toggleMenu.propertyType)"
-    >
-      <i class="fa fa-home" aria-hidden="true"></i>
-    </button>
-  </p>
+    <div class="flyout small" *ngIf="toggleMenu?.propertyType">
+      <mat-button-toggle-group name="propType" multiple class="w-100 d-flex" #group>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_single_family"
+          (click)="formChangeValue('is_single_family', !formSearch.value.is_single_family)"
+        >
+          House
+        </mat-button-toggle>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_condo"
+          (click)="formChangeValue('is_condo', !formSearch.value.is_condo)"
+        >
+          Condo
+        </mat-button-toggle>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_townhouse"
+          (click)="formChangeValue('is_townhouse', !formSearch.value.is_townhouse)"
+        >
+          Townhome
+        </mat-button-toggle>
+        <mat-button-toggle
+          class="flex-fill"
+          [checked]="formSearch.value.is_multi_family"
+          (click)="formChangeValue('is_multi_family', !formSearch.value.is_multi_family)"
+        >
+          Multi-family
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        (click)="toggleOpen('propertyType', !toggleMenu.propertyType)"
+      >
+        <i class="fa fa-home" aria-hidden="true"></i>
+      </button>
+    </p>
 
-  <!--
+    <!--
     Heatmap Toggle
   -->
-  <p class="mb-2">
-    <button
-      type="button"
-      class="btn p-0"
-      [ngClass]="{ active: toggleActive.heatmap }"
-      (click)="toggleSelected.emit({ event: 'heatmap' }); toggleActive.heatmap = !toggleActive.heatmap"
-      [disabled]="!locations?.length"
-      title="Toggle Heatmap"
-    >
-      <i class="fa fa-map" aria-hidden="true"></i>
-    </button>
-  </p>
-  <p class="mb-2">
-    <button
-      type="button"
-      [matMenuTriggerFor]="appMenu"
-      class="btn p-0"
-      [disabled]="!locations?.length"
-      title="Choose different map styles"
-    >
-      <i class="fa fa-street-view" aria-hidden="true"></i>
-    </button>
-    <mat-menu #appMenu="matMenu" xPosition="before" yPosition="below">
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'basic' })">
-        Basic
+    <p class="mb-2">
+      <button
+        type="button"
+        class="btn p-0"
+        [ngClass]="{ active: toggleActive.heatmap }"
+        (click)="toggleSelected.emit({ event: 'heatmap' }); toggleActive.heatmap = !toggleActive.heatmap"
+        [disabled]="!locations?.length"
+        title="Toggle Heatmap"
+      >
+        <i class="fa fa-map" aria-hidden="true"></i>
       </button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'streets' })">
-        Streets
+    </p>
+    <p class="mb-2">
+      <button
+        type="button"
+        [matMenuTriggerFor]="appMenu"
+        class="btn p-0"
+        [disabled]="!locations?.length"
+        title="Choose different map styles"
+      >
+        <i class="fa fa-street-view" aria-hidden="true"></i>
       </button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'bright' })">
-        Bright
+      <mat-menu #appMenu="matMenu" xPosition="before" yPosition="below">
+        <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'basic' })">
+          Basic
+        </button>
+        <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'streets' })">
+          Streets
+        </button>
+        <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'bright' })">
+          Bright
+        </button>
+        <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'light' })">
+          Light
+        </button>
+        <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'dark' })">
+          Dark
+        </button>
+        <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'satellite' })">
+          Satellite
+        </button>
+      </mat-menu>
+    </p>
+
+    <!--
+      Reset All Options
+    -->
+    <div style="position:absolute;bottom:20px;">
+        <button
+          type="button"
+          class="btn p-0"
+          [disabled]="!locations?.length"
+          (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
+          title="Toggle ROG only listings"
+        ><i class="fa fa-ban fa-2x"></i>
       </button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'light' })">
-        Light
-      </button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'dark' })">
-        Dark
-      </button>
-      <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'satellite' })">
-        Satellite
-      </button>
-    </mat-menu>
-  </p>
-</div>
-<div class="flyout-bg" (click)="toggleOpen()" (dragstart)="toggleOpen()" draggable *ngIf="toggleBackgroundShow"></div>
+      </div>
+
+
+
+
+
+
+
+
+  </div>
+  <div class="flyout-bg" (click)="toggleOpen()" (dragstart)="toggleOpen()" draggable *ngIf="toggleBackgroundShow"></div>
+</form>

@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-toggles',
@@ -9,7 +10,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 export class TogglesComponent implements OnInit {
 
   @Input() locations: Map.Location[];
-
+  @Input() formSearch: FormGroup;
   @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
 
   public toggleMenu: { [key: string]: boolean} = {
@@ -37,6 +38,7 @@ export class TogglesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // this.formSearch.valueChanges.subscribe(() => this.toggleBackgroundShow = false);
   }
 
 
@@ -53,6 +55,17 @@ export class TogglesComponent implements OnInit {
       this.toggleMenu[key] = val;
       this.toggleBackgroundShow = true;
     }
+  }
+
+  /**
+   * Change a value on the form
+   * @param field 
+   * @param value 
+   */
+  public formChangeValue(field: string, value: string | number | boolean) {
+    const obj: { [key: string]: any} = {};
+    obj[field] = value;
+    this.formSearch.patchValue(obj);
   }
   
   public propTypeChanged() {

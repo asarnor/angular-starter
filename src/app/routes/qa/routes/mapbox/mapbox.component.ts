@@ -43,9 +43,14 @@ export class MapboxComponent implements OnInit {
       bedroomsMax: ['', []],
       bathsMin: ['', []],
       bathsMax: ['', []],
-      homeTypes: ['', []],
+      days_on_market: ['0', []],
+      homeTypes: [null, []],
       sqFootageMin: ['', []],
       sqFootageMax: ['', []],
+      listing_status_active: [true, []], 
+      listing_status_pending: [false, []], 
+      listing_status_withdrawn: [false, []], 
+      listing_status_sold: [false, []], 
       is_single_family: [true, []],
       is_multi_family: [true, []],
       is_townhouse: [true, []],
@@ -53,7 +58,11 @@ export class MapboxComponent implements OnInit {
     });
     this.formSearch.controls['zip'].disable();
 
-    this.formSearch.valueChanges.subscribe(val => console.log(val));
+
+    this.formSearch.valueChanges.subscribe(val => {
+      console.log(val);
+      this.locationsSearch();
+    });
 
     this.http.get<Models.LocationMLS[]>('assets/mock-data/properties.json').subscribe(locations => {
       this.locationsOriginal = locations.map(location => {
@@ -200,7 +209,7 @@ export class MapboxComponent implements OnInit {
 
       return true;
     });
-
+    console.log(this.locations.length)
     this.sidebarMobileShow = false;
     document.getElementById('map-container').scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -226,7 +235,6 @@ export class MapboxComponent implements OnInit {
 
   /**
    * Only show Rog listings
-  
   public toggleRogListings() {
     this.locations = this.locationsOriginal.filter(listing => {
       if ((this.listingsShowAll && listing.metadata.isBrand) || !this.listingsShowAll) {

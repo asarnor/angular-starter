@@ -9,14 +9,14 @@
       <div class="d-block d-lg-none">
         <button mat-flat-button class="btn py-1 mat-reverse btn-sidebar-toggle" (click)="sidebarMobileShow = true">
           <i class="fa fa-chevron-right float-right mt-2"></i> <i class="fa fa-map-pin mr-2"></i> ({{
-            locationsOriginal | count
+            locations | count
           }}) Listings in your area
         </button>
       </div>
 
       <div class="map-container-main">
      
-            <app-toggles [locations]="locations" (toggleSelected)="toggleSelected($event)"></app-toggles>
+            <app-toggles [locations]="locations" [formSearch]="formSearch" (toggleSelected)="toggleSelected($event)"></app-toggles>
         <!-- Main map -->
         <app-map-mapbox *ngIf="locations"
           [locations]="locations"
