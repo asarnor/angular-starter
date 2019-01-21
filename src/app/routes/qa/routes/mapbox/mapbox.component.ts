@@ -174,7 +174,7 @@ export class MapboxComponent implements OnInit {
         return false;
       }
 
-      // Min sq ft
+      // Max sq ft
       if (formValue.sqFootageMax !== '' && location.square_feet > parseInt(formValue.sqFootageMax)) {
         return false;
       }
