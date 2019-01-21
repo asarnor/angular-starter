@@ -6,7 +6,7 @@
   &.btn-pin-rog {background-image: url('/assets/img/map-icon-rog.png');}
   &.btn-heatmap{background-image: url('/assets/img/btn-heatmap.png');}
   &.btn-maptype{background-image: url('/assets/img/btn-maptype.png');}
-  &.active{border:1px solid red;
+  &.selected{background-color: #41a2ec;// background-image: linear-gradient(to bottom, #41a2ec 0%, #74c0fa 100%);
   .fa{color:#fff;}
   }
   .fa{color:#aea579;font-size:24px;margin-top: 4px;}

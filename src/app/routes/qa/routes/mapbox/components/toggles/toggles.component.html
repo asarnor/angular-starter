@@ -6,7 +6,7 @@
           type="button"
           class="btn p-0"
           [ngClass]="{ active: !formSearch.value.isBrand }"
-          (click)="formChangeValue('isBrand', !formSearch.value.isBrand);toggleBackgroundShow = false;toggleClose();"
+          (click)="formChangeValue('isBrand', !formSearch.value.isBrand); toggleBackgroundShow = false; toggleClose()"
           title="Toggle ROG only listings"
         >
           <img src="assets/img/map-icon.png" style="max-width:30px;max-height:30px;" />
@@ -15,7 +15,7 @@
           type="button"
           class="btn p-0"
           [ngClass]="{ active: formSearch.value.isBrand }"
-          (click)="formChangeValue('isBrand', !formSearch.value.isBrand);toggleBackgroundShow = false;toggleClose();"
+          (click)="formChangeValue('isBrand', !formSearch.value.isBrand); toggleBackgroundShow = false; toggleClose()"
           title="Toggle ROG only listings"
         >
           <img src="assets/img/map-icon-rog.png" style="max-width:30px;max-height:30px;" />
@@ -28,6 +28,7 @@
         class="btn btn-rog"
         (click)="toggleOpen('rogListings', !toggleMenu.rogListings)"
         title="Toggle ROG only listings"
+        [ngClass]="{ selected: toggleMenu.rogListings }"
       ></button>
     </p>
 
@@ -63,7 +64,12 @@
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)">
+      <button
+        type="button"
+        class="btn p-0"
+        (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
+        [ngClass]="{ selected: toggleMenu.mlsStatus }"
+      >
         <i class="fa fa-info-circle" aria-hidden="true"></i>
       </button>
     </p>
@@ -79,7 +85,7 @@
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)">
+      <button type="button" class="btn p-0" (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)" [ngClass]="{ 'selected' : toggleMenu.daysOnMarket }">
         <i class="fa fa-calendar" aria-hidden="true"></i>
       </button>
     </p>
@@ -108,7 +114,7 @@
       </div>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('beds', !toggleMenu.beds)">
+      <button type="button" class="btn p-0" (click)="toggleOpen('beds', !toggleMenu.beds)" [ngClass]="{ 'selected' : toggleMenu.beds }">
         <i class="fa fa-bed" aria-hidden="true"></i>
       </button>
     </p>
@@ -137,7 +143,7 @@
       </div>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('baths', !toggleMenu.baths)">
+      <button type="button" class="btn p-0" (click)="toggleOpen('baths', !toggleMenu.baths)" [ngClass]="{ 'selected' : toggleMenu.baths }">
         <i class="fa fa-bath" aria-hidden="true"></i>
       </button>
     </p>
@@ -186,7 +192,7 @@
     </div>
 
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('price', !toggleMenu.price)">
+      <button type="button" class="btn p-0" (click)="toggleOpen('price', !toggleMenu.price)" [ngClass]="{ 'selected' : toggleMenu.price }">
         <i class="fa fa-dollar" aria-hidden="true"></i>
       </button>
     </p>
@@ -229,7 +235,7 @@
       </div>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('sqft', !toggleMenu.sqft)">
+      <button type="button" class="btn p-0" (click)="toggleOpen('sqft', !toggleMenu.sqft)" [ngClass]="{ 'selected' : toggleMenu.sqft }">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       </button>
     </p>
@@ -270,14 +276,14 @@
       </mat-button-toggle-group>
     </div>
     <p class="mb-2">
-      <button type="button" class="btn p-0" (click)="toggleOpen('propertyType', !toggleMenu.propertyType)">
+      <button type="button" class="btn p-0" (click)="toggleOpen('propertyType', !toggleMenu.propertyType)" [ngClass]="{ 'selected' : toggleMenu.propertyType }">
         <i class="fa fa-home" aria-hidden="true"></i>
       </button>
     </p>
 
     <!--
     Heatmap Toggle
-  -->
+    -->
     <p class="mb-2">
       <button
         type="button"
@@ -318,13 +324,8 @@
     <!--
       Reset All Options
     -->
-    <div style="position:absolute;bottom:20px;">
-      <button
-        type="button"
-        class="btn p-0"
-        (click)="formReset()"
-        title="Reset Form"
-      >
+    <div style="position:absolute;bottom:20px;z-index:3;">
+      <button type="button" class="btn p-0" (click)="formReset()" title="Reset Form">
         <i class="fa fa-ban fa-2x"></i>
       </button>
     </div>
