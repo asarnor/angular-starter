@@ -3,7 +3,7 @@
     <div class="btn-group">
       <button
         type="button"
-        class="btn btn-pin"
+        class="btn p-0"
         [disabled]="!locations?.length"
         [ngClass]="{ active: !toggleActive.rogListings }"
         (click)="
@@ -12,10 +12,12 @@
           toggleMenu.rogListings = false
         "
         title="Toggle ROG only listings"
-      ></button>
+      >
+        <img src="assets/img/map-icon.png" style="max-width:30px;max-height:30px;" />
+      </button>
       <button
         type="button"
-        class="btn btn-pin-rog"
+        class="btn p-0"
         [disabled]="!locations?.length"
         [ngClass]="{ active: toggleActive.rogListings }"
         (click)="
@@ -24,7 +26,9 @@
           toggleMenu.rogListings = false
         "
         title="Toggle ROG only listings"
-      ></button>
+      >
+        <img src="assets/img/map-icon-rog.png" style="max-width:30px;max-height:30px;" />
+      </button>
     </div>
   </div>
   <p class="mb-2">
@@ -55,7 +59,7 @@
       [disabled]="!locations?.length"
       (click)="toggleOpen('mlsStatus', !toggleMenu.mlsStatus)"
     >
-      <i class="fa fa-home" aria-hidden="true"></i>
+      <i class="fa fa-info-circle" aria-hidden="true"></i>
     </button>
   </p>
 
@@ -76,7 +80,7 @@
       [disabled]="!locations?.length"
       (click)="toggleOpen('daysOnMarket', !toggleMenu.daysOnMarket)"
     >
-      <i class="fa fa-sun-o" aria-hidden="true"></i>
+      <i class="fa fa-calendar" aria-hidden="true"></i>
     </button>
   </p>
 
@@ -320,13 +324,13 @@ Square footage
       </mat-button-toggle>
       <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_condo')">
         Condo
-        </mat-button-toggle>
+      </mat-button-toggle>
       <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_townhouse')">
         Townhome
-        </mat-button-toggle>
+      </mat-button-toggle>
       <mat-button-toggle [checked]="true" class="flex-fill" (change)="propTypeChanged($event, 'is_multi_family')">
         Multi-family
-        </mat-button-toggle>
+      </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
   <p class="mb-2">
@@ -351,7 +355,9 @@ Square footage
       (click)="toggleSelected.emit({ event: 'heatmap' }); toggleActive.heatmap = !toggleActive.heatmap"
       [disabled]="!locations?.length"
       title="Toggle Heatmap"
-    ><i class="fa fa-map" aria-hidden="true"></i></button>
+    >
+      <i class="fa fa-map" aria-hidden="true"></i>
+    </button>
   </p>
   <p class="mb-2">
     <button
@@ -360,7 +366,9 @@ Square footage
       class="btn p-0"
       [disabled]="!locations?.length"
       title="Choose different map styles"
-    ><i class="fa fa-street-view" aria-hidden="true"></i></button>
+    >
+      <i class="fa fa-street-view" aria-hidden="true"></i>
+    </button>
     <mat-menu #appMenu="matMenu" xPosition="before" yPosition="below">
       <button type="button" mat-menu-item (click)="toggleSelected.emit({ event: 'mapStyle', data: 'basic' })">
         Basic
@@ -383,3 +391,4 @@ Square footage
     </mat-menu>
   </p>
 </div>
+<div class="flyout-bg" (click)="toggleOpen()" (dragstart)="toggleOpen()" draggable *ngIf="toggleBackgroundShow"></div>

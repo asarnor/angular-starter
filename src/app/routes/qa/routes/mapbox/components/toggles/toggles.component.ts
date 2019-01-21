@@ -23,6 +23,8 @@ export class TogglesComponent implements OnInit {
     propertyType: false
   };
 
+  public toggleBackgroundShow = false;
+
   public toggleActive: { [key: string]: boolean} = {
     rogListings: false,
     heatmap: false,
@@ -43,10 +45,18 @@ export class TogglesComponent implements OnInit {
    * @param key 
    * @param val 
    */
-  public toggleOpen(key: string, val: boolean) {
-    console.log(key, val);
+  public toggleOpen(key?: string, val?: boolean) {
+    this.toggleBackgroundShow = false;
+    // Disable all flyouts
     Object.keys(this.toggleMenu).forEach(key2 => this.toggleMenu[key2] = false);
-    this.toggleMenu[key] = val;
+    if (key && val) {
+      this.toggleMenu[key] = val;
+      this.toggleBackgroundShow = true;
+    }
+  }
+  
+  public propTypeChanged() {
+
   }
 
 }
