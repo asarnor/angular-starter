@@ -16,7 +16,7 @@ export class HttpInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add any custom headers
-    const headersObj:  {[keys: string]: string} = {};
+    const headersObj: { [keys: string]: string } = {};
     // If token present, add bearer token
     if (this.settings.token) {
       headersObj['Authorization'] = 'Bearer ' + this.settings.token;
@@ -24,7 +24,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     // Create headers element
     const headers = new HttpHeaders(headersObj);
     // Clone request, add headers
-    const cloneReq = next.handle(req.clone({headers}));
+    const cloneReq = next.handle(req.clone({ headers }));
     // Return request, handle errors globally here
     return cloneReq.pipe(catchError(error => {
       // If forbidden error, end session

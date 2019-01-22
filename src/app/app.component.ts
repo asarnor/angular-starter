@@ -22,12 +22,12 @@ export class AppComponent implements OnInit {
     private sw: ServiceWorkerService,
     private comms: AppCommsService,
     private version: VersionManagementService,
-    private settings: AppSettings
+    private settings: AppSettings,
   ) {}
 
   ngOnInit() {
     this.routeChange();
-    
+
     // If service worker
     if (environment.settings.enableServiceWorker) {
       this.sw.enable();
@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
     if (environment.endpoints.version) {
       this.version.versionCheckStart();
     }
-    
   }
 
   /**

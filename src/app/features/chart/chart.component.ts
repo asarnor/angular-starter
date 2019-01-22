@@ -50,8 +50,7 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
     | 'stackedBar100'
     | 'stackedArea100'
     | 'pie'
-    | 'doughnut' =
-    'column';
+    | 'doughnut' = 'column';
   @Input() width: string;
   @Input() height: string;
   @Input() data: CanvasJS.ChartDataSeriesOptions[];

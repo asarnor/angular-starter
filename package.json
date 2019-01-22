@@ -3,7 +3,7 @@
   "version": "2.2.0",
   "license": "MIT",
   "scripts": {
-    "install": "git update-index --skip-worktree src/environments/environment.local.ts && npm i",
+    "localize": "git update-index --skip-worktree src/environments/environment.local.ts && npm i",
     "start": "npm run format && ng serve",
     "format": "npm run format-glob -- \"src/{app,environments}/**/*{.ts,.js,.json,.css,.scss}\"",
     "format-glob": "prettier --write",
@@ -102,7 +102,7 @@
     "karma-coverage-istanbul-reporter": "1.2.1",
     "karma-jasmine": "1.1.0",
     "karma-jasmine-html-reporter": "0.2.2",
-    "prettier": "1.13.7",
+    "prettier": "1.16.0",
     "protractor": "5.4.1",
     "schematics": "file:schematics",
     "schematics-utilities": "^1.1.1",

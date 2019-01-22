@@ -6,10 +6,9 @@ import { MatButtonToggleChange } from '@angular/material';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit {
-
   public heatMap = true;
 
   @Input() formSearch: FormGroup;
@@ -17,20 +16,19 @@ export class SidebarComponent implements OnInit {
 
   @Output() submit = new EventEmitter<any>();
   @Output() listingSelected = new EventEmitter<Models.LocationMLS>();
-  @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
+  @Output() toggleSelected = new EventEmitter<{ event: string; data?: any }>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /**
    * When prop type changes, update form. Button toggle does not support reactive forms
-   * @param change 
-   * @param type 
+   * @param change
+   * @param type
    */
-  public propTypeChanged(change: MatButtonToggleChange, type: string ) {
-    const val: {[key: string]: boolean} = {};
+  public propTypeChanged(change: MatButtonToggleChange, type: string) {
+    const val: { [key: string]: boolean } = {};
     val[type] = change.source.checked;
     this.formSearch.patchValue(val);
   }
@@ -40,5 +38,4 @@ export class SidebarComponent implements OnInit {
     e.stopPropagation();
     e.preventDefault();
   }
-
 }

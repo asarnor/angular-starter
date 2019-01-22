@@ -100,8 +100,9 @@
           value="Pending"
           [checked]="formSearch.value.listing_status_pending"
           (click)="formChangeValue('listing_status_pending', !formSearch.value.listing_status_pending)"
-          >Pending</mat-button-toggle
         >
+          Pending
+        </mat-button-toggle>
         <mat-button-toggle
           value="Withdrawn"
           [checked]="formSearch.value.listing_status_withdrawn"
@@ -190,11 +191,31 @@
         </mat-button-toggle-group>
         <mat-button-toggle-group vertical class="mr-2" formControlName="bedroomsMax">
           <mat-button-toggle value="">No Max</mat-button-toggle>
-          <mat-button-toggle value="1" [disabled]="formSearch.value.bedroomsMin > 1 && formSearch.value.bedroomsMin !== ''">1</mat-button-toggle>
-          <mat-button-toggle value="2" [disabled]="formSearch.value.bedroomsMin > 2 && formSearch.value.bedroomsMin !== ''">2</mat-button-toggle>
-          <mat-button-toggle value="3" [disabled]="formSearch.value.bedroomsMin > 3 && formSearch.value.bedroomsMin !== ''">3</mat-button-toggle>
-          <mat-button-toggle value="4" [disabled]="formSearch.value.bedroomsMin > 4 && formSearch.value.bedroomsMin !== ''">4</mat-button-toggle>
-          <mat-button-toggle value="5" [disabled]="formSearch.value.bedroomsMin > 5 && formSearch.value.bedroomsMin !== ''">5+</mat-button-toggle>
+          <mat-button-toggle
+            value="1"
+            [disabled]="formSearch.value.bedroomsMin > 1 && formSearch.value.bedroomsMin !== ''"
+            >1</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="2"
+            [disabled]="formSearch.value.bedroomsMin > 2 && formSearch.value.bedroomsMin !== ''"
+            >2</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="3"
+            [disabled]="formSearch.value.bedroomsMin > 3 && formSearch.value.bedroomsMin !== ''"
+            >3</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="4"
+            [disabled]="formSearch.value.bedroomsMin > 4 && formSearch.value.bedroomsMin !== ''"
+            >4</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="5"
+            [disabled]="formSearch.value.bedroomsMin > 5 && formSearch.value.bedroomsMin !== ''"
+            >5+</mat-button-toggle
+          >
         </mat-button-toggle-group>
       </div>
     </div>
@@ -219,9 +240,9 @@
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMin">
           <mat-button-toggle value="">No Min</mat-button-toggle>
-          <mat-button-toggle value="1" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''"
-            >1</mat-button-toggle
-          >
+          <mat-button-toggle value="1" [disabled]="formSearch.value.bathsMax < 1 && formSearch.value.bathsMax !== ''">
+            1
+          </mat-button-toggle>
           <mat-button-toggle value="2" [disabled]="formSearch.value.bathsMax < 2 && formSearch.value.bathsMax !== ''"
             >2</mat-button-toggle
           >
@@ -237,11 +258,21 @@
         </mat-button-toggle-group>
         <mat-button-toggle-group vertical class="mr-2" formControlName="bathsMax">
           <mat-button-toggle value="">No Max</mat-button-toggle>
-          <mat-button-toggle value="1" [disabled]="formSearch.value.bathsMin > 1 && formSearch.value.bathsMin !== ''">1</mat-button-toggle>
-          <mat-button-toggle value="2" [disabled]="formSearch.value.bathsMin > 2 && formSearch.value.bathsMin !== ''">2</mat-button-toggle>
-          <mat-button-toggle value="3" [disabled]="formSearch.value.bathsMin > 3 && formSearch.value.bathsMin !== ''">3</mat-button-toggle>
-          <mat-button-toggle value="4" [disabled]="formSearch.value.bathsMin > 4 && formSearch.value.bathsMin !== ''">4</mat-button-toggle>
-          <mat-button-toggle value="5" [disabled]="formSearch.value.bathsMin > 5 && formSearch.value.bathsMin !== ''">5+</mat-button-toggle>
+          <mat-button-toggle value="1" [disabled]="formSearch.value.bathsMin > 1 && formSearch.value.bathsMin !== ''"
+            >1</mat-button-toggle
+          >
+          <mat-button-toggle value="2" [disabled]="formSearch.value.bathsMin > 2 && formSearch.value.bathsMin !== ''"
+            >2</mat-button-toggle
+          >
+          <mat-button-toggle value="3" [disabled]="formSearch.value.bathsMin > 3 && formSearch.value.bathsMin !== ''"
+            >3</mat-button-toggle
+          >
+          <mat-button-toggle value="4" [disabled]="formSearch.value.bathsMin > 4 && formSearch.value.bathsMin !== ''"
+            >4</mat-button-toggle
+          >
+          <mat-button-toggle value="5" [disabled]="formSearch.value.bathsMin > 5 && formSearch.value.bathsMin !== ''"
+            >5+</mat-button-toggle
+          >
         </mat-button-toggle-group>
       </div>
     </div>
@@ -340,20 +371,76 @@
 
         <mat-button-toggle-group vertical class="sm" formControlName="priceHigh">
           <mat-button-toggle value="">No Max Price</mat-button-toggle>
-          <mat-button-toggle value="50000" [disabled]="formSearch.value.priceLow > 50000 && formSearch.value.priceLow !== ''">$50k</mat-button-toggle>
-          <mat-button-toggle value="10000" [disabled]="formSearch.value.priceLow > 10000 && formSearch.value.priceLow !== ''">$100k</mat-button-toggle>
-          <mat-button-toggle value="150000" [disabled]="formSearch.value.priceLow > 150000 && formSearch.value.priceLow !== ''">$150k</mat-button-toggle>
-          <mat-button-toggle value="200000" [disabled]="formSearch.value.priceLow > 200000 && formSearch.value.priceLow !== ''">$200k</mat-button-toggle>
-          <mat-button-toggle value="250000" [disabled]="formSearch.value.priceLow > 250000 && formSearch.value.priceLow !== ''">$250k</mat-button-toggle>
-          <mat-button-toggle value="300000" [disabled]="formSearch.value.priceLow > 300000 && formSearch.value.priceLow !== ''">$300k</mat-button-toggle>
-          <mat-button-toggle value="400000" [disabled]="formSearch.value.priceLow > 400000 && formSearch.value.priceLow !== ''">$400k</mat-button-toggle>
-          <mat-button-toggle value="450000" [disabled]="formSearch.value.priceLow > 450000 && formSearch.value.priceLow !== ''">$450k</mat-button-toggle>
-          <mat-button-toggle value="500000" [disabled]="formSearch.value.priceLow > 500000 && formSearch.value.priceLow !== ''">$500k</mat-button-toggle>
-          <mat-button-toggle value="600000" [disabled]="formSearch.value.priceLow > 600000 && formSearch.value.priceLow !== ''">$600k</mat-button-toggle>
-          <mat-button-toggle value="700000" [disabled]="formSearch.value.priceLow > 700000 && formSearch.value.priceLow !== ''">$700k</mat-button-toggle>
-          <mat-button-toggle value="800000" [disabled]="formSearch.value.priceLow > 800000 && formSearch.value.priceLow !== ''">$800k</mat-button-toggle>
-          <mat-button-toggle value="900000" [disabled]="formSearch.value.priceLow > 900000 && formSearch.value.priceLow !== ''">$900k</mat-button-toggle>
-          <mat-button-toggle value="1000000" [disabled]="formSearch.value.priceLow > 1000000 && formSearch.value.priceLow !== ''">$1M+</mat-button-toggle>
+          <mat-button-toggle
+            value="50000"
+            [disabled]="formSearch.value.priceLow > 50000 && formSearch.value.priceLow !== ''"
+            >$50k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="10000"
+            [disabled]="formSearch.value.priceLow > 10000 && formSearch.value.priceLow !== ''"
+            >$100k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="150000"
+            [disabled]="formSearch.value.priceLow > 150000 && formSearch.value.priceLow !== ''"
+            >$150k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="200000"
+            [disabled]="formSearch.value.priceLow > 200000 && formSearch.value.priceLow !== ''"
+            >$200k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="250000"
+            [disabled]="formSearch.value.priceLow > 250000 && formSearch.value.priceLow !== ''"
+            >$250k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="300000"
+            [disabled]="formSearch.value.priceLow > 300000 && formSearch.value.priceLow !== ''"
+            >$300k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="400000"
+            [disabled]="formSearch.value.priceLow > 400000 && formSearch.value.priceLow !== ''"
+            >$400k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="450000"
+            [disabled]="formSearch.value.priceLow > 450000 && formSearch.value.priceLow !== ''"
+            >$450k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="500000"
+            [disabled]="formSearch.value.priceLow > 500000 && formSearch.value.priceLow !== ''"
+            >$500k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="600000"
+            [disabled]="formSearch.value.priceLow > 600000 && formSearch.value.priceLow !== ''"
+            >$600k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="700000"
+            [disabled]="formSearch.value.priceLow > 700000 && formSearch.value.priceLow !== ''"
+            >$700k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="800000"
+            [disabled]="formSearch.value.priceLow > 800000 && formSearch.value.priceLow !== ''"
+            >$800k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="900000"
+            [disabled]="formSearch.value.priceLow > 900000 && formSearch.value.priceLow !== ''"
+            >$900k</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1000000"
+            [disabled]="formSearch.value.priceLow > 1000000 && formSearch.value.priceLow !== ''"
+            >$1M+</mat-button-toggle
+          >
         </mat-button-toggle-group>
       </div>
     </div>
@@ -379,33 +466,129 @@
       <div class="d-flex flex-row">
         <mat-button-toggle-group vertical class="sm mr-2" formControlName="sqFootageMin">
           <mat-button-toggle value="">No Min Sq Ft</mat-button-toggle>
-          <mat-button-toggle value="250" [disabled]="formSearch.value.sqFootageMax < 250 && formSearch.value.sqFootageMax !== ''">250</mat-button-toggle>
-          <mat-button-toggle value="500" [disabled]="formSearch.value.sqFootageMax < 500 && formSearch.value.sqFootageMax !== ''">500</mat-button-toggle>
-          <mat-button-toggle value="750" [disabled]="formSearch.value.sqFootageMax < 750 && formSearch.value.sqFootageMax !== ''">750</mat-button-toggle>
-          <mat-button-toggle value="1000" [disabled]="formSearch.value.sqFootageMax < 1000 && formSearch.value.sqFootageMax !== ''">1000</mat-button-toggle>
-          <mat-button-toggle value="1250" [disabled]="formSearch.value.sqFootageMax < 1250 && formSearch.value.sqFootageMax !== ''">1250</mat-button-toggle>
-          <mat-button-toggle value="1500" [disabled]="formSearch.value.sqFootageMax < 1500 && formSearch.value.sqFootageMax !== ''">1500</mat-button-toggle>
-          <mat-button-toggle value="1750" [disabled]="formSearch.value.sqFootageMax < 1750 && formSearch.value.sqFootageMax !== ''">1750</mat-button-toggle>
-          <mat-button-toggle value="2000" [disabled]="formSearch.value.sqFootageMax < 2000 && formSearch.value.sqFootageMax !== ''">2000</mat-button-toggle>
-          <mat-button-toggle value="2500" [disabled]="formSearch.value.sqFootageMax < 2500 && formSearch.value.sqFootageMax !== ''">2500</mat-button-toggle>
-          <mat-button-toggle value="3000" [disabled]="formSearch.value.sqFootageMax < 3000 && formSearch.value.sqFootageMax !== ''">3000</mat-button-toggle>
-          <mat-button-toggle value="3500" [disabled]="formSearch.value.sqFootageMax < 3500 && formSearch.value.sqFootageMax !== ''">3500</mat-button-toggle>
-          <mat-button-toggle value="4000" [disabled]="formSearch.value.sqFootageMax < 4000 && formSearch.value.sqFootageMax !== ''">4000+</mat-button-toggle>
+          <mat-button-toggle
+            value="250"
+            [disabled]="formSearch.value.sqFootageMax < 250 && formSearch.value.sqFootageMax !== ''"
+            >250</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="500"
+            [disabled]="formSearch.value.sqFootageMax < 500 && formSearch.value.sqFootageMax !== ''"
+            >500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="750"
+            [disabled]="formSearch.value.sqFootageMax < 750 && formSearch.value.sqFootageMax !== ''"
+            >750</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1000"
+            [disabled]="formSearch.value.sqFootageMax < 1000 && formSearch.value.sqFootageMax !== ''"
+            >1000</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1250"
+            [disabled]="formSearch.value.sqFootageMax < 1250 && formSearch.value.sqFootageMax !== ''"
+            >1250</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1500"
+            [disabled]="formSearch.value.sqFootageMax < 1500 && formSearch.value.sqFootageMax !== ''"
+            >1500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1750"
+            [disabled]="formSearch.value.sqFootageMax < 1750 && formSearch.value.sqFootageMax !== ''"
+            >1750</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="2000"
+            [disabled]="formSearch.value.sqFootageMax < 2000 && formSearch.value.sqFootageMax !== ''"
+            >2000</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="2500"
+            [disabled]="formSearch.value.sqFootageMax < 2500 && formSearch.value.sqFootageMax !== ''"
+            >2500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="3000"
+            [disabled]="formSearch.value.sqFootageMax < 3000 && formSearch.value.sqFootageMax !== ''"
+            >3000</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="3500"
+            [disabled]="formSearch.value.sqFootageMax < 3500 && formSearch.value.sqFootageMax !== ''"
+            >3500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="4000"
+            [disabled]="formSearch.value.sqFootageMax < 4000 && formSearch.value.sqFootageMax !== ''"
+            >4000+</mat-button-toggle
+          >
         </mat-button-toggle-group>
         <mat-button-toggle-group vertical class="sm" formControlName="sqFootageMax">
           <mat-button-toggle value="">No Max Sq Ft</mat-button-toggle>
-          <mat-button-toggle value="250" [disabled]="formSearch.value.sqFootageMin > 250 && formSearch.value.sqFootageMin !== ''">250</mat-button-toggle>
-          <mat-button-toggle value="500" [disabled]="formSearch.value.sqFootageMin > 500 && formSearch.value.sqFootageMin !== ''">500</mat-button-toggle>
-          <mat-button-toggle value="750" [disabled]="formSearch.value.sqFootageMin > 750 && formSearch.value.sqFootageMin !== ''">750</mat-button-toggle>
-          <mat-button-toggle value="1000" [disabled]="formSearch.value.sqFootageMin > 1000 && formSearch.value.sqFootageMin !== ''">1000</mat-button-toggle>
-          <mat-button-toggle value="1250" [disabled]="formSearch.value.sqFootageMin > 1250 && formSearch.value.sqFootageMin !== ''">1250</mat-button-toggle>
-          <mat-button-toggle value="1500" [disabled]="formSearch.value.sqFootageMin > 1500 && formSearch.value.sqFootageMin !== ''">1500</mat-button-toggle>
-          <mat-button-toggle value="1750" [disabled]="formSearch.value.sqFootageMin > 1750 && formSearch.value.sqFootageMin !== ''">1750</mat-button-toggle>
-          <mat-button-toggle value="2000" [disabled]="formSearch.value.sqFootageMin > 2000 && formSearch.value.sqFootageMin !== ''">2000</mat-button-toggle>
-          <mat-button-toggle value="2500" [disabled]="formSearch.value.sqFootageMin > 2500 && formSearch.value.sqFootageMin !== ''">2500</mat-button-toggle>
-          <mat-button-toggle value="3000" [disabled]="formSearch.value.sqFootageMin > 3000 && formSearch.value.sqFootageMin !== ''">3000</mat-button-toggle>
-          <mat-button-toggle value="3500" [disabled]="formSearch.value.sqFootageMin > 3500 && formSearch.value.sqFootageMin !== ''">3500</mat-button-toggle>
-          <mat-button-toggle value="4000" [disabled]="formSearch.value.sqFootageMin > 4000 && formSearch.value.sqFootageMin !== ''">4000+</mat-button-toggle>
+          <mat-button-toggle
+            value="250"
+            [disabled]="formSearch.value.sqFootageMin > 250 && formSearch.value.sqFootageMin !== ''"
+            >250</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="500"
+            [disabled]="formSearch.value.sqFootageMin > 500 && formSearch.value.sqFootageMin !== ''"
+            >500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="750"
+            [disabled]="formSearch.value.sqFootageMin > 750 && formSearch.value.sqFootageMin !== ''"
+            >750</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1000"
+            [disabled]="formSearch.value.sqFootageMin > 1000 && formSearch.value.sqFootageMin !== ''"
+            >1000</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1250"
+            [disabled]="formSearch.value.sqFootageMin > 1250 && formSearch.value.sqFootageMin !== ''"
+            >1250</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1500"
+            [disabled]="formSearch.value.sqFootageMin > 1500 && formSearch.value.sqFootageMin !== ''"
+            >1500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1750"
+            [disabled]="formSearch.value.sqFootageMin > 1750 && formSearch.value.sqFootageMin !== ''"
+            >1750</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="2000"
+            [disabled]="formSearch.value.sqFootageMin > 2000 && formSearch.value.sqFootageMin !== ''"
+            >2000</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="2500"
+            [disabled]="formSearch.value.sqFootageMin > 2500 && formSearch.value.sqFootageMin !== ''"
+            >2500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="3000"
+            [disabled]="formSearch.value.sqFootageMin > 3000 && formSearch.value.sqFootageMin !== ''"
+            >3000</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="3500"
+            [disabled]="formSearch.value.sqFootageMin > 3500 && formSearch.value.sqFootageMin !== ''"
+            >3500</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="4000"
+            [disabled]="formSearch.value.sqFootageMin > 4000 && formSearch.value.sqFootageMin !== ''"
+            >4000+</mat-button-toggle
+          >
         </mat-button-toggle-group>
       </div>
     </div>

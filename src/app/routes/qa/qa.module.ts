@@ -11,6 +11,6 @@ import { ListingModalComponent } from './routes/mapbox/components/listing-modal/
 @NgModule({
   imports: [CommonModule, SiteModule, routing, ChartModule, MapModule],
   declarations: [QaComponent, ChartsComponent, MapComponent, ListingModalComponent],
-  entryComponents: [ListingModalComponent]
+  entryComponents: [ListingModalComponent],
 })
 export class QaModule {}

@@ -16,6 +16,6 @@ const Components = [MapboxComponent, SidebarComponent, ListingsComponent, Listin
   imports: [CommonModule, SiteModule, MapMapboxModule],
   declarations: [Components, TogglesComponent],
   providers: [ModalService],
-  entryComponents: [] // ListingModalComponent
+  entryComponents: [], // ListingModalComponent
 })
 export class MapboxModule {}

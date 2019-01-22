@@ -29,9 +29,9 @@ declare namespace Microsoft.Maps {
     aggregationProperty?: string;
 
     /*
-         * A callback function which defines the color a data bin polygon should be. This callback recieves data bin information
-         * along with the min and max calculated metrics for the data set. If set, this callback function must return a color value.
-         */
+     * A callback function which defines the color a data bin polygon should be. This callback recieves data bin information
+     * along with the min and max calculated metrics for the data set. If set, this callback function must return a color value.
+     */
     colorCallback?: (binInfo: IDataBinInfo, min: IDataBinMetrics, max: IDataBinMetrics) => string | Color;
 
     /* The shape of the data bin to generate. Default: hexagon */
@@ -44,15 +44,15 @@ declare namespace Microsoft.Maps {
     polygonOptions?: IPolygonOptions;
 
     /*
-         * A spatial distance which will be converted into a pixel distance at the equater and used to generate symetrically sized data bins
-         * that have the apprimate spatial distance radius. Default: 1000
-         */
+     * A spatial distance which will be converted into a pixel distance at the equater and used to generate symetrically sized data bins
+     * that have the apprimate spatial distance radius. Default: 1000
+     */
     radius?: number;
 
     /*
-         * A callback function which defines how much to scale a data bins size. This callback recieves data bin information
-         * along with the min and max calculated metrics for the data set. If set, this callback function must return a number between 0 and 1.
-         */
+     * A callback function which defines how much to scale a data bins size. This callback recieves data bin information
+     * along with the min and max calculated metrics for the data set. If set, this callback function must return a number between 0 and 1.
+     */
     scaleCallback?: (binInfo: IDataBinInfo, min: IDataBinMetrics, max: IDataBinMetrics) => number;
   }
 

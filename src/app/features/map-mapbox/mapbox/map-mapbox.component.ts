@@ -57,7 +57,6 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(model: any) {
-
     // On style changes
     if (model.style && this.isLoaded) {
       this.map.setStyle(`mapbox://styles/mapbox/${this.style}-v9`);
@@ -297,5 +296,5 @@ export class MapMapboxComponent implements OnInit, AfterViewInit, OnChanges {
       // Request the next frame of the animation.
       requestAnimationFrame(this.rotateTo);
     }
-  };
+  }
 }

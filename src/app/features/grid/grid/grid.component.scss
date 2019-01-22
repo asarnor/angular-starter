@@ -1,9 +1,17 @@
 @import '../../../../styles/globals';
 /* Grid Container */
-:host{display: flex;flex-direction: column;height: 100%;}
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 app-grid,
 ag-grid-angular,
-.gridContainer {display: flex;flex-direction: column;height: 100%;}
+.gridContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
 /* Ag Grid */
 ag-grid-angular .ag-root-wrapper {

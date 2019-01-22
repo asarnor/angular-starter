@@ -55,8 +55,8 @@ export function ApiReducer(state: AppStore.Api = {}, action: Action) {
   }
 
   /*
-  * Get complete
-  */
+   * Get complete
+   */
   if (isType(action, ApiStoreActions.GET_COMPLETE)) {
     // If response is an array/collection and has an entityAdapter, convert to ngrx entities
     if (Array.isArray(action.payload.data) && typeof action.payload.data === 'object' && action.payload.apiMap.entity) {
@@ -90,8 +90,8 @@ export function ApiReducer(state: AppStore.Api = {}, action: Action) {
   }
 
   /*
-  * Post, put and upsert complete
-  */
+   * Post, put and upsert complete
+   */
   if (
     isType(action, ApiStoreActions.POST_COMPLETE) ||
     isType(action, ApiStoreActions.PUT_COMPLETE) ||
@@ -132,8 +132,8 @@ export function ApiReducer(state: AppStore.Api = {}, action: Action) {
   }
 
   /*
-  * Delete complete
-  */
+   * Delete complete
+   */
   if (isType(action, ApiStoreActions.DELETE_COMPLETE)) {
     // If the destination is an ngrx entity type
     if (state[action.payload.apiMap.storeProperty].entities) {

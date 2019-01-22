@@ -8,9 +8,8 @@ describe('TogglesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TogglesComponent ]
-    })
-    .compileComponents();
+      declarations: [TogglesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

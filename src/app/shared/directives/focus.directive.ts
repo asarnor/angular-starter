@@ -17,7 +17,7 @@ export class FocusDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.appFocus !== false && this.el && this.el.nativeElement) {
-      this.el.nativeElement.focus();
+      setTimeout(() => this.el.nativeElement.focus(), 500);
     }
   }
 }

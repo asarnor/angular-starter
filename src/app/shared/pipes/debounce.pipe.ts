@@ -24,13 +24,16 @@ export class DebouncePipe implements PipeTransform {
       // there is a new value that needs to be debounced
       this.transformValue = value;
       clearTimeout(this.timeoutHandle);
-      this.timeoutHandle = setTimeout(() => {
-        this.zone.run(() => {
-          this.currentValue = this.transformValue;
-          this.transformValue = null;
-          this.changeDetector.markForCheck();
-        });
-      }, typeof debounceTime === 'number' ? debounceTime : 300);
+      this.timeoutHandle = setTimeout(
+        () => {
+          this.zone.run(() => {
+            this.currentValue = this.transformValue;
+            this.transformValue = null;
+            this.changeDetector.markForCheck();
+          });
+        },
+        typeof debounceTime === 'number' ? debounceTime : 300,
+      );
     }
     return this.currentValue;
   }

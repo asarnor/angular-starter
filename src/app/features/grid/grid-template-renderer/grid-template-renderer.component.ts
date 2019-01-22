@@ -6,9 +6,7 @@ import { ICellRendererParams } from 'ag-grid-community';
 @Component({
   selector: 'app-template-renderer',
   template: `
-    <ng-container
-      *ngTemplateOutlet="template; context: templateContext"
-    ></ng-container>
+    <ng-container *ngTemplateOutlet="template; context: templateContext"></ng-container>
   `,
 })
 export class GridTemplateRendererComponent implements ICellRendererAngularComp {

@@ -31,38 +31,40 @@ export class ModalsService {
   public modalList: { [key: string]: any } = {
     ConfirmationModalComponent: ConfirmationModalComponent,
     LogoutModalComponent: LogoutModalComponent,
-    FeedbackComponent: FeedbackComponent
+    FeedbackComponent: FeedbackComponent,
   };
 
   constructor(private store: Store<AppStore.Root>, private settings: AppSettings, public dialog: MatDialog) {
     // Subscribe to the modal in the store and launch store modal if data is found. Also make sure token is present
-    this.store.select(storeElem => storeElem.ui.modal).subscribe((modal: any) => {
-      // Make sure modal exists AND that a token is present in app settings. This prevents a modal from persisting after logout
-      if (modal && Object.keys(modal).length && this.settings.token) {
-        // Store reference to the modal instance
-        let width = '720px';
+    this.store
+      .select(storeElem => storeElem.ui.modal)
+      .subscribe((modal: any) => {
+        // Make sure modal exists AND that a token is present in app settings. This prevents a modal from persisting after logout
+        if (modal && Object.keys(modal).length && this.settings.token) {
+          // Store reference to the modal instance
+          let width = '720px';
 
-        switch (modal.size) {
-          case 'sm':
-            width = '480px';
-            break;
-          case 'xl':
-            width = '1024px';
-            break;
-          case 'full':
-            width = '90%';
-            break;
+          switch (modal.size) {
+            case 'sm':
+              width = '480px';
+              break;
+            case 'xl':
+              width = '1024px';
+              break;
+            case 'full':
+              width = '90%';
+              break;
+          }
+
+          const modalRef = this.dialog.open(this.modalList[modal.modalId], {
+            width: width,
+            data: modal.data || null,
+          });
+
+          this.modalRef$.next(modalRef);
+          this.onClose();
         }
-
-        const modalRef = this.dialog.open(this.modalList[modal.modalId], {
-          width: width,
-          data: modal.data || null,
-        });
-
-        this.modalRef$.next(modalRef);
-        this.onClose();
-      }
-    });
+      });
   }
 
   /**

@@ -5,10 +5,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   selector: 'app-listing-modal',
   templateUrl: './listing-modal.component.html',
   styleUrls: ['./listing-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListingModalComponent implements OnInit {
-  
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -23,5 +22,4 @@ export class ListingModalComponent implements OnInit {
   public submit() {
     this.dialogRef.close(this.dataAlt || this.data);
   }
-
 }

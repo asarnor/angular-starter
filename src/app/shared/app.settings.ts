@@ -34,8 +34,8 @@ export class AppSettings {
   private _userName: string | null = null;
   /** API token */
   private _ui: string | null = null;
-   /** User */
-   private _version: string | null = null;
+  /** User */
+  private _version: string | null = null;
 
   /** Used by the error interceptor to pass global error messages to app.component.html */
   public error$ = new BehaviorSubject<string>(null);

@@ -1,19 +1,18 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-toggles',
   templateUrl: './toggles.component.html',
   styleUrls: ['./toggles.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TogglesComponent implements OnInit {
-
   @Input() locations: Map.Location[];
   @Input() formSearch: FormGroup;
-  @Output() toggleSelected = new EventEmitter<{event: string, data?: any}>();
+  @Output() toggleSelected = new EventEmitter<{ event: string; data?: any }>();
 
-  public toggleMenu: { [key: string]: boolean} = {
+  public toggleMenu: { [key: string]: boolean } = {
     rogListings: false,
     mlsStatus: false,
     daysOnMarket: false,
@@ -21,12 +20,12 @@ export class TogglesComponent implements OnInit {
     baths: false,
     price: false,
     sqft: false,
-    propertyType: false
+    propertyType: false,
   };
 
   public toggleBackgroundShow = false;
 
-  public toggleActive: { [key: string]: boolean} = {
+  public toggleActive: { [key: string]: boolean } = {
     rogListings: false,
     heatmap: false,
     mlsStatusActive: true,
@@ -35,13 +34,12 @@ export class TogglesComponent implements OnInit {
     mlsStatusSold: false,
   };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     // this.formSearch.valueChanges.subscribe(() => this.toggleBackgroundShow = false);
   }
 
-  
   public formReset() {
     this.formSearch.patchValue({
       bathsMax: '',
@@ -66,18 +64,17 @@ export class TogglesComponent implements OnInit {
     });
   }
 
-
   /**
    * Open a flyout menu, close all others first
-   * @param key 
-   * @param val 
+   * @param key
+   * @param val
    */
   public toggleOpen(key?: string, val?: boolean) {
     this.toggleBackgroundShow = false;
     // Disable all flyouts
     this.toggleClose();
     if (key && val) {
-      const toggleMenu = {...this.toggleMenu};
+      const toggleMenu = { ...this.toggleMenu };
       toggleMenu[key] = val;
       this.toggleMenu = toggleMenu;
       this.toggleBackgroundShow = true;
@@ -86,20 +83,19 @@ export class TogglesComponent implements OnInit {
 
   /**
    * Change a value on the form
-   * @param field 
-   * @param value 
+   * @param field
+   * @param value
    */
   public formChangeValue(field: string, value: string | number | boolean) {
-    const obj: { [key: string]: any} = {};
+    const obj: { [key: string]: any } = {};
     obj[field] = value;
     this.formSearch.patchValue(obj);
   }
 
   /** Close all toggles */
   public toggleClose() {
-    const toggleMenu = {...this.toggleMenu};
-    Object.keys(toggleMenu).forEach(key2 => toggleMenu[key2] = false);
+    const toggleMenu = { ...this.toggleMenu };
+    Object.keys(toggleMenu).forEach(key2 => (toggleMenu[key2] = false));
     this.toggleMenu = toggleMenu;
   }
-  
 }

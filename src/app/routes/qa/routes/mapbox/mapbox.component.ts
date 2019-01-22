@@ -272,12 +272,11 @@ export class MapboxComponent implements OnInit {
       case 'heatmap':
         this.heatmap = !this.heatmap;
         break;
-        case 'mapStyle':
+      case 'mapStyle':
         this.mapStyle = action.data;
         break;
     }
   }
-  
 
   /**
    * Only show Rog listings
