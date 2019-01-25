@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store, createSelector } from '@ngrx/store';
+import { Store } from '@ngrx/store'; // , createSelector
 
 // import { Models } from '$models';
 import { AppStore } from '$shared';
@@ -8,25 +8,28 @@ import { AppStore } from '$shared';
 // import { map } from 'rxjs/operators';
 // const keyBy = require('lodash/keyBy');
 
+/** Memoized selectors are not updating in NGRX 7, commented out for now
 // Mapped/source selectors for reuse or transforming data
 const selectors = {
   users: createSelector(
     (state: AppStore.Root) => state.api.users,
     users => {
+      console.log(users);
       if (users && users.data) {
         // Modify data before returning to selector
       }
-      return users;
+      return {...users};
     },
   ),
 };
+ */
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiSelectorsService {
-  public users$ = this.store.select(selectors.users); // Memoized selector
-  // public users$ = this.store.select(store => store.api.users);
+  public users$ = this.store.select(store => store.api.users);
+  // public users$ = this.store.select(selector.users); // Memoized selector
 
   constructor(private store: Store<AppStore.Root>) {}
 

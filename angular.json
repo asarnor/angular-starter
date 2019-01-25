@@ -16,7 +16,7 @@
               "src/app/features/chart/chart.module",
               "src/app/features/context-menu/context-menu.module",
               "src/app/features/grid/grid.module",
-              "src/app/features/map/map.module",
+              "src/app/features/map/map.module"
             ],
             "outputPath": "dist/browser",
             "index": "src/index.html",
