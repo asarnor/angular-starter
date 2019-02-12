@@ -1,6 +1,6 @@
 <ng-container *ngIf="state">
   <!-- Loading -->
-  <div *ngIf="state.loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+  <div *ngIf="(state.loading && !disableLoading) || (disableLoading && !state?.data)"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
 
   <!-- Error -->
   <ng-container *ngIf="errorShow && (state.error || state.errorModifying)">
@@ -10,5 +10,5 @@
   </ng-container>
 
   <!-- Content -->
-  <ng-container *ngIf="!state?.loading && !state?.error"> <ng-content></ng-content> </ng-container>
+  <ng-container *ngIf="(!state?.loading && !state?.error) || (disableLoading && state.data)"> <ng-content></ng-content> </ng-container>
 </ng-container>

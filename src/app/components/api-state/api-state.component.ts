@@ -11,7 +11,8 @@ import { AppStore } from '$shared';
 })
 export class ApiStateComponent implements OnInit, OnChanges {
   @Input() state: AppStore.ApiState<any>;
-
+  /** Only show loading screen if no data present */
+  @Input() disableLoading = true;
   public errorShow = true;
 
   constructor() {}
