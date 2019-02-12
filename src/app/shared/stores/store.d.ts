@@ -70,6 +70,8 @@ export declare namespace AppStore {
     uniqueId?: string | string[];
     /** The location of the rest API endpoint */
     entity?: EntityAdapter;
+    /** Should new data be added to the existing store data without removing existing data first? If true, data will need to be manually removed from the store with api.storeDataRemove() */
+    persistData?: boolean;
     /** Map the data before returning to store. This is usually used to extra data from a nested property. IE response => {data: [] } */
     map?: (data: any) => any;
   }

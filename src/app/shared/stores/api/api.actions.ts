@@ -1,6 +1,7 @@
 import actionCreatorFactory from 'typescript-fsa';
 import { createEntityAdapter } from '@ngrx/entity';
 import { AppStore } from '$shared';
+import { ApiProps } from '$api';
 
 const actionCreator = actionCreatorFactory('api');
 
@@ -11,6 +12,8 @@ export const ApiStoreActions = {
   RESET: actionCreator<null>('RESET'),
   RESET_ERRORS: actionCreator<null>('RESET_ERRORS'),
   RESET_SUCCESS: actionCreator<null>('RESET_SUCCESS'),
+
+  DATA_CLEAR: actionCreator<ApiProps>('DATA_CLEAR'),
 
   STATE_LOADING: actionCreator<AppStore.ApiResponse>('STATE_LOADING'),
   STATE_MODIFYING: actionCreator<AppStore.ApiResponse>('STATE_MODIFYING'),

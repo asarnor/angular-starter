@@ -12,6 +12,14 @@ export function ApiReducer(state: AppStore.Api = {}, action: Action) {
     state = {};
   }
 
+  // Remove data from an endpoint
+  if (isType(action, ApiStoreActions.DATA_CLEAR)) {
+    state[action.payload] = {
+      ...state[action.payload],
+      data: [],
+    };
+  }
+
   // Loading
   if (isType(action, ApiStoreActions.STATE_LOADING)) {
     state[action.payload.apiMap.storeProperty] = {
@@ -66,7 +74,9 @@ export function ApiReducer(state: AppStore.Api = {}, action: Action) {
         ...state[action.payload.apiMap.storeProperty],
       };
       // After successful get, clear out all data currently in this store
-      state[action.payload.apiMap.storeProperty] = action.payload.apiMap.entity.adapter.removeAll();
+      if (action.payload.apiMap.persistData !== true) {
+        state[action.payload.apiMap.storeProperty] = action.payload.apiMap.entity.adapter.removeAll();
+      }
       // Update record/s in collection
       state[action.payload.apiMap.storeProperty] = action.payload.apiMap.entity.adapter.addMany(
         action.payload.data,

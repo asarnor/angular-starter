@@ -55,8 +55,10 @@ export class ApiHttpService {
         share(),
       );
     } else {
+      // If map method specified, grab that out of cache instead
+      const data = apiMap.map ? apiMap.map(this.cache[url]) : this.cache[url];
       // Update store with cached data
-      this.storeSvc.dispatch(ApiStoreActions.GET_COMPLETE({ apiMap: apiMap, data: this.cache[url] }));
+      this.storeSvc.dispatch(ApiStoreActions.GET_COMPLETE({ apiMap: apiMap, data: data }));
       return of(this.cache[url]); // Return observable of api response
     }
   }

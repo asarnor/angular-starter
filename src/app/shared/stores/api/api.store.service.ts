@@ -9,6 +9,7 @@ import { ApiSelectorsService } from './api.selectors.service';
 import { ApiStoreActions } from './api.actions';
 import { ApiMap } from './api.map';
 import { AppStore } from '../store';
+import { ApiProps } from '$api';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,14 @@ export class ApiService extends ApiHttpService {
 
     // Output store changes to console
     // this.store.subscribe(storeApi => console.log(JSON.parse(JSON.stringify(storeApi.api))));
+  }
+
+  /**
+   * Removes all of the data from a single datatype in the store but leaves the api state intact
+   * @param prop
+   */
+  public storeDataClear(prop: ApiProps) {
+    this.store.dispatch(ApiStoreActions.DATA_CLEAR(prop));
   }
 
   /**
