@@ -12,12 +12,14 @@ import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 import { CountPipe } from './pipes/count.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
 import { TextCasePipe } from './pipes/text-case.pipe';
+import { SlugPipe } from './pipes/slug.pipe';
 
 // Directives
 import { FullScreenDirective } from './directives/full-screen.directive';
 import { FocusDirective } from './directives/focus.directive';
 import { ModalLaunchDirective } from './directives/modal-launch.directive';
 import { DomObserverDirective } from './directives/dom-observer.directive';
+
 
 // Pipes + Directives
 export const APP_PIPES_DIRECTIVES = [
@@ -31,6 +33,7 @@ export const APP_PIPES_DIRECTIVES = [
   CountPipe,
   DurationPipe,
   TextCasePipe,
+  SlugPipe,
 
   // Directives
   FullScreenDirective,
