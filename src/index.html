@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon-192x192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-icon-180x180.png">
   <link rel="manifest" href="manifest.json">
-  <script nomodule="" src="assets/scripts/polyfills-ie.min.js"></script>  
+  <script>if (!!navigator.userAgent.match(/Trident\/7\./)){  document.write('<script src="assets/scripts/polyfills-ie.min.js"><\/script>');}  </script>
 </head>
 <body>
  
